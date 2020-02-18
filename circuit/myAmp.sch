@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:myAmp-cache
 EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
@@ -225,11 +226,11 @@ L myAmp:R R?
 U 1 1 5E4B217A
 P 4050 1750
 F 0 "R?" H 4120 1796 50  0000 L CNN
-F 1 "2K2" H 4120 1705 50  0000 L CNN
+F 1 "100K" H 4120 1705 50  0000 L CNN
 F 2 "" V 3980 1750 50  0001 C CNN
 F 3 "" H 4050 1750 50  0001 C CNN
 	1    4050 1750
-	1    0    0    -1  
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	4050 1500 4050 1600
