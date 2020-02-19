@@ -1,8 +1,8 @@
 # myAmp
 
-For a while I've had this idea to build my own battery powered, guitar amplifier. I want to put it into the case of my old Marshall Valvestate 8010 that I've had since the mid '90s. The Marshall hasn't been working properly for a very long time, I couldn't be bothered to try to fix it, and I've felt bad throwing it out. So I will use it for science! Which is great because I hate making enclosures for my projects.
+For a while I've had this idea to build my own battery powered, guitar amplifier. I want to put it into the case of my old Marshall Valvestate 8010 that I've had since the mid '90s. The Marshall hasn't been working properly for a very long time, I couldn't be bothered to try to fix it, and since the amp has sentimental value I've felt bad simply throwing it out. So I will use it for science! Which is great because I hate making enclosures for my projects.
 
-I don't really need an amp, but I need a project to learn about the basics, since most of the electronics I did so far was about connecting ICs. Which is fun, but not what I am after at the moment.
+I don't really need an amp, but I need a project to learn more about the basic electronics with discrete components, since most of the electronics I did so far was about connecting ICs. Which was fun, but I want to learn more about the basics.
 
 This amp will have:
 
