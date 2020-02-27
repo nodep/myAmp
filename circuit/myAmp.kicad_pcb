@@ -34,8 +34,12 @@
   )
 
   (setup
-    (last_trace_width 0.25)
-    (trace_clearance 0.2)
+    (last_trace_width 0.2032)
+    (user_trace_width 0.254)
+    (user_trace_width 0.3048)
+    (user_trace_width 0.3556)
+    (user_trace_width 0.4064)
+    (trace_clearance 0.2032)
     (zone_clearance 0.508)
     (zone_45_only no)
     (trace_min 0.2)
@@ -132,8 +136,8 @@
   (net 39 /TONE_OUT)
 
   (net_class Default "This is the default net class."
-    (clearance 0.2)
-    (trace_width 0.25)
+    (clearance 0.2032)
+    (trace_width 0.2032)
     (via_dia 0.8)
     (via_drill 0.4)
     (uvia_dia 0.3)
