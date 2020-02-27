@@ -1,4 +1,4 @@
-(module C_1206 (layer F.Cu) (tedit 5C081586)
+(module C_1206 (layer F.Cu) (tedit 5E578ED5)
   (tags "capacitor handsolder")
   (attr smd)
   (fp_text reference REF** (at 0 -1.5) (layer F.SilkS)
@@ -13,7 +13,7 @@
   (fp_line (start -1 0.9) (end 1 0.9) (layer F.SilkS) (width 0.12))
   (pad 1 smd roundrect (at -1.7 0) (size 1.425 1.75) (layers F.Cu F.Paste F.Mask) (roundrect_rratio 0.175))
   (pad 2 smd roundrect (at 1.7 0) (size 1.425 1.75) (layers F.Cu F.Paste F.Mask) (roundrect_rratio 0.175))
-  (model ${KISYS3DMOD}/Capacitors_SMD.3dshapes/C_1206.wrl
+  (model ${KISYS3DMOD}/Capacitor_SMD.3dshapes/C_1206_3216Metric.wrl
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
