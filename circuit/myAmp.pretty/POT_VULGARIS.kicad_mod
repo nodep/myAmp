@@ -1,4 +1,4 @@
-(module POT_VULGARIS (layer F.Cu) (tedit 5E4D791E)
+(module POT_VULGARIS (layer F.Cu) (tedit 5EA84740)
   (fp_text reference REF** (at 0 -6.35) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -15,4 +15,9 @@
   (pad 1 thru_hole oval (at -5.08 0) (size 3 4) (drill 1.7) (layers *.Cu *.Mask))
   (pad 2 thru_hole oval (at 0 0) (size 3 4) (drill 1.7) (layers *.Cu *.Mask))
   (pad 3 thru_hole oval (at 5.08 0) (size 3 4) (drill 1.7) (layers *.Cu *.Mask))
+  (model ${KISYS3DMOD}/Potentiometers.3dshapes/Potentiometer_Alps-RK163-single_15mm.wrl
+    (offset (xyz -5.08 0 -0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 90))
+  )
 )
