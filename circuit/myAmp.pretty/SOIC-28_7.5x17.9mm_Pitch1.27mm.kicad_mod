@@ -1,4 +1,4 @@
-(module SOIC-28_7.5x17.9mm_Pitch1.27mm (layer F.Cu) (tedit 5EBEDCDF)
+(module SOIC-28_7.5x17.9mm_Pitch1.27mm (layer F.Cu) (tedit 5ED39CBE)
   (descr "28-Lead Plastic Small Outline (SO) - Wide, 7.50 mm Body [SOIC] (see Microchip Packaging Specification 00000049BS.pdf)")
   (tags "SOIC 1.27")
   (attr smd)
@@ -44,7 +44,7 @@
   (pad 26 smd roundrect (at 4.8 -5.715) (size 1.8 0.6) (layers F.Cu F.Paste F.Mask) (roundrect_rratio 0.25))
   (pad 27 smd roundrect (at 4.8 -6.985) (size 1.8 0.6) (layers F.Cu F.Paste F.Mask) (roundrect_rratio 0.25))
   (pad 28 smd roundrect (at 4.8 -8.255) (size 1.8 0.6) (layers F.Cu F.Paste F.Mask) (roundrect_rratio 0.25))
-  (model Housings_SOIC.3dshapes/SOIC-28_7.5x17.9mm_Pitch1.27mm.wrl
+  (model ${KIPRJMOD}/myAmp.pretty/models/SOIC-28W_7.5x17.9mm_P1.27mm.step
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))

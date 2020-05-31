@@ -1,4 +1,4 @@
-(module DIP-8 (layer F.Cu) (tedit 5EC53FD1)
+(module DIP-8 (layer F.Cu) (tedit 5ED39A43)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 0.75 0.75) (thickness 0.15)))
   )
@@ -13,8 +13,8 @@
   (fp_line (start -3.2 3.2) (end -3.2 1.9) (layer F.SilkS) (width 0.15))
   (fp_line (start 3.2 0.6) (end 3.2 -0.6) (layer F.SilkS) (width 0.15))
   (fp_line (start 3.2 3.1) (end 3.2 1.9) (layer F.SilkS) (width 0.15))
-  (fp_arc (start 0 -4.4) (end -1 -4.4) (angle -180) (layer F.SilkS) (width 0.15))
   (fp_line (start 3.2 -4.4) (end 1 -4.4) (layer F.SilkS) (width 0.15))
+  (fp_arc (start 0 -4.4) (end -1 -4.4) (angle -180) (layer F.SilkS) (width 0.15))
   (pad 1 thru_hole roundrect (at -3.81 -3.81) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask) (roundrect_rratio 0.25))
   (pad 2 thru_hole circle (at -3.81 -1.27) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask))
   (pad 3 thru_hole circle (at -3.81 1.27) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask))
@@ -23,7 +23,7 @@
   (pad 6 thru_hole circle (at 3.81 1.27) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask))
   (pad 7 thru_hole circle (at 3.81 -1.27) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask))
   (pad 8 thru_hole circle (at 3.81 -3.81) (size 1.524 1.524) (drill 0.8) (layers *.Cu *.Mask))
-  (model ${KISYS3DMOD}/Housings_DIP.3dshapes/DIP-8_W7.62mm.wrl
+  (model ${KIPRJMOD}/myAmp.pretty/models/DIP-8_W7.62mm.step
     (offset (xyz -3.81 3.81 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
