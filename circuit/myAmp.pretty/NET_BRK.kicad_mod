@@ -1,4 +1,4 @@
-(module NET_BRK (layer F.Cu) (tedit 5ED165F5)
+(module NET_BRK (layer F.Cu) (tedit 5ED40118)
   (fp_text reference REF** (at 0 0.5) (layer F.SilkS) hide
     (effects (font (size 0.1 0.1) (thickness 0.025)))
   )
