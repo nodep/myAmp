@@ -988,11 +988,11 @@ Wire Wire Line
 	10850 7950 10900 7950
 Wire Wire Line
 	10900 8050 10850 8050
-Text Label 10900 7850 0    50   ~ 0
+Text Label 10900 8050 0    50   ~ 0
 S0
 Text Label 10900 7950 0    50   ~ 0
 S1
-Text Label 10900 8050 0    50   ~ 0
+Text Label 10900 7850 0    50   ~ 0
 S2
 Text Label 11650 3550 0    50   ~ 0
 T0
