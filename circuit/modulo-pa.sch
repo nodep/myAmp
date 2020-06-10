@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 3 3
+Sheet 3 7
 Title ""
 Date ""
 Rev ""
@@ -1217,4 +1217,56 @@ NoConn ~ 1250 5000
 NoConn ~ 1250 5100
 Text Notes 3300 5900 0    150  ~ 0
 jfet measure jig
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F004702
+P 6450 6850
+AR Path="/5F004702" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F004702" Ref="J3"  Part="1" 
+F 0 "J3" H 6527 6891 50  0000 L CNN
+F 1 "HOLE" H 6527 6800 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 6850 50  0001 C CNN
+F 3 "" H 6450 6850 50  0001 C CNN
+	1    6450 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F004708
+P 6450 7050
+AR Path="/5F004708" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F004708" Ref="J5"  Part="1" 
+F 0 "J5" H 6527 7091 50  0000 L CNN
+F 1 "HOLE" H 6527 7000 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7050 50  0001 C CNN
+F 3 "" H 6450 7050 50  0001 C CNN
+	1    6450 7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F00470E
+P 6450 7250
+AR Path="/5F00470E" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F00470E" Ref="J6"  Part="1" 
+F 0 "J6" H 6527 7291 50  0000 L CNN
+F 1 "HOLE" H 6527 7200 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7250 50  0001 C CNN
+F 3 "" H 6450 7250 50  0001 C CNN
+	1    6450 7250
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F004714
+P 6450 7450
+AR Path="/5F004714" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F004714" Ref="J7"  Part="1" 
+F 0 "J7" H 6527 7491 50  0000 L CNN
+F 1 "HOLE" H 6527 7400 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7450 50  0001 C CNN
+F 3 "" H 6450 7450 50  0001 C CNN
+	1    6450 7450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

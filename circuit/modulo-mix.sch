@@ -1,0 +1,518 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 6 7
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L myAmp:R R?
+U 1 1 5F066997
+P 4750 2700
+AR Path="/5F066997" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F066997" Ref="R17"  Part="1" 
+F 0 "R17" V 4750 2700 50  0000 C CNN
+F 1 "10K" V 4850 2700 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 4680 2700 50  0001 C CNN
+F 3 "" H 4750 2700 50  0001 C CNN
+	1    4750 2700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L myAmp:C C?
+U 1 1 5F06699D
+P 4300 2700
+AR Path="/5F06699D" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F06699D" Ref="C18"  Part="1" 
+F 0 "C18" V 4350 2600 50  0000 R CNN
+F 1 "1µF" V 4350 2900 50  0000 R CNN
+F 2 "myAmp:C_1206" H 4338 2550 50  0001 C CNN
+F 3 "" H 4300 2700 50  0001 C CNN
+	1    4300 2700
+	0    -1   -1   0   
+$EndComp
+Text Label 3600 2700 0    50   ~ 0
+FV_LOUT
+Wire Wire Line
+	4400 2700 4600 2700
+$Comp
+L myAmp:R R?
+U 1 1 5F0669A5
+P 5250 2700
+AR Path="/5F0669A5" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F0669A5" Ref="R28"  Part="1" 
+F 0 "R28" V 5250 2700 50  0000 C CNN
+F 1 "10K" V 5350 2700 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 5180 2700 50  0001 C CNN
+F 3 "" H 5250 2700 50  0001 C CNN
+	1    5250 2700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L myAmp:R_POT_DBL RV?
+U 1 1 5F0669AB
+P 5000 2950
+AR Path="/5F0669AB" Ref="RV?"  Part="1" 
+AR Path="/5F048FD6/5F0669AB" Ref="RV7"  Part="1" 
+F 0 "RV7" H 4930 2996 50  0000 R CNN
+F 1 "10K" H 4930 2905 50  0000 R CNN
+F 2 "myAmp:ALPS_RK09L_DBL" H 5000 2950 50  0001 C CNN
+F 3 "" H 5000 2950 50  0001 C CNN
+	1    5000 2950
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2700 5000 2700
+Wire Wire Line
+	5000 2800 5000 2700
+Connection ~ 5000 2700
+Wire Wire Line
+	5000 2700 4900 2700
+Text GLabel 4750 2950 0    50   Input ~ 0
+VGND
+Wire Wire Line
+	4850 2950 4750 2950
+$Comp
+L myAmp:R R?
+U 1 1 5F0669B7
+P 4750 3200
+AR Path="/5F0669B7" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F0669B7" Ref="R18"  Part="1" 
+F 0 "R18" V 4750 3200 50  0000 C CNN
+F 1 "10K" V 4850 3200 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 4680 3200 50  0001 C CNN
+F 3 "" H 4750 3200 50  0001 C CNN
+	1    4750 3200
+	0    -1   1    0   
+$EndComp
+$Comp
+L myAmp:R R?
+U 1 1 5F0669BD
+P 5250 3200
+AR Path="/5F0669BD" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F0669BD" Ref="R29"  Part="1" 
+F 0 "R29" V 5250 3200 50  0000 C CNN
+F 1 "10K" V 5350 3200 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 5180 3200 50  0001 C CNN
+F 3 "" H 5250 3200 50  0001 C CNN
+	1    5250 3200
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	4900 3200 5000 3200
+Wire Wire Line
+	5000 3100 5000 3200
+Connection ~ 5000 3200
+Wire Wire Line
+	5000 3200 5100 3200
+$Comp
+L myAmp:C C?
+U 1 1 5F0669C7
+P 4300 3200
+AR Path="/5F0669C7" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F0669C7" Ref="C19"  Part="1" 
+F 0 "C19" V 4350 3100 50  0000 R CNN
+F 1 "1µF" V 4350 3400 50  0000 R CNN
+F 2 "myAmp:C_1206" H 4338 3050 50  0001 C CNN
+F 3 "" H 4300 3200 50  0001 C CNN
+	1    4300 3200
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4400 3200 4600 3200
+Text Label 3600 3200 0    50   ~ 0
+TONE_OUT
+Wire Wire Line
+	5400 2700 5500 2700
+Wire Wire Line
+	5500 3200 5400 3200
+$Comp
+L myAmp:TL072 U?
+U 1 1 5F0669D1
+P 6350 2850
+AR Path="/5F0669D1" Ref="U?"  Part="1" 
+AR Path="/5F048FD6/5F0669D1" Ref="U4"  Part="1" 
+F 0 "U4" H 6350 3217 50  0000 C CNN
+F 1 "NE5532" H 6350 3126 50  0000 C CNN
+F 2 "myAmp:SOIC-8_3.9x4.9mm_P1.27mm" H 6350 2850 50  0001 C CNN
+F 3 "" H 6350 2850 50  0001 C CNN
+	1    6350 2850
+	1    0    0    -1  
+$EndComp
+Text GLabel 5950 2750 0    50   Input ~ 0
+VGND
+Text GLabel 6850 2850 2    50   Input ~ 0
+LOUT
+$Comp
+L myAmp:NE5532 U?
+U 3 1 5F0669D9
+P 7600 3600
+AR Path="/5F0669D9" Ref="U?"  Part="3" 
+AR Path="/5F048FD6/5F0669D9" Ref="U6"  Part="3" 
+F 0 "U6" H 7558 3646 50  0000 L CNN
+F 1 "NE5532" H 7558 3555 50  0000 L CNN
+F 2 "myAmp:SOIC-8_3.9x4.9mm_P1.27mm" H 7600 3600 50  0001 C CNN
+F 3 "" H 7600 3600 50  0001 C CNN
+	3    7600 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VDD #PWR?
+U 1 1 5F0669DF
+P 7500 3200
+AR Path="/5F0669DF" Ref="#PWR?"  Part="1" 
+AR Path="/5F048FD6/5F0669DF" Ref="#PWR0165"  Part="1" 
+F 0 "#PWR0165" H 7500 3050 50  0001 C CNN
+F 1 "VDD" H 7517 3373 50  0000 C CNN
+F 2 "" H 7500 3200 50  0001 C CNN
+F 3 "" H 7500 3200 50  0001 C CNN
+	1    7500 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 3200 7500 3250
+$Comp
+L power:GND #PWR?
+U 1 1 5F0669E6
+P 7500 4000
+AR Path="/5F0669E6" Ref="#PWR?"  Part="1" 
+AR Path="/5F048FD6/5F0669E6" Ref="#PWR0166"  Part="1" 
+F 0 "#PWR0166" H 7500 3750 50  0001 C CNN
+F 1 "GND" H 7505 3827 50  0000 C CNN
+F 2 "" H 7500 4000 50  0001 C CNN
+F 3 "" H 7500 4000 50  0001 C CNN
+	1    7500 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 4000 7500 3950
+$Comp
+L myAmp:C C?
+U 1 1 5F0669ED
+P 7300 3600
+AR Path="/5F0669ED" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F0669ED" Ref="C24"  Part="1" 
+F 0 "C24" H 7400 3700 50  0000 C CNN
+F 1 "100nF" H 7450 3500 50  0000 C CNN
+F 2 "myAmp:C_5MM_1206" H 7338 3450 50  0001 C CNN
+F 3 "" H 7300 3600 50  0001 C CNN
+	1    7300 3600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7300 3500 7300 3250
+Wire Wire Line
+	7300 3250 7500 3250
+Connection ~ 7500 3250
+Wire Wire Line
+	7500 3250 7500 3300
+Wire Wire Line
+	7300 3700 7300 3950
+Wire Wire Line
+	7300 3950 7500 3950
+Connection ~ 7500 3950
+Wire Wire Line
+	7500 3950 7500 3900
+Text Notes 4250 3700 0    150  ~ 0
+wet/dry mixer
+Wire Wire Line
+	6500 3300 6700 3300
+Wire Wire Line
+	5500 2700 5500 2950
+Wire Wire Line
+	5950 2750 6050 2750
+Connection ~ 5500 2950
+Wire Wire Line
+	5500 2950 5500 3200
+Wire Wire Line
+	6700 2850 6700 3100
+Wire Wire Line
+	6350 3150 6350 3100
+Wire Wire Line
+	6350 3100 6700 3100
+Connection ~ 6700 3100
+Wire Wire Line
+	6700 3100 6700 3300
+Wire Wire Line
+	5500 2950 5700 2950
+Wire Wire Line
+	5700 3300 6200 3300
+Wire Wire Line
+	5700 3300 5700 2950
+Connection ~ 5700 2950
+$Comp
+L myAmp:R R?
+U 1 1 5F066A0A
+P 4750 4050
+AR Path="/5F066A0A" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F066A0A" Ref="R23"  Part="1" 
+F 0 "R23" V 4750 4050 50  0000 C CNN
+F 1 "10K" V 4850 4050 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 4680 4050 50  0001 C CNN
+F 3 "" H 4750 4050 50  0001 C CNN
+	1    4750 4050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L myAmp:C C?
+U 1 1 5F066A10
+P 4300 4050
+AR Path="/5F066A10" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F066A10" Ref="C21"  Part="1" 
+F 0 "C21" V 4350 3950 50  0000 R CNN
+F 1 "1µF" V 4350 4250 50  0000 R CNN
+F 2 "myAmp:C_1206" H 4338 3900 50  0001 C CNN
+F 3 "" H 4300 4050 50  0001 C CNN
+	1    4300 4050
+	0    -1   -1   0   
+$EndComp
+Text Label 3600 4050 0    50   ~ 0
+FV_ROUT
+Wire Wire Line
+	4400 4050 4600 4050
+$Comp
+L myAmp:R R?
+U 1 1 5F066A18
+P 5250 4050
+AR Path="/5F066A18" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F066A18" Ref="R30"  Part="1" 
+F 0 "R30" V 5250 4050 50  0000 C CNN
+F 1 "10K" V 5350 4050 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 5180 4050 50  0001 C CNN
+F 3 "" H 5250 4050 50  0001 C CNN
+	1    5250 4050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L myAmp:R_POT_DBL RV?
+U 2 1 5F066A1E
+P 5000 4300
+AR Path="/5F066A1E" Ref="RV?"  Part="1" 
+AR Path="/5F048FD6/5F066A1E" Ref="RV7"  Part="2" 
+F 0 "RV7" H 4930 4346 50  0000 R CNN
+F 1 "10K" H 4930 4255 50  0000 R CNN
+F 2 "myAmp:ALPS_RK09L_DBL" H 5000 4300 50  0001 C CNN
+F 3 "" H 5000 4300 50  0001 C CNN
+	2    5000 4300
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 4050 5000 4050
+Wire Wire Line
+	5000 4150 5000 4050
+Connection ~ 5000 4050
+Wire Wire Line
+	5000 4050 4900 4050
+Text GLabel 4750 4300 0    50   Input ~ 0
+VGND
+Wire Wire Line
+	4850 4300 4750 4300
+$Comp
+L myAmp:R R?
+U 1 1 5F066A2A
+P 4750 4550
+AR Path="/5F066A2A" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F066A2A" Ref="R24"  Part="1" 
+F 0 "R24" V 4750 4550 50  0000 C CNN
+F 1 "10K" V 4850 4550 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 4680 4550 50  0001 C CNN
+F 3 "" H 4750 4550 50  0001 C CNN
+	1    4750 4550
+	0    -1   1    0   
+$EndComp
+$Comp
+L myAmp:R R?
+U 1 1 5F066A30
+P 5250 4550
+AR Path="/5F066A30" Ref="R?"  Part="1" 
+AR Path="/5F048FD6/5F066A30" Ref="R31"  Part="1" 
+F 0 "R31" V 5250 4550 50  0000 C CNN
+F 1 "10K" V 5350 4550 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 5180 4550 50  0001 C CNN
+F 3 "" H 5250 4550 50  0001 C CNN
+	1    5250 4550
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	4900 4550 5000 4550
+Wire Wire Line
+	5000 4450 5000 4550
+Connection ~ 5000 4550
+Wire Wire Line
+	5000 4550 5100 4550
+$Comp
+L myAmp:C C?
+U 1 1 5F066A3A
+P 4300 4550
+AR Path="/5F066A3A" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F066A3A" Ref="C23"  Part="1" 
+F 0 "C23" V 4350 4450 50  0000 R CNN
+F 1 "1µF" V 4350 4750 50  0000 R CNN
+F 2 "myAmp:C_1206" H 4338 4400 50  0001 C CNN
+F 3 "" H 4300 4550 50  0001 C CNN
+	1    4300 4550
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4400 4550 4600 4550
+Text Label 3600 4550 0    50   ~ 0
+TONE_OUT
+Wire Wire Line
+	5400 4050 5500 4050
+Wire Wire Line
+	5500 4550 5400 4550
+$Comp
+L myAmp:TL072 U?
+U 2 1 5F066A44
+P 6350 4200
+AR Path="/5F066A44" Ref="U?"  Part="2" 
+AR Path="/5F048FD6/5F066A44" Ref="U4"  Part="2" 
+F 0 "U4" H 6350 4567 50  0000 C CNN
+F 1 "NE5532" H 6350 4476 50  0000 C CNN
+F 2 "myAmp:SOIC-8_3.9x4.9mm_P1.27mm" H 6350 4200 50  0001 C CNN
+F 3 "" H 6350 4200 50  0001 C CNN
+	2    6350 4200
+	1    0    0    -1  
+$EndComp
+Text GLabel 5950 4100 0    50   Input ~ 0
+VGND
+Text GLabel 6850 4200 2    50   Input ~ 0
+ROUT
+$Comp
+L myAmp:R_POT_DBL RV?
+U 2 1 5F066A4C
+P 6350 4650
+AR Path="/5F066A4C" Ref="RV?"  Part="2" 
+AR Path="/5F048FD6/5F066A4C" Ref="RV8"  Part="2" 
+F 0 "RV8" V 6350 4750 50  0000 R CNN
+F 1 "10K" V 6250 4650 50  0000 C CNN
+F 2 "myAmp:ALPS_RK09L_DBL" H 6350 4650 50  0001 C CNN
+F 3 "" H 6350 4650 50  0001 C CNN
+	2    6350 4650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6500 4650 6700 4650
+Wire Wire Line
+	5500 4050 5500 4300
+Wire Wire Line
+	5950 4100 6050 4100
+Connection ~ 5500 4300
+Wire Wire Line
+	5500 4300 5500 4550
+Wire Wire Line
+	6700 4200 6700 4450
+Wire Wire Line
+	6350 4500 6350 4450
+Wire Wire Line
+	6350 4450 6700 4450
+Connection ~ 6700 4450
+Wire Wire Line
+	6700 4450 6700 4650
+Wire Wire Line
+	5500 4300 5700 4300
+Wire Wire Line
+	5700 4650 6200 4650
+Wire Wire Line
+	5700 4650 5700 4300
+Connection ~ 5700 4300
+$Comp
+L myAmp:R_POT_DBL RV?
+U 1 1 5F066A60
+P 6350 3300
+AR Path="/5F066A60" Ref="RV?"  Part="2" 
+AR Path="/5F048FD6/5F066A60" Ref="RV8"  Part="1" 
+F 0 "RV8" V 6350 3400 50  0000 R CNN
+F 1 "10K" V 6250 3300 50  0000 C CNN
+F 2 "myAmp:ALPS_RK09L_DBL" H 6350 3300 50  0001 C CNN
+F 3 "" H 6350 3300 50  0001 C CNN
+	1    6350 3300
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6650 2850 6700 2850
+Connection ~ 6700 2850
+Wire Wire Line
+	6650 4200 6700 4200
+Connection ~ 6700 4200
+Wire Wire Line
+	5700 4300 6050 4300
+Wire Wire Line
+	6700 4200 6850 4200
+Wire Wire Line
+	6700 2850 6850 2850
+Wire Wire Line
+	5700 2950 6050 2950
+Wire Wire Line
+	3600 2700 4200 2700
+Wire Wire Line
+	3600 3200 4200 3200
+Wire Wire Line
+	3600 4050 4200 4050
+Wire Wire Line
+	3600 4550 4200 4550
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F09C364
+P 6550 6950
+AR Path="/5F09C364" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F09C364" Ref="J?"  Part="1" 
+AR Path="/5F048FD6/5F09C364" Ref="J24"  Part="1" 
+F 0 "J24" H 6627 6991 50  0000 L CNN
+F 1 "HOLE" H 6627 6900 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6550 6950 50  0001 C CNN
+F 3 "" H 6550 6950 50  0001 C CNN
+	1    6550 6950
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F09C36A
+P 6550 7150
+AR Path="/5F09C36A" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F09C36A" Ref="J?"  Part="1" 
+AR Path="/5F048FD6/5F09C36A" Ref="J25"  Part="1" 
+F 0 "J25" H 6627 7191 50  0000 L CNN
+F 1 "HOLE" H 6627 7100 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6550 7150 50  0001 C CNN
+F 3 "" H 6550 7150 50  0001 C CNN
+	1    6550 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F09C370
+P 6550 7350
+AR Path="/5F09C370" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F09C370" Ref="J?"  Part="1" 
+AR Path="/5F048FD6/5F09C370" Ref="J26"  Part="1" 
+F 0 "J26" H 6627 7391 50  0000 L CNN
+F 1 "HOLE" H 6627 7300 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6550 7350 50  0001 C CNN
+F 3 "" H 6550 7350 50  0001 C CNN
+	1    6550 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F09C376
+P 6550 7550
+AR Path="/5F09C376" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F09C376" Ref="J?"  Part="1" 
+AR Path="/5F048FD6/5F09C376" Ref="J27"  Part="1" 
+F 0 "J27" H 6627 7591 50  0000 L CNN
+F 1 "HOLE" H 6627 7500 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6550 7550 50  0001 C CNN
+F 3 "" H 6550 7550 50  0001 C CNN
+	1    6550 7550
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 3
+Sheet 2 7
 Title ""
 Date ""
 Rev ""
@@ -243,5 +243,61 @@ F 2 "myAmp:modulo-bus" V 1350 4300 50  0001 C CNN
 F 3 "" H 800 4150 50  0001 C CNN
 	1    1150 3600
 	-1   0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F099381
+P 6450 6900
+AR Path="/5F099381" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F099381" Ref="J?"  Part="1" 
+AR Path="/60E5426B/5F099381" Ref="J20"  Part="1" 
+F 0 "J20" H 6527 6941 50  0000 L CNN
+F 1 "HOLE" H 6527 6850 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 6900 50  0001 C CNN
+F 3 "" H 6450 6900 50  0001 C CNN
+	1    6450 6900
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F099387
+P 6450 7100
+AR Path="/5F099387" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F099387" Ref="J?"  Part="1" 
+AR Path="/60E5426B/5F099387" Ref="J21"  Part="1" 
+F 0 "J21" H 6527 7141 50  0000 L CNN
+F 1 "HOLE" H 6527 7050 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7100 50  0001 C CNN
+F 3 "" H 6450 7100 50  0001 C CNN
+	1    6450 7100
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F09938D
+P 6450 7300
+AR Path="/5F09938D" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F09938D" Ref="J?"  Part="1" 
+AR Path="/60E5426B/5F09938D" Ref="J22"  Part="1" 
+F 0 "J22" H 6527 7341 50  0000 L CNN
+F 1 "HOLE" H 6527 7250 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7300 50  0001 C CNN
+F 3 "" H 6450 7300 50  0001 C CNN
+	1    6450 7300
+	1    0    0    -1  
+$EndComp
+$Comp
+L myAmp:HOLE J?
+U 1 1 5F099393
+P 6450 7500
+AR Path="/5F099393" Ref="J?"  Part="1" 
+AR Path="/60D4580B/5F099393" Ref="J?"  Part="1" 
+AR Path="/60E5426B/5F099393" Ref="J23"  Part="1" 
+F 0 "J23" H 6527 7541 50  0000 L CNN
+F 1 "HOLE" H 6527 7450 50  0000 L CNN
+F 2 "myAmp:MountingHole" H 6450 7500 50  0001 C CNN
+F 3 "" H 6450 7500 50  0001 C CNN
+	1    6450 7500
+	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
