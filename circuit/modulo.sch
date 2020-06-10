@@ -14,39 +14,39 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 6500 3600 1450 1150
+S 3150 7200 1450 1150
 U 60E5426B
-F0 "power 12V" 50
-F1 "modulo-pow.sch" 50
+F0 "power 12V" 200
+F1 "modulo-pow.sch" 200
 $EndSheet
 $Sheet
-S 6500 1200 1450 1500
+S 9250 1300 1450 1500
 U 60D4580B
-F0 "pre amp" 50
-F1 "modulo-pa.sch" 50
+F0 "pre amp" 200
+F1 "modulo-pa.sch" 200
 $EndSheet
 $Sheet
-S 4350 1050 1350 1350
+S 3150 1350 1350 1350
 U 5EE9AF5B
-F0 "FV-1" 50
-F1 "modulo-fv.sch" 50
+F0 "FV-1" 200
+F1 "modulo-fv.sch" 200
 $EndSheet
 $Sheet
-S 9300 1500 1550 1600
+S 9450 6950 1550 1600
 U 5EF28843
-F0 "Class D audio power amp" 50
-F1 "modulo-powamp.sch" 50
+F0 "Class D audio power amp" 200
+F1 "modulo-powamp.sch" 200
 $EndSheet
 $Sheet
-S 9800 4100 1450 1100
+S 9350 4700 1450 1100
 U 5F048FD6
-F0 "mixer" 50
-F1 "modulo-mix.sch" 50
+F0 "mixer" 200
+F1 "modulo-mix.sch" 200
 $EndSheet
 $Sheet
-S 3200 3650 1350 1350
+S 3150 4750 1350 1350
 U 5F06BD21
-F0 "mcu" 50
-F1 "modulo-mcu.sch" 50
+F0 "mcu" 200
+F1 "modulo-mcu.sch" 200
 $EndSheet
 $EndSCHEMATC

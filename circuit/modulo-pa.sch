@@ -738,7 +738,6 @@ Wire Wire Line
 Connection ~ 7550 2300
 Wire Wire Line
 	7550 2300 7550 2550
-Connection ~ 7550 1950
 $Comp
 L myAmp:C C?
 U 1 1 61526944
@@ -912,8 +911,8 @@ Wire Wire Line
 	6800 3150 6300 3150
 Wire Wire Line
 	6800 3000 6800 3150
-Text Label 7650 1950 0    50   ~ 0
-PREAMP_OUT
+Text Label 7550 1950 0    50   ~ 0
+PA_OUT
 Wire Wire Line
 	6100 2650 6300 2650
 Wire Wire Line
@@ -1009,8 +1008,6 @@ Wire Wire Line
 	1850 1800 2450 1800
 Wire Wire Line
 	3200 1500 3850 1500
-Wire Wire Line
-	7550 1950 7650 1950
 Wire Wire Line
 	6450 1850 6850 1850
 Wire Wire Line
@@ -1199,7 +1196,7 @@ Wire Wire Line
 	1350 3600 1450 3600
 Connection ~ 1350 3600
 Text Label 1450 3600 0    50   ~ 0
-PREAMP_OUT
+PA_OUT
 NoConn ~ 1250 3100
 NoConn ~ 1250 3300
 NoConn ~ 1250 3400
