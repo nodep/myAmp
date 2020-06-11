@@ -91,10 +91,6 @@ F 3 "" H 5950 5100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5150 5200 5050 5200
-Wire Wire Line
-	5050 5200 5050 5300
-Wire Wire Line
 	5150 5500 5050 5500
 Connection ~ 5050 5500
 Wire Wire Line
@@ -106,7 +102,6 @@ Wire Wire Line
 	5050 5400 5050 5500
 Wire Wire Line
 	5150 5300 5050 5300
-Connection ~ 5050 5300
 Wire Wire Line
 	5050 5300 5050 5400
 $Comp
@@ -972,25 +967,10 @@ F 3 "" H 6500 7450 50  0001 C CNN
 	1    6500 7450
 	1    0    0    -1  
 $EndComp
-$Comp
-L myAmp:modulo-bus U15
-U 1 1 5F0ADE54
-P 1200 2650
-F 0 "U15" H 1142 3965 50  0000 C CNN
-F 1 "modulo-bus" H 1142 3874 50  0000 C CNN
-F 2 "myAmp:modulo-bus" V 1400 3350 50  0001 C CNN
-F 3 "" H 850 3200 50  0001 C CNN
-	1    1200 2650
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
-	1900 2100 1900 2200
+	2150 2100 2150 2200
 Wire Wire Line
-	1900 2200 1550 2200
-Wire Wire Line
-	1900 2100 3900 2100
-Wire Wire Line
-	1550 2300 2800 2300
+	2150 2100 3900 2100
 Wire Wire Line
 	2800 2300 2800 2400
 Wire Wire Line
@@ -998,67 +978,63 @@ Wire Wire Line
 $Comp
 L power:+3.3V #PWR018
 U 1 1 5F0BAD59
-P 1650 2000
-F 0 "#PWR018" H 1650 1850 50  0001 C CNN
-F 1 "+3.3V" H 1665 2173 50  0000 C CNN
-F 2 "" H 1650 2000 50  0001 C CNN
-F 3 "" H 1650 2000 50  0001 C CNN
-	1    1650 2000
+P 1800 2000
+F 0 "#PWR018" H 1800 1850 50  0001 C CNN
+F 1 "+3.3V" H 1815 2173 50  0000 C CNN
+F 2 "" H 1800 2000 50  0001 C CNN
+F 3 "" H 1800 2000 50  0001 C CNN
+	1    1800 2000
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	1650 2000 1550 2000
+	1800 2000 1700 2000
 $Comp
 L power:GND #PWR019
 U 1 1 5F0C0CE7
-P 1700 1600
-F 0 "#PWR019" H 1700 1350 50  0001 C CNN
-F 1 "GND" H 1700 1450 50  0000 C CNN
-F 2 "" H 1700 1600 50  0001 C CNN
-F 3 "" H 1700 1600 50  0001 C CNN
-	1    1700 1600
+P 1850 1600
+F 0 "#PWR019" H 1850 1350 50  0001 C CNN
+F 1 "GND" H 1850 1450 50  0000 C CNN
+F 2 "" H 1850 1600 50  0001 C CNN
+F 3 "" H 1850 1600 50  0001 C CNN
+	1    1850 1600
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	1700 1600 1550 1600
-NoConn ~ 1550 1700
-NoConn ~ 1550 1800
-NoConn ~ 1550 1900
-NoConn ~ 1550 3400
-NoConn ~ 1550 3500
-NoConn ~ 1550 3600
-NoConn ~ 1550 3700
-Text Label 2050 2500 0    50   ~ 0
+	1850 1600 1700 1600
+NoConn ~ 1700 1700
+NoConn ~ 1700 1800
+NoConn ~ 1700 1900
+Text Label 1850 2500 0    50   ~ 0
 FV_LOUT
-Text Label 2050 2600 0    50   ~ 0
+Text Label 1850 2600 0    50   ~ 0
 FV_ROUT
 Wire Wire Line
-	2050 2500 1550 2500
+	1850 2500 1700 2500
 Wire Wire Line
-	2050 2600 1550 2600
+	1850 2600 1700 2600
 Wire Wire Line
-	1550 2700 1700 2700
+	1700 2900 1850 2900
 Wire Wire Line
-	1550 2800 1700 2800
+	1700 3000 1850 3000
 Wire Wire Line
-	1550 2900 1700 2900
+	1700 3100 1850 3100
 Wire Wire Line
-	1550 3000 1700 3000
+	1700 3200 1850 3200
 Wire Wire Line
-	1550 3100 1700 3100
+	1700 3300 1850 3300
 Wire Wire Line
-	1550 3200 1700 3200
-Text Label 1700 2800 0    50   ~ 0
+	1700 3400 1850 3400
+Text Label 1850 3000 0    50   ~ 0
 SDA
-Text Label 1700 2700 0    50   ~ 0
+Text Label 1850 2900 0    50   ~ 0
 SCL
-Text Label 1700 2900 0    50   ~ 0
+Text Label 1850 3100 0    50   ~ 0
 S0
-Text Label 1700 3000 0    50   ~ 0
+Text Label 1850 3200 0    50   ~ 0
 S1
-Text Label 1700 3100 0    50   ~ 0
+Text Label 1850 3300 0    50   ~ 0
 S2
-Text Label 1700 3200 0    50   ~ 0
+Text Label 1850 3400 0    50   ~ 0
 T0
 $Comp
 L myAmp:CPOL C51
@@ -1099,4 +1075,48 @@ Wire Wire Line
 	2550 3700 2550 3750
 Text Label 6250 2850 0    50   ~ 0
 REFP
+Text Label 5050 5200 0    50   ~ 0
+A0
+$Comp
+L myAmp:R R47
+U 1 1 5EE42B7D
+P 4800 5200
+F 0 "R47" V 4800 5200 50  0000 C CNN
+F 1 "10K" V 4700 5200 50  0000 C CNN
+F 2 "myAmp:R_10MM" V 4730 5200 50  0001 C CNN
+F 3 "" H 4800 5200 50  0001 C CNN
+	1    4800 5200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4950 5200 5150 5200
+Wire Wire Line
+	4650 5200 4600 5200
+Wire Wire Line
+	4600 5200 4600 5500
+Wire Wire Line
+	4600 5500 5050 5500
+Wire Wire Line
+	1700 2800 1850 2800
+Text Label 1850 2800 0    50   ~ 0
+A0
+Wire Wire Line
+	1700 2200 2150 2200
+Wire Wire Line
+	1700 2300 2800 2300
+$Comp
+L myAmp:modulo-bus U15
+U 1 1 5F0ADE54
+P 1350 2650
+F 0 "U15" H 1292 3965 50  0000 C CNN
+F 1 "modulo-bus" H 1292 3874 50  0000 C CNN
+F 2 "myAmp:modulo-bus" V 1550 3350 50  0001 C CNN
+F 3 "" H 1000 3200 50  0001 C CNN
+	1    1350 2650
+	-1   0    0    -1  
+$EndComp
+NoConn ~ 1700 3600
+NoConn ~ 1700 3700
+NoConn ~ 1700 3800
+NoConn ~ 1700 3900
 $EndSCHEMATC

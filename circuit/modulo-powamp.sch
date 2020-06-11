@@ -932,22 +932,6 @@ NoConn ~ 2250 3100
 NoConn ~ 2250 3000
 NoConn ~ 2250 2700
 NoConn ~ 2250 2800
-Wire Wire Line
-	2250 3900 4300 3900
-Wire Wire Line
-	2250 4000 3850 4000
-Wire Wire Line
-	3250 4150 3250 4100
-Wire Wire Line
-	3250 4100 2250 4100
-Wire Wire Line
-	3250 4150 4300 4150
-Wire Wire Line
-	2250 4200 3150 4200
-Wire Wire Line
-	3150 4200 3150 4250
-Wire Wire Line
-	3150 4250 3850 4250
 $Comp
 L power:+12V #PWR0165
 U 1 1 5F1A0505
@@ -1003,4 +987,28 @@ F 3 "" H 3950 3050 50  0001 C CNN
 	1    3950 3050
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	4300 3900 2750 3900
+Wire Wire Line
+	2750 3900 2750 4100
+Wire Wire Line
+	2750 4100 2250 4100
+Wire Wire Line
+	2800 4200 2250 4200
+Wire Wire Line
+	2850 4300 2250 4300
+Wire Wire Line
+	3850 4000 2800 4000
+Wire Wire Line
+	2800 4000 2800 4200
+Wire Wire Line
+	4300 4150 2850 4150
+Wire Wire Line
+	2850 4150 2850 4300
+Wire Wire Line
+	3850 4250 2900 4250
+Wire Wire Line
+	2900 4250 2900 4400
+Wire Wire Line
+	2900 4400 2250 4400
 $EndSCHEMATC

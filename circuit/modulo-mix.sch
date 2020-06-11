@@ -76,10 +76,8 @@ Wire Wire Line
 Connection ~ 4700 2300
 Wire Wire Line
 	4700 2300 4600 2300
-Text GLabel 4450 2550 0    50   Input ~ 0
-VGND
 Wire Wire Line
-	4550 2550 4450 2550
+	4550 2550 4200 2550
 $Comp
 L myAmp:R R?
 U 1 1 5F0669B7
@@ -292,10 +290,6 @@ Wire Wire Line
 Connection ~ 4700 3650
 Wire Wire Line
 	4700 3650 4600 3650
-Text GLabel 4450 3900 0    50   Input ~ 0
-VGND
-Wire Wire Line
-	4550 3900 4450 3900
 $Comp
 L myAmp:R R?
 U 1 1 5F066A2A
@@ -833,12 +827,12 @@ vgnd_disc
 NoConn ~ 2150 1950
 NoConn ~ 2150 2150
 NoConn ~ 2150 2250
-NoConn ~ 2150 2950
-NoConn ~ 2150 3050
 NoConn ~ 2150 3150
 NoConn ~ 2150 3250
 NoConn ~ 2150 3350
 NoConn ~ 2150 3450
+NoConn ~ 2150 3550
+NoConn ~ 2150 3650
 $Comp
 L power:+12V #PWR?
 U 1 1 5F1DA304
@@ -968,4 +962,55 @@ Wire Wire Line
 Connection ~ 5400 2800
 Wire Wire Line
 	5400 2800 5400 2550
+NoConn ~ 2150 3050
+Wire Wire Line
+	2150 3850 2250 3850
+Wire Wire Line
+	2150 4050 2250 4050
+Wire Wire Line
+	2150 4150 2500 4150
+Text Label 2250 3850 0    50   ~ 0
+MIXL
+Text Label 2250 4050 0    50   ~ 0
+MIXR
+Text Label 4200 2550 0    50   ~ 0
+MIX_VGND
+Text Label 4200 3900 0    50   ~ 0
+MIX_VGND
+Wire Wire Line
+	4200 3900 4550 3900
+$Comp
+L power:GND #PWR?
+U 1 1 5EEFD6B6
+P 2500 3950
+AR Path="/5EEFD6B6" Ref="#PWR?"  Part="1" 
+AR Path="/60D4580B/5EEFD6B6" Ref="#PWR?"  Part="1" 
+AR Path="/5F048FD6/5EEFD6B6" Ref="#PWR0178"  Part="1" 
+F 0 "#PWR0178" H 2500 3700 50  0001 C CNN
+F 1 "GND" H 2505 3777 50  0000 C CNN
+F 2 "" H 2500 3950 50  0001 C CNN
+F 3 "" H 2500 3950 50  0001 C CNN
+	1    2500 3950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2150 3950 2500 3950
+$Comp
+L power:GND #PWR?
+U 1 1 5EF027A4
+P 2500 4150
+AR Path="/5EF027A4" Ref="#PWR?"  Part="1" 
+AR Path="/60D4580B/5EF027A4" Ref="#PWR?"  Part="1" 
+AR Path="/5F048FD6/5EF027A4" Ref="#PWR0179"  Part="1" 
+F 0 "#PWR0179" H 2500 3900 50  0001 C CNN
+F 1 "GND" H 2505 3977 50  0000 C CNN
+F 2 "" H 2500 4150 50  0001 C CNN
+F 3 "" H 2500 4150 50  0001 C CNN
+	1    2500 4150
+	0    -1   -1   0   
+$EndComp
+Text Label 6550 2450 0    50   ~ 0
+MIXL
+Text Label 6600 3800 0    50   ~ 0
+MIXR
 $EndSCHEMATC

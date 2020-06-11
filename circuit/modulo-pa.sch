@@ -1200,18 +1200,18 @@ PA_OUT
 NoConn ~ 1250 3100
 NoConn ~ 1250 3300
 NoConn ~ 1250 3400
-NoConn ~ 1250 3900
 NoConn ~ 1250 4000
-NoConn ~ 1250 4100
 NoConn ~ 1250 4200
 NoConn ~ 1250 4300
 NoConn ~ 1250 4400
 NoConn ~ 1250 4500
 NoConn ~ 1250 4600
+NoConn ~ 1250 4700
 NoConn ~ 1250 4800
-NoConn ~ 1250 4900
 NoConn ~ 1250 5000
 NoConn ~ 1250 5100
+NoConn ~ 1250 5200
+NoConn ~ 1250 5300
 Text Notes 3300 5900 0    150  ~ 0
 jfet measure jig
 $Comp
@@ -1266,4 +1266,5 @@ F 3 "" H 6450 7450 50  0001 C CNN
 	1    6450 7450
 	1    0    0    -1  
 $EndComp
+NoConn ~ 1250 3900
 $EndSCHEMATC
