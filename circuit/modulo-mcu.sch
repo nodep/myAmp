@@ -35,8 +35,6 @@ F 3 "" H 1650 1550 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	1550 1150 1650 1150
-Wire Wire Line
-	1650 1150 1650 1200
 $Comp
 L power:GND #PWR?
 U 1 1 5EE73AD5
@@ -967,8 +965,6 @@ Wire Wire Line
 	6100 5950 6550 5950
 Wire Wire Line
 	5650 5750 6100 5750
-Wire Wire Line
-	1650 1400 1650 1450
 $Comp
 L myAmp:HOLE J?
 U 1 1 5EE83F3C
@@ -1331,4 +1327,6 @@ F 3 "" H 6500 5150 50  0001 C CNN
 	1    6700 5200
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	1650 1150 1650 1450
 $EndSCHEMATC
