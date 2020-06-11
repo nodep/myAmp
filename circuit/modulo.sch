@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
-Sheet 1 7
+Sheet 1 6
 Title "Modulo"
 Date ""
 Rev ""
@@ -13,12 +13,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Sheet
-S 3150 7200 1450 1150
-U 60E5426B
-F0 "power 12V" 200
-F1 "modulo-pow.sch" 200
-$EndSheet
 $Sheet
 S 9250 1300 1450 1500
 U 60D4580B
@@ -46,7 +40,7 @@ $EndSheet
 $Sheet
 S 3150 4750 1350 1350
 U 5F06BD21
-F0 "mcu" 200
+F0 "power and MCU" 200
 F1 "modulo-mcu.sch" 200
 $EndSheet
 $EndSCHEMATC
