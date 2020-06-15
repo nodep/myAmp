@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 6
+Sheet 3 6
 Title ""
 Date ""
 Rev ""
@@ -1013,6 +1013,8 @@ Wire Wire Line
 Wire Wire Line
 	1850 2600 1700 2600
 Wire Wire Line
+	1700 2800 1850 2800
+Wire Wire Line
 	1700 2900 1850 2900
 Wire Wire Line
 	1700 3000 1850 3000
@@ -1022,19 +1024,17 @@ Wire Wire Line
 	1700 3200 1850 3200
 Wire Wire Line
 	1700 3300 1850 3300
-Wire Wire Line
-	1700 3400 1850 3400
-Text Label 1850 3000 0    50   ~ 0
-SDA
 Text Label 1850 2900 0    50   ~ 0
+SDA
+Text Label 1850 2800 0    50   ~ 0
 SCL
-Text Label 1850 3100 0    50   ~ 0
+Text Label 1850 3000 0    50   ~ 0
 S0
-Text Label 1850 3200 0    50   ~ 0
+Text Label 1850 3100 0    50   ~ 0
 S1
-Text Label 1850 3300 0    50   ~ 0
+Text Label 1850 3200 0    50   ~ 0
 S2
-Text Label 1850 3400 0    50   ~ 0
+Text Label 1850 3300 0    50   ~ 0
 T0
 $Comp
 L myAmp:CPOL C51
@@ -1097,8 +1097,8 @@ Wire Wire Line
 Wire Wire Line
 	4600 5500 5050 5500
 Wire Wire Line
-	1700 2800 1850 2800
-Text Label 1850 2800 0    50   ~ 0
+	1700 3400 1850 3400
+Text Label 1850 3400 0    50   ~ 0
 A0
 Wire Wire Line
 	1700 2200 2150 2200
@@ -1115,8 +1115,12 @@ F 3 "" H 1000 3200 50  0001 C CNN
 	1    1350 2650
 	-1   0    0    -1  
 $EndComp
-NoConn ~ 1700 3600
+NoConn ~ 1700 4000
 NoConn ~ 1700 3700
 NoConn ~ 1700 3800
 NoConn ~ 1700 3900
+Wire Wire Line
+	1700 3500 1850 3500
+Text Label 1850 3500 0    50   ~ 0
+WP
 $EndSCHEMATC

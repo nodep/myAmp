@@ -560,8 +560,6 @@ Wire Wire Line
 	5650 4850 5700 4850
 Wire Wire Line
 	5650 4750 5700 4750
-Wire Wire Line
-	5700 5250 5650 5250
 $Comp
 L myAmp:R R?
 U 1 1 5EE73BD1
@@ -661,7 +659,7 @@ F 3 "" H 7250 6050 50  0001 C CNN
 	1    7250 6050
 	1    0    0    -1  
 $EndComp
-Text Label 5700 5250 0    50   ~ 0
+Text Label 5700 5050 0    50   ~ 0
 WP
 Wire Wire Line
 	8250 3400 8750 3400
@@ -1597,4 +1595,47 @@ Wire Wire Line
 Connection ~ 8300 1150
 Wire Wire Line
 	8300 1150 8450 1150
+Wire Wire Line
+	1550 3850 1650 3850
+Wire Wire Line
+	1550 3950 1650 3950
+Wire Wire Line
+	1550 4050 1650 4050
+Wire Wire Line
+	1550 4150 1650 4150
+Wire Wire Line
+	1550 4250 1650 4250
+Wire Wire Line
+	1550 4350 1650 4350
+Text Label 1650 4250 0    50   ~ 0
+S2
+Text Label 1650 4150 0    50   ~ 0
+S1
+Text Label 1650 4050 0    50   ~ 0
+S0
+Text Label 1650 4350 0    50   ~ 0
+T0
+Text Label 1650 3950 0    50   ~ 0
+SDA
+Text Label 1650 3850 0    50   ~ 0
+SCL
+Wire Wire Line
+	5650 4950 5700 4950
+Text Label 5700 4950 0    50   ~ 0
+A0
+Wire Wire Line
+	1550 4450 1650 4450
+Text Label 1650 4450 0    50   ~ 0
+A0
+NoConn ~ 1550 5100
+NoConn ~ 1550 4750
+NoConn ~ 1550 4850
+NoConn ~ 1550 4950
+Wire Wire Line
+	5700 5050 5650 5050
+NoConn ~ 5650 5250
+Wire Wire Line
+	1550 4550 1650 4550
+Text Label 1650 4550 0    50   ~ 0
+WP
 $EndSCHEMATC

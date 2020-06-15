@@ -1208,7 +1208,7 @@ NoConn ~ 1250 4500
 NoConn ~ 1250 4600
 NoConn ~ 1250 4700
 NoConn ~ 1250 4800
-NoConn ~ 1250 5000
+NoConn ~ 1250 4900
 NoConn ~ 1250 5100
 NoConn ~ 1250 5200
 NoConn ~ 1250 5300
@@ -1267,4 +1267,5 @@ F 3 "" H 6450 7450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 1250 3900
+NoConn ~ 1250 5400
 $EndSCHEMATC
