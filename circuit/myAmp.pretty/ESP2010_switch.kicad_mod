@@ -1,4 +1,4 @@
-(module ESP2010_switch (layer F.Cu) (tedit 5ED4D898)
+(module ESP2010_switch (layer F.Cu) (tedit 5EE8C525)
   (descr "1 pin")
   (tags "CONN DEV")
   (fp_text reference SW1 (at 0 2 180) (layer F.SilkS)
@@ -27,9 +27,9 @@
   (pad 1 thru_hole rect (at -2.54 0) (size 1.7272 2.032) (drill 0.8) (layers *.Cu *.Mask))
   (pad 2 thru_hole oval (at 0 0) (size 1.7272 2.032) (drill 0.8) (layers *.Cu *.Mask))
   (pad 3 thru_hole oval (at 2.54 0) (size 1.7272 2.032) (drill 0.8) (layers *.Cu *.Mask))
-  (model Pin_Headers/Pin_Header_Angled_1x03.wrl
-    (at (xyz 0 0 0))
+  (model ${KIPRJMOD}/myAmp.pretty/models/PinHeader_1x03_P2.54mm_Horizontal.wrl
+    (offset (xyz -2.54 0 0))
     (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
+    (rotate (xyz 0 0 -90))
   )
 )
