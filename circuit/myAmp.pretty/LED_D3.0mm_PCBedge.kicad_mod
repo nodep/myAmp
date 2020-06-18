@@ -1,4 +1,4 @@
-(module LED_D3.0mm_PCBedge (layer F.Cu) (tedit 5EE0B061)
+(module LED_D3.0mm_PCBedge (layer F.Cu) (tedit 5EEB3322)
   (descr "LED 3mm - Lead pitch 100mil (2,54mm)")
   (tags "LED led 3mm 3MM 100mil 2,54mm")
   (fp_text reference Ref* (at 0.5 -0.5 90) (layer Dwgs.User) hide
@@ -14,11 +14,11 @@
   (fp_text user A (at -1.905 -3.175) (layer F.SilkS)
     (effects (font (size 0.75 0.75) (thickness 0.15)))
   )
-  (pad 2 thru_hole circle (at -0.5 -3) (size 1.2 1.2) (drill 0.8) (layers *.Cu *.Mask))
-  (pad 1 thru_hole roundrect (at 0.5 -1) (size 1.2 1.2) (drill 0.8) (layers *.Cu *.Mask) (roundrect_rratio 0.25))
+  (pad 2 thru_hole circle (at -0.7 -3) (size 1.2 1.2) (drill 0.8) (layers *.Cu *.Mask))
+  (pad 1 thru_hole roundrect (at 0.7 -1) (size 1.2 1.2) (drill 0.8) (layers *.Cu *.Mask) (roundrect_rratio 0.25))
   (model ${KIPRJMOD}/myAmp.pretty/models/LED_D3.0mm_Clear.wrl
-    (offset (xyz 0.45 0.5 -2))
+    (offset (xyz 0.63 0.5 -1.97))
     (scale (xyz 1 1 1))
-    (rotate (xyz 90 70 180))
+    (rotate (xyz 90 60 180))
   )
 )

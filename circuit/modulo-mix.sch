@@ -503,20 +503,6 @@ Wire Wire Line
 Text Notes 8750 2300 0    150  ~ 0
 virtual ground
 $Comp
-L myAmp:C C?
-U 1 1 5F1BF598
-P 10300 1400
-AR Path="/5F1BF598" Ref="C?"  Part="1" 
-AR Path="/60D4580B/5F1BF598" Ref="C?"  Part="1" 
-AR Path="/5F048FD6/5F1BF598" Ref="C54"  Part="1" 
-F 0 "C54" H 10250 1300 50  0000 R CNN
-F 1 "100nF" H 10150 1500 50  0000 C CNN
-F 2 "myAmp:C_5MM_1206" H 10338 1250 50  0001 C CNN
-F 3 "" H 10300 1400 50  0001 C CNN
-	1    10300 1400
-	-1   0    0    1   
-$EndComp
-$Comp
 L myAmp:BC547 Q?
 U 1 1 5F1BF59E
 P 9150 3100
@@ -735,19 +721,6 @@ Wire Wire Line
 	8900 4700 8450 4700
 Wire Wire Line
 	8900 4800 8900 4700
-Wire Wire Line
-	10200 1150 10300 1150
-Wire Wire Line
-	10300 1150 10300 1300
-Wire Wire Line
-	10300 1500 10300 1600
-Wire Wire Line
-	9900 1500 9900 1600
-Wire Wire Line
-	9900 1600 9900 1700
-Connection ~ 9900 1600
-Wire Wire Line
-	10300 1600 9900 1600
 $Comp
 L power:+12V #PWR?
 U 1 1 5F1BF60B
@@ -794,9 +767,6 @@ Wire Wire Line
 	10700 1150 10700 2850
 Wire Wire Line
 	10700 2850 10050 2850
-Connection ~ 10300 1150
-Wire Wire Line
-	10300 1150 10700 1150
 Wire Wire Line
 	10050 2950 10100 2950
 Wire Wire Line
@@ -972,4 +942,32 @@ Wire Wire Line
 	5400 3900 5400 4150
 Wire Wire Line
 	5400 2550 5400 2800
+$Comp
+L myAmp:C C?
+U 1 1 5F1BF598
+P 9450 1400
+AR Path="/5F1BF598" Ref="C?"  Part="1" 
+AR Path="/60D4580B/5F1BF598" Ref="C?"  Part="1" 
+AR Path="/5F048FD6/5F1BF598" Ref="C54"  Part="1" 
+F 0 "C54" H 9400 1300 50  0000 R CNN
+F 1 "100nF" H 9300 1500 50  0000 C CNN
+F 2 "myAmp:C_5MM_1206" H 9488 1250 50  0001 C CNN
+F 3 "" H 9450 1400 50  0001 C CNN
+	1    9450 1400
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	9450 1150 9450 1300
+Connection ~ 9450 1150
+Wire Wire Line
+	9900 1500 9900 1600
+Wire Wire Line
+	10200 1150 10700 1150
+Wire Wire Line
+	9450 1500 9450 1600
+Wire Wire Line
+	9450 1600 9900 1600
+Connection ~ 9900 1600
+Wire Wire Line
+	9900 1600 9900 1700
 $EndSCHEMATC

@@ -163,15 +163,15 @@ virtual ground
 $Comp
 L myAmp:C C?
 U 1 1 61476326
-P 9900 1450
+P 9050 1450
 AR Path="/61476326" Ref="C?"  Part="1" 
 AR Path="/60D4580B/61476326" Ref="C3"  Part="1" 
-F 0 "C3" H 9850 1350 50  0000 R CNN
-F 1 "100nF" H 9750 1550 50  0000 C CNN
-F 2 "myAmp:C_5MM_1206" H 9938 1300 50  0001 C CNN
-F 3 "" H 9900 1450 50  0001 C CNN
-	1    9900 1450
-	-1   0    0    1   
+F 0 "C3" H 9000 1350 50  0000 R CNN
+F 1 "100nF" H 8900 1550 50  0000 C CNN
+F 2 "myAmp:C_5MM_1206" H 9088 1300 50  0001 C CNN
+F 3 "" H 9050 1450 50  0001 C CNN
+	1    9050 1450
+	1    0    0    1   
 $EndComp
 $Comp
 L myAmp:BC547 Q?
@@ -382,18 +382,10 @@ Wire Wire Line
 Wire Wire Line
 	8500 4850 8500 4750
 Wire Wire Line
-	9800 1200 9900 1200
-Wire Wire Line
-	9900 1200 9900 1350
-Wire Wire Line
-	9900 1550 9900 1650
-Wire Wire Line
 	9500 1550 9500 1650
 Wire Wire Line
 	9500 1650 9500 1750
 Connection ~ 9500 1650
-Wire Wire Line
-	9900 1650 9500 1650
 $Comp
 L power:+12V #PWR?
 U 1 1 61476399
@@ -437,9 +429,6 @@ Wire Wire Line
 	10300 1200 10300 2900
 Wire Wire Line
 	10300 2900 9650 2900
-Connection ~ 9900 1200
-Wire Wire Line
-	9900 1200 10300 1200
 Wire Wire Line
 	9650 3000 9700 3000
 Wire Wire Line
@@ -1212,7 +1201,7 @@ NoConn ~ 1250 4900
 NoConn ~ 1250 5100
 NoConn ~ 1250 5200
 NoConn ~ 1250 5300
-Text Notes 3300 5900 0    150  ~ 0
+Text Notes 3100 5900 0    150  ~ 0
 jfet measure jig
 $Comp
 L myAmp:HOLE J?
@@ -1268,4 +1257,13 @@ F 3 "" H 6450 7450 50  0001 C CNN
 $EndComp
 NoConn ~ 1250 3900
 NoConn ~ 1250 5400
+Wire Wire Line
+	9050 1200 9050 1350
+Connection ~ 9050 1200
+Wire Wire Line
+	9050 1550 9050 1650
+Wire Wire Line
+	9050 1650 9500 1650
+Wire Wire Line
+	9800 1200 10300 1200
 $EndSCHEMATC

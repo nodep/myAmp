@@ -721,7 +721,7 @@ F 1 "50K" H 8280 3455 50  0000 R CNN
 F 2 "myAmp:BOURNS_PTD901_xx15K" H 8350 3500 50  0001 C CNN
 F 3 "" H 8350 3500 50  0001 C CNN
 	1    8350 3500
-	-1   0    0    -1  
+	-1   0    0    1   
 $EndComp
 $Comp
 L myAmp:R_POT RV5
@@ -732,18 +732,7 @@ F 1 "50K" H 7830 3455 50  0000 R CNN
 F 2 "myAmp:BOURNS_PTD901_xx15K" H 7900 3500 50  0001 C CNN
 F 3 "" H 7900 3500 50  0001 C CNN
 	1    7900 3500
-	-1   0    0    -1  
-$EndComp
-$Comp
-L myAmp:R_POT RV6
-U 1 1 5EF23247
-P 7450 3500
-F 0 "RV6" H 7380 3546 50  0000 R CNN
-F 1 "50K" H 7380 3455 50  0000 R CNN
-F 2 "myAmp:BOURNS_PTD901_xx15K" H 7450 3500 50  0001 C CNN
-F 3 "" H 7450 3500 50  0001 C CNN
-	1    7450 3500
-	-1   0    0    -1  
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	4600 3950 5050 3950
@@ -846,7 +835,7 @@ Wire Wire Line
 Connection ~ 4700 2100
 Wire Wire Line
 	4700 2100 4550 2100
-Text Label 3400 2100 0    50   ~ 0
+Text Label 3200 2100 0    50   ~ 0
 FV_LIN
 $Comp
 L myAmp:C C5
@@ -968,9 +957,9 @@ F 3 "" H 6500 7450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2150 2100 2150 2200
+	2800 2100 2800 2200
 Wire Wire Line
-	2150 2100 3900 2100
+	2800 2100 3900 2100
 Wire Wire Line
 	2800 2300 2800 2400
 Wire Wire Line
@@ -1101,7 +1090,7 @@ Wire Wire Line
 Text Label 1850 3400 0    50   ~ 0
 A0
 Wire Wire Line
-	1700 2200 2150 2200
+	1700 2200 2800 2200
 Wire Wire Line
 	1700 2300 2800 2300
 $Comp
@@ -1123,4 +1112,15 @@ Wire Wire Line
 	1700 3500 1850 3500
 Text Label 1850 3500 0    50   ~ 0
 WP
+$Comp
+L myAmp:R_POT RV6
+U 1 1 5EF23247
+P 7450 3500
+F 0 "RV6" H 7380 3546 50  0000 R CNN
+F 1 "50K" H 7380 3455 50  0000 R CNN
+F 2 "myAmp:BOURNS_PTD901_xx15K" H 7450 3500 50  0001 C CNN
+F 3 "" H 7450 3500 50  0001 C CNN
+	1    7450 3500
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC
