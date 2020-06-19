@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding='UTF-8'?>
+<CAMsetup>
+	<thisfile>.\modulo.camset</thisfile>
+	<morelayertypes>
+	</morelayertypes>
+	<usecolors>
+		<mixer>0.000</mixer>
+		<object type="Plated H. In">00BFBFBF</object>
+		<object type="Plated H. Out">0026120F</object>
+		<object type="Edge In">008C8C09</object>
+		<object type="Edge Out">00809854</object>
+		<object type="Volume">9E7D8C59</object>
+		<object type="Background">00898989</object>
+		<layer type="PasteMask">008080C0</layer>
+		<layer type="Silkscreen">00E3E3E3</layer>
+		<layer type="SolderMask">900B2B06</layer>
+		<layer type="Copper">00765223</layer>
+		<layer type="Core">00000000</layer>
+		<layer type="Prepreg">00000000</layer>
+		<layer type="BoardOutline">00000000</layer>
+	</usecolors>
+	<boardlayers>
+		<layer type="Silkscreen" H="35" Er="0.000" color="0000EC23">
+			<filename>.\modulo-f_silks.gto</filename>
+			<filedisp>modulo-f_silks.gto</filedisp>
+		</layer>
+		<layer type="SolderMask" H="35" Er="0.000" color="00635F84">
+			<filename>.\modulo-f_mask.gts</filename>
+			<filedisp>modulo-f_mask.gts</filedisp>
+		</layer>
+		<layer type="Copper" H="35" Negative="DefaultPositive" color="002BC16C">
+			<filename>.\modulo-f_cu.gtl</filename>
+			<filedisp>modulo-f_cu.gtl</filedisp>
+		</layer>
+		<layer type="Prepreg" H="790" Er="4.800">
+		</layer>
+		<layer type="Copper" H="35" Negative="DefaultPositive" color="00A5A790">
+			<filename>.\modulo-b_cu.gbl</filename>
+			<filedisp>modulo-b_cu.gbl</filedisp>
+		</layer>
+		<layer type="SolderMask" H="35" Er="0.000" color="005991F1">
+			<filename>.\modulo-b_mask.gbs</filename>
+			<filedisp>modulo-b_mask.gbs</filedisp>
+		</layer>
+		<layer type="Silkscreen" H="35" Er="0.000" color="006C05BB">
+			<filename>.\modulo-b_silks.gbo</filename>
+			<filedisp>modulo-b_silks.gbo</filedisp>
+		</layer>
+		<layer type="BoardOutline" H="1000">
+			<filename>.\modulo-edge_cuts.gm1</filename>
+			<filedisp>modulo-edge_cuts.gm1</filedisp>
+		</layer>
+	</boardlayers>
+
+	<boarddrillplates>
+		<drillplate from="top" to="btm" plated="no">
+			<filename>.\modulo.drl</filename>
+			<filedisp>modulo.drl</filedisp>
+		</drillplate>
+	</boarddrillplates>
+
+	<GerberSetup Incremental='no' OmitTrailingZeros='no' Milimeters='no' Len1='2' Len2='3'/>
+	<NCDSetup Guess='yes' Incremental='no' OmitTrailingZeros='no' Units='DefaultInch' Len1='2' Len2='3' Autooffset='yes'/>
+	<IPC356Setup AutoUnits='1' AutoMagnitude='1' LongPinID='yes' CpyFromDrill='yes' Autooffset='yes' AutoBtmAcc='yes'/>
+	<BoardOutlineDrawing srctype='1' trackwidthMin='0.004' trackwidthSlopStart='0.01' trackwidthMetaTrsh='0.012'/>
+	<IdentifyOutline mode='2' removeoutside='yes' horizMargin='5' vertMargin='2.5' brushBlob='1' />
+	<PosSaveRestoreTab>
+		<entry idx='1' pos='-41.1256, -13.2513, -29.1484' rot='-0.468844, 0.256834, -0.406027, 0.741191'/>
+		<entry idx='2' pos='243.0308, 345.1474, -8.7014' rot='-0.472118, 0.113002, -0.203500, 0.850249'/>
+		<entry idx='3' pos='278.6378, 350.3644, -0.2550' rot='-0.500000, -0.500000, 0.500000, 0.500000'/>
+		<entry idx='4' pos='278.6378, 350.3644, -0.2550' rot='-0.500000, -0.500000, 0.500000, 0.500000'/>
+		<entry idx='5' pos='278.6378, 350.3644, -0.2550' rot='-0.500000, -0.500000, 0.500000, 0.500000'/>
+	</PosSaveRestoreTab>
+
+</CAMsetup>
