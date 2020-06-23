@@ -886,26 +886,8 @@ F 3 "" H 7900 5200 60  0000 C CNN
 	1    7900 5200
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 5EE73CA5
-P 5800 6450
-AR Path="/5EE73CA5" Ref="#PWR?"  Part="1" 
-AR Path="/5F06BD21/5EE73CA5" Ref="#PWR0195"  Part="1" 
-AR Path="/60E5426B/5EE73CA5" Ref="#PWR?"  Part="1" 
-F 0 "#PWR0195" H 5800 6200 50  0001 C CNN
-F 1 "GND" H 5805 6277 50  0000 C CNN
-F 2 "" H 5800 6450 50  0001 C CNN
-F 3 "" H 5800 6450 50  0001 C CNN
-	1    5800 6450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5650 5350 6100 5350
-Wire Wire Line
-	5850 6400 5800 6400
-Wire Wire Line
-	5800 6400 5800 6450
 Wire Wire Line
 	7200 3100 7550 3100
 Wire Wire Line
@@ -1659,4 +1641,7 @@ $EndComp
 Wire Wire Line
 	10600 5550 10600 5650
 Connection ~ 10600 5550
+NoConn ~ 5650 5450
+NoConn ~ 5650 5550
+NoConn ~ 5650 5650
 $EndSCHEMATC
