@@ -19,21 +19,21 @@ sendProgram:
 	; prepare for the ISR
 	ldi		prevState, 0x00
 	sei
-	
+
 	; wait for the transfer to complete
 checkDone:
 	cpi		prevState, 0xFF
 	brne	checkDone
-	
+
 	cli		; transfer is done, so no more interrupts
-	
+
 	; restore registers
 	pop		prevState
 	pop		tempH
 	pop		temp
 	pop		zh
 	pop		zl
-	
+
 	ret
 
 TWI_vect:
@@ -68,9 +68,9 @@ initAddress:
 
 	ldi		zl, lo8(fv1Banks)
 	ldi		zh, hi8(fv1Banks)
-	
+
 	lds		temp, hiOffset
-	
+
 	add		zh, temp
 
 	jmp		cleanup
@@ -79,7 +79,7 @@ sendByte:
 
 	lpm		tempH, z+
 	sts		TWDR, tempH
-	
+
 	ldi		tempH, TW_ST_DATA_ACK
 
 cleanup:

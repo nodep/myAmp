@@ -99,7 +99,7 @@ void refresh_program(const int16_t delta)
 		if (bank > 0)
 			sx_port |= _BV(T0_BIT);
 		else
-			hiOffset = program * 2 + (bank - 1) * 0x1000;
+			hiOffset = program * 2 + (bank - 1) * 0x10;
 
 		// return the value to the PORTx register
 		PORT(S0_PORT) = sx_port;
