@@ -12,6 +12,8 @@
 #include "leds.h"
 #include "rotenc.h"
 
+uint8_t hiOffset = 0;
+
 // implemented in assembly
 void sendProgram(void);
 
@@ -96,6 +98,8 @@ void refresh_program(const int16_t delta)
 		// external
 		if (bank > 0)
 			sx_port |= _BV(T0_BIT);
+		else
+			hiOffset = program * 2 + (bank - 1) * 0x1000;
 
 		// return the value to the PORTx register
 		PORT(S0_PORT) = sx_port;

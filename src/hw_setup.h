@@ -50,7 +50,11 @@
 #define ROT_B_PORT		B
 #define ROT_B_BIT		2
 
-extern const uint8_t progAddress[0x200] PROGMEM;
+// the address of the FV-1 programs
+extern const unsigned char fv1Banks[4][0x1000] PROGMEM;
+
+// the offset for the hi byte of the address
+extern uint8_t hiOffset;
 
 // we must have FV-1 pins on the same port to make things simpler
 #if S0_PORT != S1_PORT  ||  S1_PORT != S2_PORT  ||  T0_PORT != S0_PORT

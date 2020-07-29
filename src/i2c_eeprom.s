@@ -3,7 +3,7 @@
 
 #include "hw_setup.h"
 
-.extern progAddress
+.extern hiOffset
 
 .global TWI_vect
 .global sendProgram
@@ -59,15 +59,19 @@ TWI_vect:
 	cpi		tempH, TW_ST_DATA_NACK
 	brne	cleanup
 
-	; tell the system we're done
+	; tell the loop in sendProgram we're done
 	ser		tempH
 
 	jmp		cleanup
 
 initAddress:
 
-	ldi		zl, lo8(progAddress)
-	ldi		zh, hi8(progAddress)
+	ldi		zl, lo8(fv1Banks)
+	ldi		zh, hi8(fv1Banks)
+	
+	lds		temp, hiOffset
+	
+	add		zh, temp
 
 	jmp		cleanup
 
