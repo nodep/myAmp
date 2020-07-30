@@ -34,6 +34,7 @@ void dbgInit(void)
     // USART Baud rate:
     UBRR0H = UBRRH_VALUE;
     UBRR0L = UBRRL_VALUE;
+    // RX is not used, only TX
     UCSR0B = _BV(TXEN0) /* | _BV(RXEN0) */;
 
     stdout = &mystdout;
@@ -45,8 +46,7 @@ void printi(uint32_t i)
 	char* start = buff + 9;
 	buff[9] = '0';
 	buff[10] = '\0';
-	uint8_t cnt;
-	for (cnt = 9; cnt <= 9  &&  i; --cnt)
+	for (uint8_t cnt = 9; cnt <= 9  &&  i; --cnt)
 	{
 		buff[cnt] = '0' + i % 10;
 		if (buff[cnt] != '0')

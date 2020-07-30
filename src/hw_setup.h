@@ -50,15 +50,14 @@
 #define ROT_B_PORT		B
 #define ROT_B_BIT		2
 
-// the address of the FV-1 programs
-extern const unsigned char fv1Banks[4][0x1000] PROGMEM;
-
-// the offset for the hi byte of the address
+// the hi byte of the fv1Banks address offset
 extern uint8_t hiOffset;
 
 // we must have FV-1 pins on the same port to make things simpler
 #if S0_PORT != S1_PORT  ||  S1_PORT != S2_PORT  ||  T0_PORT != S0_PORT
 #	error "SO, S1, S2 and T0 must all be on the same port"
 #endif
+
+#define MS2TICKS(ms)        (ms * F_CPU / 1024 / 1000)
 
 #endif

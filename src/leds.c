@@ -11,9 +11,7 @@
 
 void led_shift_byte(uint8_t byte)
 {
-	uint8_t bcnt;
-
-	for (bcnt = 0; bcnt < 8; ++bcnt)
+	for (uint8_t bcnt = 0; bcnt < 8; ++bcnt)
 	{
 		if (byte & 0x80)
 			SetBit(PORT(LED_DATA_PORT), LED_DATA_BIT);
@@ -29,15 +27,15 @@ void led_shift_byte(uint8_t byte)
 
 void led_show(const uint8_t program, const uint8_t bank)
 {
-	static uint8_t old_program = 0xff;
-	static uint8_t old_bank = 0xff;
-	if (program != old_program  ||  bank != old_bank)
+	static uint8_t oldProgram = 0xff;
+	static uint8_t oldBank = 0xff;
+	if (program != oldProgram  ||  bank != oldBank)
 	{
-		led_shift_byte(1 << bank);
+		led_shift_byte(bank);
 		led_shift_byte(1 << program);
 		
-		old_program = program;
-		old_bank = bank;
+		oldProgram = program;
+		oldBank = bank;
 	}
 }
 

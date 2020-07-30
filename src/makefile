@@ -10,15 +10,15 @@ FUSEX = 0xff
 AVRDUDE = avrdude -c stk500v2 -P avrdoper -p $(DEVICE)
 #AVRDUDE = avrdude -c dragon_isp -P usb -p $(DEVICE)
 
-CFLAGS	= -I. -Wall -Os
+CFLAGS	= -I. -Wall -Os -std=c99
 CFLAGS += -DDBGPRINT
 
 LFLAGS  = -Wl,--relax
-LFLAGS += -u vfprintf -lprintf_flt -lm
+LFLAGS += -u vfprintf
 
 COMPILE = avr-gcc -mmcu=$(DEVICE) -DF_CPU=$(F_CPU) $(CFLAGS)
 
-OBJECTS = main.o avrdbg.o leds.o rotenc.o i2c_eeprom.o programs.o
+OBJECTS = main.o avrdbg.o leds.o rotenc.o i2c_eeprom.o banks.o
 
 hex: $(TARGET).hex
 

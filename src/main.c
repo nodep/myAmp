@@ -4,17 +4,20 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 
 #include "hw_setup.h"
 #include "avrdbg.h"
 #include "utils.h"
 #include "leds.h"
 #include "rotenc.h"
+#include "banks.h"
 
+// Set by program_refresh() and read by the I2C ISR.
+// It is an offsets of the high byte of the FV-1 programs pointer (fv1Banks)
+// to the correct byte based on the selected bank and program
 uint8_t hiOffset = 0;
 
-// implemented in assembly
+// implemented in assembly in i2c_eeprom.s
 void sendProgram(void);
 
 void timer_init(void)
@@ -69,40 +72,48 @@ void init_hw(void)
 
 void refresh_program(const int16_t delta)
 {
-	static int16_t rot_pos = 0b11100;
-	const int16_t max_rot_pos = 0x7f;
+    // rotPos encoding:
+    // bits 0 and 1: intermediary positions on the rotary encoder
+    // bits 2, 3 and 4: selected program
+    // bits 5, 6 and 7: selected bank
+    
+	static int16_t rotPos = 0;
+	const int16_t maxRotPos = (NUM_BANKS << 5) | 0b11111;
 
-	rot_pos += delta;
-	if (rot_pos > max_rot_pos)
-		rot_pos -= max_rot_pos;
-	else if (rot_pos < 0)
-		rot_pos += max_rot_pos;
+	rotPos += delta;
+	if (rotPos > maxRotPos)
+		rotPos -= maxRotPos;
+	else if (rotPos < 0)
+		rotPos += maxRotPos;
 
 	static uint8_t prevProgram = 0xff;
-	static uint8_t prevBank = 0xff;
+	static uint8_t prevBank =    0xff;
 
-	const uint8_t program = (rot_pos >> 2) & 7;
-	const uint8_t bank = 	(rot_pos >> 5) & 3;
+	const uint8_t program = (rotPos >> 2) & 7;
+	const uint8_t bank = 	(rotPos >> 5) & 7;
 
 	if (program != prevProgram  ||  bank != prevBank)
 	{
 		led_show(program, bank);
 
 		// get the current value of the PORTx register
-		uint8_t sx_port = PORT(S0_PORT) & ~(_BV(S0_BIT) | _BV(S1_BIT) | _BV(S2_BIT) | _BV(T0_BIT));
+		uint8_t sxPort = PORT(S0_PORT) & ~(_BV(S0_BIT) | _BV(S1_BIT) | _BV(S2_BIT) | _BV(T0_BIT));
 
-		sx_port |= (program & 1) << 3;
-		sx_port |= (program & 2) << 1;
-		sx_port |= (program & 4) >> 1;
+		sxPort |= (program & 1) << 3;
+		sxPort |= (program & 2) << 1;
+		sxPort |= (program & 4) >> 1;
 
-		// external
+		// is this an external program?
 		if (bank > 0)
-			sx_port |= _BV(T0_BIT);
-		else
+        {
 			hiOffset = program * 2 + (bank - 1) * 0x10;
+			sxPort |= _BV(T0_BIT);
+        }
+		
+		dprint("p=%i b=%i\n", program, bank);
 
 		// return the value to the PORTx register
-		PORT(S0_PORT) = sx_port;
+		PORT(S0_PORT) = sxPort;
 
 		// wait for the transfer to complete before returning
 		if (bank > 0)
@@ -119,21 +130,21 @@ int main()
 
 	dprint("I live...\n");
 
-	int16_t delta = 0;
-
-	const uint16_t min_change_interval = 1563;	// ~100ms
-	uint16_t prev_change = TCNT1 - min_change_interval;
+	const uint16_t minChangeInterval = MS2TICKS(50);
+	uint16_t prevChange = TCNT1 - minChangeInterval;
 
 	refresh_program(0);		// init the program selector
 
+	int16_t delta = 0;
+    
 	while (1)
 	{
 		delta += rotenc_delta();
 
 		// if we have a delta and the program change timeout has passed
-		if (delta != 0  &&  (TCNT1 - prev_change) >= min_change_interval)
+		if (delta != 0  &&  (TCNT1 - prevChange) >= minChangeInterval)
 		{
-			prev_change = TCNT1;
+			prevChange = TCNT1;
 
 			refresh_program(delta);
 			delta = 0;
