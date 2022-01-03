@@ -6,3 +6,13 @@ fp-info-cache
 *.sch-bak
 *.dcm
 *.net
+*.kicad_prl
+*.spj
+*.drl
+*.gbl
+*.gbs
+*.gbo
+*.gm1
+*.gtl
+*.gts
+*.gto
