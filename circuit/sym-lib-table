@@ -1,3 +1,3 @@
 (sym_lib_table
-  (lib (name myAmp)(type Legacy)(uri ${KIPRJMOD}/myAmp.lib)(options "")(descr ""))
+  (lib (name "myAmp")(type "KiCad")(uri "${KIPRJMOD}/myAmp.kicad_sym")(options "")(descr ""))
 )
