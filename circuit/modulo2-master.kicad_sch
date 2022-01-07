@@ -1396,7 +1396,7 @@
     (uuid f9403623-c00c-4b71-bc5c-d763ff009386)
   )
 
-  (symbol (lib_id "myAmp:NE5532") (at 31.75 52.07 0)
+  (symbol (lib_id "myAmp:NE5532") (at 31.75 52.07 0) (unit 3)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f0669d9)
     (property "Reference" "U1" (id 0) (at 30.6832 50.9016 0)
@@ -1415,7 +1415,7 @@
     (pin "8" (uuid 3f43b8cc-e232-4de4-a8bc-56a1a1c0a87a))
   )
 
-  (symbol (lib_id "power:GND") (at 29.21 67.31 0)
+  (symbol (lib_id "power:GND") (at 29.21 67.31 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f0669e6)
     (property "Reference" "#PWR05" (id 0) (at 29.21 73.66 0)
@@ -1431,7 +1431,7 @@
     (pin "1" (uuid dbe6edc1-ee1c-41ad-b94e-6a468b80b874))
   )
 
-  (symbol (lib_id "myAmp:C") (at 24.13 52.07 180)
+  (symbol (lib_id "myAmp:C") (at 24.13 52.07 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f0669ed)
     (property "Reference" "C2" (id 0) (at 21.59 54.61 0))
@@ -1446,7 +1446,7 @@
     (pin "2" (uuid 7b32ef33-8c7b-417f-9260-1a8773398f8f))
   )
 
-  (symbol (lib_id "myAmp:BC547") (at 39.37 147.32 0)
+  (symbol (lib_id "myAmp:BC547") (at 39.37 147.32 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf59e)
     (property "Reference" "Q1" (id 0) (at 44.2214 146.1516 0)
@@ -1466,7 +1466,7 @@
     (pin "3" (uuid 345b5742-5f5b-4133-bd63-f955ca19a62c))
   )
 
-  (symbol (lib_id "myAmp:BC557") (at 39.37 177.8 0) (mirror x)
+  (symbol (lib_id "myAmp:BC557") (at 39.37 177.8 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5a4)
     (property "Reference" "Q2" (id 0) (at 44.2214 176.6316 0)
@@ -1486,7 +1486,7 @@
     (pin "3" (uuid 0df376e0-b3b8-4926-8318-ef70bcc43326))
   )
 
-  (symbol (lib_id "myAmp:R") (at 41.91 157.48 180)
+  (symbol (lib_id "myAmp:R") (at 41.91 157.48 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5aa)
     (property "Reference" "R2" (id 0) (at 43.18 156.21 0)
@@ -1505,7 +1505,7 @@
     (pin "2" (uuid 899f373a-cf16-4f13-9d21-dfc8f80ca371))
   )
 
-  (symbol (lib_id "myAmp:R") (at 41.91 167.64 180)
+  (symbol (lib_id "myAmp:R") (at 41.91 167.64 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5b0)
     (property "Reference" "R3" (id 0) (at 43.18 166.37 0)
@@ -1524,7 +1524,7 @@
     (pin "2" (uuid d5926ae5-e972-4dcc-8335-d8bd16db6dbc))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 33.02 154.94 90)
+  (symbol (lib_id "myAmp:1N4148") (at 33.02 154.94 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5bd)
     (property "Reference" "D1" (id 0) (at 29.21 153.67 90)
@@ -1543,7 +1543,7 @@
     (pin "2" (uuid 73975e5a-04c0-454b-b7b1-06dcb3c81497))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 33.02 170.18 90)
+  (symbol (lib_id "myAmp:1N4148") (at 33.02 170.18 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5c3)
     (property "Reference" "D2" (id 0) (at 29.21 168.91 90)
@@ -1562,7 +1562,7 @@
     (pin "2" (uuid 23d0e929-f5a1-4c62-b387-0887d9659f38))
   )
 
-  (symbol (lib_id "myAmp:R") (at 33.02 182.88 180)
+  (symbol (lib_id "myAmp:R") (at 33.02 182.88 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5cd)
     (property "Reference" "R6" (id 0) (at 27.94 181.61 0)
@@ -1581,7 +1581,7 @@
     (pin "2" (uuid f683b564-906b-42f6-a233-cd22c58657dd))
   )
 
-  (symbol (lib_id "myAmp:R") (at 33.02 142.24 180)
+  (symbol (lib_id "myAmp:R") (at 33.02 142.24 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5d3)
     (property "Reference" "R1" (id 0) (at 31.75 140.97 0)
@@ -1600,7 +1600,7 @@
     (pin "2" (uuid 7f2c9904-545b-4337-acd6-8707e0924818))
   )
 
-  (symbol (lib_id "myAmp:CPOL") (at 21.59 148.59 0) (mirror y)
+  (symbol (lib_id "myAmp:CPOL") (at 21.59 148.59 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00005f1bf5e1)
     (property "Reference" "C1" (id 0) (at 20.32 146.05 0)
@@ -1619,13 +1619,13 @@
     (pin "2" (uuid f03f8712-a7f0-45ba-8dbf-7ce6f298ed42))
   )
 
-  (symbol (lib_id "myAmp:R") (at 179.07 66.04 90)
+  (symbol (lib_id "myAmp:R") (at 179.07 66.04 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b16417)
     (property "Reference" "R5" (id 0) (at 177.8 68.58 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "10k" (id 1) (at 176.53 63.5 90)
+    (property "Value" "1k" (id 1) (at 177.8 63.5 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:R_10MM" (id 2) (at 179.07 67.818 90)
@@ -1711,7 +1711,7 @@
     (pin "4" (uuid 16010e58-8aee-45c1-99df-d1cc2bd80779))
   )
 
-  (symbol (lib_id "power:GND") (at 90.17 173.99 270) (mirror x)
+  (symbol (lib_id "power:GND") (at 90.17 173.99 270) (mirror x) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b24dd8)
     (property "Reference" "#PWR09" (id 0) (at 83.82 173.99 0)
@@ -1745,7 +1745,7 @@
     (pin "3" (uuid 1452f510-68cb-471e-a2d7-5f55b38265b4))
   )
 
-  (symbol (lib_id "power:GND") (at 62.23 62.23 0)
+  (symbol (lib_id "power:GND") (at 62.23 62.23 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b28dd3)
     (property "Reference" "#PWR06" (id 0) (at 62.23 68.58 0)
@@ -1761,7 +1761,7 @@
     (pin "1" (uuid 5a9c0dbe-9c68-4f1b-bb8c-18e35b87c9b2))
   )
 
-  (symbol (lib_id "myAmp:TL072") (at 199.39 54.61 0)
+  (symbol (lib_id "myAmp:TL072") (at 199.39 54.61 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b3cfd6)
     (property "Reference" "U1" (id 0) (at 199.39 45.2882 0))
@@ -1777,7 +1777,7 @@
     (pin "3" (uuid 2b626917-a177-4b61-81a1-fd2a69eb9f9a))
   )
 
-  (symbol (lib_id "myAmp:CPOL") (at 21.59 176.53 0) (mirror y)
+  (symbol (lib_id "myAmp:CPOL") (at 21.59 176.53 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b3cfde)
     (property "Reference" "C3" (id 0) (at 20.32 173.99 0)
@@ -1796,7 +1796,7 @@
     (pin "2" (uuid 30f27120-8919-4f22-a0e2-49bd0c1104a0))
   )
 
-  (symbol (lib_id "power:GND") (at 33.02 190.5 0)
+  (symbol (lib_id "power:GND") (at 33.02 190.5 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b3cfdf)
     (property "Reference" "#PWR07" (id 0) (at 33.02 196.85 0)
@@ -1812,7 +1812,7 @@
     (pin "1" (uuid 2480dd87-1dff-4a50-81a2-52ef161ac45c))
   )
 
-  (symbol (lib_id "power:GND") (at 269.24 62.23 270)
+  (symbol (lib_id "power:GND") (at 269.24 62.23 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b48981)
     (property "Reference" "#PWR04" (id 0) (at 262.89 62.23 0)
@@ -1865,7 +1865,7 @@
     (pin "1" (uuid 6c5e0d12-8ed5-4c38-93b5-5d0f856a23b9))
   )
 
-  (symbol (lib_id "power:GND") (at 269.24 57.15 270)
+  (symbol (lib_id "power:GND") (at 269.24 57.15 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b74417)
     (property "Reference" "#PWR03" (id 0) (at 262.89 57.15 0)
@@ -1913,13 +1913,13 @@
     (pin "7" (uuid bdf9dfdb-3e3e-46cc-8bb8-4372561c164b))
   )
 
-  (symbol (lib_id "myAmp:R") (at 219.71 54.61 90)
+  (symbol (lib_id "myAmp:R") (at 219.71 54.61 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b8cd59)
     (property "Reference" "R7" (id 0) (at 218.44 57.15 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "47" (id 1) (at 217.17 52.07 90)
+    (property "Value" "68" (id 1) (at 218.44 52.07 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:R_10MM" (id 2) (at 219.71 56.388 90)
@@ -1932,7 +1932,7 @@
     (pin "2" (uuid b0ef56f0-51f0-42df-b28a-72491f7f6bb8))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 229.87 60.96 90)
+  (symbol (lib_id "myAmp:1N4148") (at 229.87 60.96 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b971c0)
     (property "Reference" "D3" (id 0) (at 226.06 59.69 90)
@@ -1951,7 +1951,7 @@
     (pin "2" (uuid d26a8420-78a3-4a9e-b4f4-5a9910f59c4d))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 229.87 69.85 90)
+  (symbol (lib_id "myAmp:1N4148") (at 229.87 69.85 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b9787a)
     (property "Reference" "D5" (id 0) (at 226.06 68.58 90)
@@ -1970,7 +1970,7 @@
     (pin "2" (uuid 0c9b9dd2-dc58-4681-9b25-b9c3d020fbdc))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 229.87 78.74 90)
+  (symbol (lib_id "myAmp:1N4148") (at 229.87 78.74 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b97b35)
     (property "Reference" "D7" (id 0) (at 226.06 77.47 90)
@@ -1989,7 +1989,7 @@
     (pin "2" (uuid 8338e846-812b-41c6-ad83-c397e10d62a8))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 229.87 87.63 90)
+  (symbol (lib_id "myAmp:1N4148") (at 229.87 87.63 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b97ff0)
     (property "Reference" "D9" (id 0) (at 226.06 86.36 90)
@@ -2008,7 +2008,7 @@
     (pin "2" (uuid 69b62df2-080c-4fbc-a9ff-a83e6181a480))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 237.49 87.63 270)
+  (symbol (lib_id "myAmp:1N4148") (at 237.49 87.63 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b9e69a)
     (property "Reference" "D10" (id 0) (at 242.57 88.9 90)
@@ -2027,7 +2027,7 @@
     (pin "2" (uuid 2335745d-4b86-4498-9fad-6d2729137fe3))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 237.49 78.74 270)
+  (symbol (lib_id "myAmp:1N4148") (at 237.49 78.74 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b9e6a0)
     (property "Reference" "D8" (id 0) (at 241.3 80.01 90)
@@ -2046,7 +2046,7 @@
     (pin "2" (uuid ec51372b-772c-40c6-ad58-bf05ad60b91d))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 237.49 69.85 270)
+  (symbol (lib_id "myAmp:1N4148") (at 237.49 69.85 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b9e6a6)
     (property "Reference" "D6" (id 0) (at 241.3 71.12 90)
@@ -2065,7 +2065,7 @@
     (pin "2" (uuid e20b2d01-f0a2-4c23-a8cf-4b8afc873d5b))
   )
 
-  (symbol (lib_id "myAmp:1N4148") (at 237.49 60.96 270)
+  (symbol (lib_id "myAmp:1N4148") (at 237.49 60.96 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b9e6ac)
     (property "Reference" "D4" (id 0) (at 241.3 62.23 90)
@@ -2084,7 +2084,7 @@
     (pin "2" (uuid f3948324-ce3a-4786-8e6f-06525e602a33))
   )
 
-  (symbol (lib_id "myAmp:C") (at 80.01 55.88 90)
+  (symbol (lib_id "myAmp:C") (at 80.01 55.88 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061baa65d)
     (property "Reference" "C4" (id 0) (at 82.55 54.61 90))
@@ -2105,7 +2105,7 @@
     (property "Reference" "RV2" (id 0) (at 120.142 62.3316 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "A250K" (id 1) (at 120.142 64.643 0)
+    (property "Value" "1M" (id 1) (at 120.142 64.643 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:POT_VULGARIS" (id 2) (at 121.92 63.5 0)
@@ -2125,7 +2125,7 @@
     (property "Reference" "RV3" (id 0) (at 120.142 77.5716 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "A250K" (id 1) (at 120.142 79.883 0)
+    (property "Value" "1M" (id 1) (at 120.142 79.883 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:POT_VULGARIS" (id 2) (at 121.92 78.74 0)
@@ -2145,7 +2145,7 @@
     (property "Reference" "RV4" (id 0) (at 120.1674 91.5416 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "10K" (id 1) (at 120.1674 93.853 0)
+    (property "Value" "5K" (id 1) (at 120.1674 93.853 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:POT_VULGARIS" (id 2) (at 121.92 92.71 0)
@@ -2159,11 +2159,11 @@
     (pin "3" (uuid 8d33a8d3-c5cc-40b4-ba71-6923d60927e2))
   )
 
-  (symbol (lib_id "myAmp:C") (at 113.03 55.88 90)
+  (symbol (lib_id "myAmp:C") (at 113.03 55.88 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061c307c0)
     (property "Reference" "C5" (id 0) (at 113.03 53.34 90))
-    (property "Value" "250pF" (id 1) (at 113.03 59.69 90))
+    (property "Value" "100pF" (id 1) (at 113.03 59.69 90))
     (property "Footprint" "myAmp:C_5MM_1206" (id 2) (at 116.84 54.9148 0)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -2174,7 +2174,7 @@
     (pin "2" (uuid 584c482d-1251-462e-825c-3a0578bafc6d))
   )
 
-  (symbol (lib_id "myAmp:R") (at 104.14 63.5 180)
+  (symbol (lib_id "myAmp:R") (at 104.14 63.5 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061c471ae)
     (property "Reference" "R8" (id 0) (at 99.06 62.23 0)
@@ -2193,11 +2193,11 @@
     (pin "2" (uuid a632aa3e-0113-4f5d-90b5-27bac9ed8392))
   )
 
-  (symbol (lib_id "myAmp:C") (at 113.03 71.12 90)
+  (symbol (lib_id "myAmp:C") (at 113.03 71.12 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061c52359)
     (property "Reference" "C6" (id 0) (at 113.03 68.58 90))
-    (property "Value" "100nF" (id 1) (at 113.03 74.93 90))
+    (property "Value" "22nF" (id 1) (at 113.03 74.93 90))
     (property "Footprint" "myAmp:C_5MM_1206" (id 2) (at 116.84 70.1548 0)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -2208,7 +2208,7 @@
     (pin "2" (uuid 238ce6dc-0557-409a-ab04-93448fccaac4))
   )
 
-  (symbol (lib_id "myAmp:C") (at 113.03 85.09 90)
+  (symbol (lib_id "myAmp:C") (at 113.03 85.09 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061c52e5e)
     (property "Reference" "C7" (id 0) (at 113.03 82.55 90))
@@ -2223,7 +2223,7 @@
     (pin "2" (uuid 262fe442-673c-4133-92f6-23f6d42651f0))
   )
 
-  (symbol (lib_id "myAmp:R") (at 91.44 63.5 180)
+  (symbol (lib_id "myAmp:R") (at 91.44 63.5 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061c9b874)
     (property "Reference" "R4" (id 0) (at 86.36 62.23 0)
@@ -2262,7 +2262,7 @@
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 52993c55-48a5-4744-9dbb-f7eb4807ee61)
     (property "Reference" "RV1" (id 0) (at 189.23 69.85 90))
-    (property "Value" "R_POT" (id 1) (at 189.23 72.39 90))
+    (property "Value" "5k" (id 1) (at 189.23 72.39 90))
     (property "Footprint" "myAmp:POT_VULGARIS" (id 2) (at 189.23 66.04 0)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -2319,10 +2319,10 @@
       (reference "C4") (unit 1) (value "680nF") (footprint "myAmp:C_FILM_L7.2mm_W5.5mm_P5.00mm")
     )
     (path "/00000000-0000-0000-0000-000061c307c0"
-      (reference "C5") (unit 1) (value "250pF") (footprint "myAmp:C_5MM_1206")
+      (reference "C5") (unit 1) (value "100pF") (footprint "myAmp:C_5MM_1206")
     )
     (path "/00000000-0000-0000-0000-000061c52359"
-      (reference "C6") (unit 1) (value "100nF") (footprint "myAmp:C_5MM_1206")
+      (reference "C6") (unit 1) (value "22nF") (footprint "myAmp:C_5MM_1206")
     )
     (path "/00000000-0000-0000-0000-000061c52e5e"
       (reference "C7") (unit 1) (value "47nF") (footprint "myAmp:C_5MM_1206")
@@ -2391,28 +2391,28 @@
       (reference "R4") (unit 1) (value "1M") (footprint "myAmp:R_10MM")
     )
     (path "/00000000-0000-0000-0000-000061b16417"
-      (reference "R5") (unit 1) (value "10k") (footprint "myAmp:R_10MM")
+      (reference "R5") (unit 1) (value "1k") (footprint "myAmp:R_10MM")
     )
     (path "/00000000-0000-0000-0000-00005f1bf5cd"
       (reference "R6") (unit 1) (value "4K7") (footprint "myAmp:R_10MM")
     )
     (path "/00000000-0000-0000-0000-000061b8cd59"
-      (reference "R7") (unit 1) (value "47") (footprint "myAmp:R_10MM")
+      (reference "R7") (unit 1) (value "68") (footprint "myAmp:R_10MM")
     )
     (path "/00000000-0000-0000-0000-000061c471ae"
       (reference "R8") (unit 1) (value "100k") (footprint "myAmp:R_10MM")
     )
     (path "/52993c55-48a5-4744-9dbb-f7eb4807ee61"
-      (reference "RV1") (unit 1) (value "R_POT") (footprint "myAmp:POT_VULGARIS")
+      (reference "RV1") (unit 1) (value "5k") (footprint "myAmp:POT_VULGARIS")
     )
     (path "/00000000-0000-0000-0000-000061c2ed9a"
-      (reference "RV2") (unit 1) (value "A250K") (footprint "myAmp:POT_VULGARIS")
+      (reference "RV2") (unit 1) (value "1M") (footprint "myAmp:POT_VULGARIS")
     )
     (path "/00000000-0000-0000-0000-000061c2f7c7"
-      (reference "RV3") (unit 1) (value "A250K") (footprint "myAmp:POT_VULGARIS")
+      (reference "RV3") (unit 1) (value "1M") (footprint "myAmp:POT_VULGARIS")
     )
     (path "/00000000-0000-0000-0000-000061c300fc"
-      (reference "RV4") (unit 1) (value "10K") (footprint "myAmp:POT_VULGARIS")
+      (reference "RV4") (unit 1) (value "5K") (footprint "myAmp:POT_VULGARIS")
     )
     (path "/00000000-0000-0000-0000-000061d371a4"
       (reference "SW1") (unit 1) (value "SW_SRC") (footprint "myAmp:ESP2010_switch")
