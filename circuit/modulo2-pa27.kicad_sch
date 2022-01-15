@@ -2317,7 +2317,7 @@
     (property "Value" "500k" (id 1) (at 143.002 49.403 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "myAmp:BOURNS_PTD901_xx15K" (id 2) (at 144.78 48.26 0)
+    (property "Footprint" "myAmp:POT_VULGARIS" (id 2) (at 144.78 48.26 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 140.97 44.45 0)
@@ -2926,7 +2926,7 @@
       (reference "RV3") (unit 1) (value "10k") (footprint "myAmp:BOURNS_PTD901_xx15K")
     )
     (path "/3815e89f-ae0b-444f-8039-7f1b98ab98ab"
-      (reference "RV4") (unit 1) (value "500k") (footprint "myAmp:BOURNS_PTD901_xx15K")
+      (reference "RV4") (unit 1) (value "500k") (footprint "myAmp:POT_VULGARIS")
     )
     (path "/77415905-9ad6-47f9-b33e-2e8f06373b35"
       (reference "RV5") (unit 1) (value "50K") (footprint "myAmp:BOURNS_PTD901_xx15K")
