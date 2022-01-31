@@ -12,6 +12,9 @@
 #include "rotenc.h"
 #include "banks.h"
 
+#define FV_FREQ(freq) (uint16_t)(((F_CPU/2)/(freq))-1)
+
+
 // Set by program_refresh() and read by the I2C ISR.
 // It is an offsets of the high byte of the FV-1 programs pointer (fv1Banks)
 // to the correct byte based on the selected bank and program
@@ -34,6 +37,17 @@ void i2c_init(void)
 	TWCR = _BV(TWEA)	// enable the ACK
 		|  _BV(TWEN)	// enable TWI
 		|  _BV(TWIE);	// enable interrupts
+}
+
+void init_fvclk(void)
+{
+	TCCR1A = _BV(COM1B0);	// output clock on B2
+	TCCR1B = _BV(WGM12) |	// CTC
+			 _BV(CS10);		// prescaler 1
+			 
+	SetBit(DDR(FV_CLK_PORT), FV_CLK_BIT);
+	
+	OCR1A = FV_FREQ(32768);
 }
 
 void init_hw(void)
@@ -61,6 +75,9 @@ void init_hw(void)
 	// internal/external selector
 	SetBit(DDR(T0_PORT), T0_BIT);
 	ClrBit(PORT(T0_PORT), T0_BIT);
+
+	// clock for FV-1
+	init_fvclk();
 
 	// these are unused
 	SetBit(DDR(WP_PORT), WP_BIT);

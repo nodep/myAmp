@@ -33,6 +33,10 @@
 #define T0_PORT			C
 #define T0_BIT			0
 
+// FV_CLK clock for the FV-1
+#define FV_CLK_PORT		B
+#define FV_CLK_BIT		2
+
 // unused at the moment
 #define WP_PORT			C
 #define WP_BIT			6

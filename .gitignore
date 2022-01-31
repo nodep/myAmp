@@ -1,12 +1,7 @@
 fp-info-cache
-*-cache.lib
-*.bak
-*.bck
-*.kicad_pcb-bak
-*.sch-bak
+*.kicad_prl
 *.dcm
 *.net
-*.kicad_prl
 *.spj
 *.drl
 *.gbl
