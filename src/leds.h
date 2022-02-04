@@ -6,4 +6,8 @@ void led_init(void);
 // clears the display
 void led_clear(void);
 
-void led_show(const uint8_t program, const uint8_t bank);
+// outputs the number of the program, the bank, and the two LEDs in the rotary encoder
+void led_show_prog_bank(const uint8_t program, const uint8_t bank);
+
+// set the state of the two LEDs of the rotary encoder
+void led_show_rotenc(const bool green, const bool blue);

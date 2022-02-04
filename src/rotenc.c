@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 #include <avr/io.h>
 #include <avr/pgmspace.h>
@@ -13,15 +14,16 @@ void rotenc_init(void)
 	ClrBit(DDR(ROT_SW_PORT), ROT_SW_BIT);
 	SetBit(PORT(ROT_SW_PORT), ROT_SW_BIT);
 	
-	// A and B are inputs will pull-ups
+	// A and B are inputs with pull-ups
 	ClrBit(DDR(ROT_A_PORT), ROT_A_BIT);
 	SetBit(PORT(ROT_A_PORT), ROT_A_BIT);
 	ClrBit(DDR(ROT_B_PORT), ROT_B_BIT);
 	SetBit(PORT(ROT_B_PORT), ROT_B_BIT);
 }
 
-const int8_t lookup_table[] =
-{  0,	// 0b0000
+const int8_t lookup_table[0x10] PROGMEM =
+{
+   0,	// 0b0000
   -1,	// 0b0001
    1,	// 0b0010
    0,	// 0b0011
@@ -36,7 +38,8 @@ const int8_t lookup_table[] =
    0,	// 0b1100
    1,	// 0b1101
   -1,	// 0b1110
-   0 };	// 0b1111
+   0,	// 0b1111
+};	
 
 int8_t rotenc_delta(void)
 {
@@ -49,5 +52,10 @@ int8_t rotenc_delta(void)
 	oldAB |= newAB;		// add current state
 	oldAB &= 0x0f;		// clear the extra bits
 
-	return lookup_table[oldAB];
+	return pgm_read_byte(&lookup_table[oldAB]);
+}
+
+bool rotenc_switch(void)
+{
+	return !(PIN(ROT_SW_PORT) & _BV(ROT_SW_BIT));
 }

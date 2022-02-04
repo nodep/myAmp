@@ -3,22 +3,22 @@ DEVICE  = atmega328p
 
 F_CPU   = 16000000
 
-FUSEH = 0xd7
-FUSEL = 0xfd
-FUSEX = 0xff
+FUSEH = 0xD7
+FUSEL = 0xFD
+FUSEX = 0xFF
 
 AVRDUDE = avrdude -c stk500v2 -P avrdoper -p $(DEVICE)
 #AVRDUDE = avrdude -c dragon_isp -P usb -p $(DEVICE)
 
-CFLAGS	= -I. -Wall -Os -std=c99
-CFLAGS += -DDBGPRINT
+CFLAGS	= -Wall -Os -std=c99
+#CFLAGS += -DDBGPRINT
 
 LFLAGS  = -Wl,--relax
-LFLAGS += -u vfprintf
+#LFLAGS += -u vfprintf
 
 COMPILE = avr-gcc -mmcu=$(DEVICE) -DF_CPU=$(F_CPU) $(CFLAGS)
 
-OBJECTS = main.o avrdbg.o leds.o rotenc.o i2c_eeprom.o banks.o
+OBJECTS = main.o avrdbg.o leds.o rotenc.o i2c_eeprom.o banks.o timer.o fvclk.o state.o
 
 hex: $(TARGET).hex
 

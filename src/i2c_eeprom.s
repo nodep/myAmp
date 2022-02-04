@@ -1,15 +1,24 @@
 #include <avr/io.h>
 #include <util/twi.h>
 
-#include "hw_setup.h"
+; TODO: Investigate if we can do all this in a single blocking C function without 
+; the need for TWI interrupt handlers
 
+; This is set by the caller of sendProgram()
+; Maybe we should do this as a proper function argument?
 .extern hiOffset
 
 .global TWI_vect
 .global sendProgram
 
+; define the registers we will be using
+#define temp		r3
+#define tempH		r20
+#define prevState	r21
+
+; function entry point
 sendProgram:
-	; save all the registers that the ISR is using
+	; save all the registers that the TWI ISR is using
 	push	zl
 	push	zh
 	push	temp
@@ -36,13 +45,15 @@ checkDone:
 
 	ret
 
+; our TWI ISR
 TWI_vect:
 
 	; push SREG
 	in		temp, _SFR_IO_ADDR(SREG)
 	push	temp
 
-	lds		tempH, TWSR					; read the TWI status register
+	; read the TWI status register
+	lds		tempH, TWSR
 
 	; if we have a byte to send
 	cpi		tempH, TW_ST_SLA_ACK

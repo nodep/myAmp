@@ -2,7 +2,7 @@ import os
 
 spnFiles = []
 
-# collect the hex files
+# collect the spn files
 for (dirpath, dirnames, filenames) in os.walk('.\\'):
     for filename in filenames:
         if filename.endswith('.spn'):

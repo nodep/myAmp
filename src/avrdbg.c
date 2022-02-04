@@ -19,9 +19,6 @@ static FILE mystdout = FDEV_SETUP_STREAM(serial_putchar, NULL, _FDEV_SETUP_WRITE
 
 static int serial_putchar(char c, FILE *stream)
 {
-    //if (c == '\n')
-	//	serial_putchar('\r', stream);
-
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
     return 0;
