@@ -64,7 +64,7 @@ void init_hw(void)
 	fvclk_init();
 }
 
-void refresh_program(const int16_t delta)
+void program_change(const int16_t delta)
 {
     // rotPos encoding:
     // bits 0 and 1: intermediary positions on the rotary encoder
@@ -130,7 +130,7 @@ int main()
 	const uint16_t minChangeInterval = MS2TICKS(100);
 	uint16_t prevChange = timer_ticks() - minChangeInterval;
 
-	refresh_program(0);		// init the program selector
+	program_change(0);		// init the program selector
 
 	int16_t delta = 0;
 
@@ -148,8 +148,8 @@ int main()
 		// if we have a delta and the change timeout has passed
 		if (delta != 0  &&  now - prevChange >= minChangeInterval)
 		{
-			if (state_is_normal())
-				refresh_program(delta);
+			if (state_is_selecting_prog())
+				program_change(delta);
 			else
 				fvclk_change(delta);
 

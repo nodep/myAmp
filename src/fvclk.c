@@ -8,12 +8,15 @@
 #include "fvclk.h"
 
 #define FV_FREQ_DEFAULT			32768
-#define FV_FREQ_MIN				25000
-#define FV_FREQ_MAX				40000
 #define FV_FREQ_STEP			100
 #define FV_FREQ_TO_CNT(freq)	(uint16_t)(((F_CPU/2)/(freq))-1)
 
 uint16_t fvclk_freq = FV_FREQ_DEFAULT;
+
+uint16_t fvclk_get_freq(void)
+{
+	return fvclk_freq;
+}
 
 void fvclk_init(void)
 {
