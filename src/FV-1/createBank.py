@@ -1,11 +1,10 @@
 bankFiles = (
-'hex\\a01.hex',
-'hex\\a02.hex',
-'hex\\a03.hex',
-'hex\\a04.hex',
-'hex\\a05.hex',
-'hex\\a06.hex',
-'hex\\a07.hex',
+'hex\\a15.hex',
+'hex\\a16.hex',
+'hex\\a17.hex',
+'hex\\a18.hex',
+'hex\\a19.hex',
+'hex\\a20.hex',
 )
 
 def decodeLine(lineNum, line):
@@ -13,15 +12,15 @@ def decodeLine(lineNum, line):
 	line = line.strip()
 
 	if line[0] != ':':
-		raise Exception('line in HEX file doesn't begin with :')
+		raise Exception("line in HEX file doesn't begin with :")
 
 	byteCount  = int(line[1:3], 16)
 	address	= int(line[3:7], 16)
 	recordType = int(line[7:9], 16)
 	if byteCount > 0:
-		data   = line[9:9 + byteCount*2]
+		data = line[9:9 + byteCount*2]
 	else:
-		data   = ''
+		data = ''
 
 	sum = 0
 	index = 1
@@ -88,6 +87,8 @@ def getSourceForBank(bankData, hexFileName):
 
 def loadBank(hexFileName):
 
+	print('processing', hexFileName)
+	
 	bankData = [0] * 4096
 
 	with open(hexFileName) as inh:
