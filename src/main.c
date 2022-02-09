@@ -14,15 +14,8 @@
 #include "banks.h"
 #include "timer.h"
 #include "fvclk.h"
+#include "sendprog.h"
 #include "state.h"
-
-// Set by program_refresh() and read by the I2C ISR.
-// It is an offsets of the high byte of the FV-1 programs pointer (fv1Banks)
-// to the correct byte based on the selected bank and program
-uint8_t hiOffset = 0;
-
-// implemented in assembly in i2c_eeprom.s
-void sendProgram(void);
 
 void i2c_init(void)
 {
@@ -30,8 +23,7 @@ void i2c_init(void)
 	TWAR = 0xA0;
 
 	TWCR = _BV(TWEA)	// enable the ACK
-		|  _BV(TWEN)	// enable TWI
-		|  _BV(TWIE);	// enable interrupts
+		|  _BV(TWEN);	// enable TWI
 }
 
 void init_hw(void)
@@ -85,9 +77,10 @@ void program_change(const int16_t delta)
 
 	const uint8_t program = (rotPos >> 2) & 7;
 	const uint8_t bank = 	(rotPos >> 5) & 7;
-
+	
 	if (program != prevProgram  ||  bank != prevBank)
 	{
+		// show the selected program
 		led_show_prog_bank(program, bank);
 
 		// get the current value of the PORTx register
@@ -97,10 +90,6 @@ void program_change(const int16_t delta)
 		sxPort |= (program & 1) << 3;
 		sxPort |= (program & 2) << 1;
 		sxPort |= (program & 4) >> 1;
-
-		// is this an external program?
-		if (bank > 0)
-			hiOffset = program * 2 + (bank - 1) * 0x10;
 
 		dprint("p=%i b=%i\n", program, bank);
 
@@ -112,9 +101,9 @@ void program_change(const int16_t delta)
 
 		PORT(S0_PORT) = sxPort;
 
-		// wait for the transfer to complete before returning
+		// send the program over I2C
 		if (bank > 0)
-			sendProgram();
+			send_program(&fv1Banks[bank - 1][program]);
 
 		prevProgram = program;
 		prevBank = bank;

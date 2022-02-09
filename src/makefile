@@ -18,7 +18,7 @@ LFLAGS  = -Wl,--relax
 
 COMPILE = avr-gcc -mmcu=$(DEVICE) -DF_CPU=$(F_CPU) $(CFLAGS)
 
-OBJECTS = main.o avrdbg.o leds.o rotenc.o i2c_eeprom.o banks.o timer.o fvclk.o state.o
+OBJECTS = main.o avrdbg.o leds.o rotenc.o banks.o timer.o fvclk.o state.o sendprog.o
 
 hex: $(TARGET).hex
 
@@ -49,6 +49,5 @@ read_fuse:
 
 # the following saves the assembly listings and preprocessed sources
 #	$(COMPILE) -g -save-temps -c $< -o $@
-#  
 
 all: clean $(TARGET).hex
