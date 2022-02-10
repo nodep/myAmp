@@ -9,7 +9,7 @@
 #include "utils.h"
 
 // the current states of the LEDs
-static uint8_t prog_bank_leds = 0;
+static uint8_t program_leds = 0;
 static uint8_t rotenc_leds = 0;
 
 void led_init(void)
@@ -49,7 +49,7 @@ void led_clear(void)
 	ClrBit(PORT(LED_RST_PORT), LED_RST_BIT);
 	
 	// set the local copies to 0
-	prog_bank_leds = 0;
+	program_leds = 0;
 	rotenc_leds = 0;
 	
 	// raise the reset signal
@@ -83,7 +83,7 @@ void led_clear(void)
 // 1 0
 // 0 0
 
-const uint8_t prog_leds_lookup[8] PROGMEM =
+const uint8_t prog_lo_leds_lookup[8] PROGMEM =
 {
 	0b00000000,	// 0
 	0b01000000,	// 1
@@ -95,7 +95,7 @@ const uint8_t prog_leds_lookup[8] PROGMEM =
 	0b11010000,	// 7
 };
 
-const uint8_t bank_leds_lookup[8] PROGMEM =
+const uint8_t prog_hi_leds_lookup[8] PROGMEM =
 {
 	0b00000000,	// 0
 	0b00100000,	// 1
@@ -107,15 +107,15 @@ const uint8_t bank_leds_lookup[8] PROGMEM =
 	0b00101100,	// 7
 };
 
-void led_show_prog_bank(const uint8_t program, const uint8_t bank)
+void led_show_program(const uint8_t program)
 {
-	const uint8_t new_val = pgm_read_byte(&prog_leds_lookup[program & 7]) |
-							pgm_read_byte(&bank_leds_lookup[bank & 7]);
+	const uint8_t new_val = pgm_read_byte(&prog_lo_leds_lookup[program & 7]) |
+							pgm_read_byte(&prog_hi_leds_lookup[(program >> 3) & 7]);
 
-	if (new_val != prog_bank_leds)
+	if (new_val != program_leds)
 	{
 		led_shift_byte(new_val | rotenc_leds);
-		prog_bank_leds = new_val;
+		program_leds = new_val;
 	}
 }
 
@@ -126,7 +126,7 @@ void led_show_rotenc(const bool green, const bool blue)
 	
 	if (new_val != rotenc_leds)
 	{
-		led_shift_byte(prog_bank_leds | new_val);
+		led_shift_byte(program_leds | new_val);
 		rotenc_leds = new_val;
 	}
 }

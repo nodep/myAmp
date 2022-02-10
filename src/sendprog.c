@@ -1,9 +1,11 @@
 #include <stdint.h>
 
+#include <avr/pgmspace.h>
 #include <util/twi.h>
 
 #include "hw_setup.h"
 #include "banks.h"
+#include "utils.h"
 
 #define CONFIRM()	TWCR = _BV(TWEA) | _BV(TWEN) | _BV(TWINT)
 
@@ -29,9 +31,10 @@ void send_program(const uint8_t* program_addr)
 		
 		CONFIRM();
 
-		// receive the lower byte of the address
+		// wait for the byte to be sent
 		loop_until_bit_is_set(TWCR, TWINT);
-	} while (TWSR != TW_ST_DATA_NACK);
 
+	} while (TWSR != TW_ST_DATA_NACK);
+	
 	CONFIRM();
 }

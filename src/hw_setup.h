@@ -1,7 +1,5 @@
 #pragma once
 
-#include <avr/pgmspace.h>
-
 // the LED shift registers
 #define LED_DATA_PORT	B
 #define LED_DATA_BIT	1
@@ -39,6 +37,3 @@
 
 #define ROT_B_PORT		D
 #define ROT_B_BIT		5
-
-// the hi byte of the fv1Banks address offset
-extern uint8_t hiOffset;

@@ -4,6 +4,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 #include <util/delay.h>
 
 #include "hw_setup.h"
@@ -29,7 +30,7 @@ void i2c_init(void)
 void init_hw(void)
 {
 	dbgInit();
-
+	
 	timer_init();
 
 	led_init();
@@ -60,11 +61,10 @@ void program_change(const int16_t delta)
 {
     // rotPos encoding:
     // bits 0 and 1: intermediary positions on the rotary encoder
-    // bits 2, 3 and 4: selected program
-    // bits 5, 6 and 7: selected bank
+    // bits 2 to 7: selected program
     
 	static int16_t rotPos = 0;
-	const int16_t maxRotPos = (NUM_BANKS << 5) | 0b11111;
+	const int16_t maxRotPos = (((NUM_EXT_PROGRAMS + 8) - 1) << 2) | 0b11;
 
 	rotPos += delta;
 	if (rotPos > maxRotPos)
@@ -73,15 +73,13 @@ void program_change(const int16_t delta)
 		rotPos += maxRotPos;
 
 	static uint8_t prevProgram	= 0xff;
-	static uint8_t prevBank		= 0xff;
 
-	const uint8_t program = (rotPos >> 2) & 7;
-	const uint8_t bank = 	(rotPos >> 5) & 7;
+	const uint8_t program = (rotPos >> 2) & 0b111111;
 	
-	if (program != prevProgram  ||  bank != prevBank)
+	if (program != prevProgram)
 	{
 		// show the selected program
-		led_show_prog_bank(program, bank);
+		led_show_program(program);
 
 		// get the current value of the PORTx register
 		uint8_t sxPort = PORT(S0_PORT) & ~(_BV(S0_BIT) | _BV(S1_BIT) | _BV(S2_BIT));
@@ -91,10 +89,10 @@ void program_change(const int16_t delta)
 		sxPort |= (program & 2) << 1;
 		sxPort |= (program & 4) >> 1;
 
-		dprint("p=%i b=%i\n", program, bank);
+		dprint("prog %i\n", program);
 
 		// set the values on output pins
-		if (bank == 0)
+		if (program < 8)
 			ClrBit(PORT(T0_PORT), T0_BIT);
 		else
 			SetBit(PORT(T0_PORT), T0_BIT);
@@ -102,11 +100,10 @@ void program_change(const int16_t delta)
 		PORT(S0_PORT) = sxPort;
 
 		// send the program over I2C
-		if (bank > 0)
-			send_program(&fv1Banks[bank - 1][program]);
+		if (program > 7)
+			send_program(&fv1programs[program - 8][0]);
 
 		prevProgram = program;
-		prevBank = bank;
 	}
 }
 
