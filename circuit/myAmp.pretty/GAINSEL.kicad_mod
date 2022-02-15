@@ -1,6 +1,6 @@
 (footprint "GAINSEL" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
-  (tedit 61FFE47F)
+  (tedit 620A97BF)
   (attr through_hole)
   (fp_text reference "REF**" (at 5.842 0 90 unlocked) (layer "F.SilkS")
     (effects (font (size 0.75 0.75) (thickness 0.15)))
@@ -57,4 +57,9 @@
   (pad "6" thru_hole circle (at 1.27 -1.27 90) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (tstamp 52b7a00f-cb87-403c-b62f-10114bf273fa))
   (pad "7" thru_hole circle (at 3.81 1.27 90) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (tstamp 29796def-9154-41c8-87b8-36b82da45deb))
   (pad "8" thru_hole circle (at 3.81 -1.27 90) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (tstamp 946b8964-465e-4fe4-adac-47e599719e07))
+  (model "${KIPRJMOD}/myAmp.pretty/models/PinHeader_2x04_P2.54mm_Vertical.wrl"
+    (offset (xyz 3.81 1.27 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 90))
+  )
 )
