@@ -3232,7 +3232,7 @@
     (property "Value" "470μF" (id 1) (at 123.19 71.12 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "myAmp:CPOL_D6.3_P2.5" (id 2) (at 121.92 68.58 0)
+    (property "Footprint" "myAmp:CPOL_D8_P3.5" (id 2) (at 121.92 68.58 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 121.92 68.58 0)
@@ -5126,7 +5126,7 @@
       (reference "C1") (unit 1) (value "1μF") (footprint "myAmp:C_FILM_L7.2mm_W5.0mm_P5.00mm")
     )
     (path "/00000000-0000-0000-0000-00005c81ba70"
-      (reference "C2") (unit 1) (value "470μF") (footprint "myAmp:CPOL_D6.3_P2.5")
+      (reference "C2") (unit 1) (value "470μF") (footprint "myAmp:CPOL_D8_P3.5")
     )
     (path "/00000000-0000-0000-0000-00005c8cabce"
       (reference "C3") (unit 1) (value "100nF") (footprint "myAmp:C_1206")
