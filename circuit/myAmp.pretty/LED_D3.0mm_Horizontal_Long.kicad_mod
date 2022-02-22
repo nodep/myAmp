@@ -20,7 +20,7 @@
   (fp_arc (start -1.5367 -0.95504) (mid -0.790567 -1.739997) (end 0.253025 -2.02946) (layer "F.SilkS") (width 0.1524) (tstamp ee9d5828-fdd7-4dae-bac0-9ddaeb2f5f56))
   (pad "1" thru_hole roundrect (at 1.27 0) (size 1.6 1.6) (drill 0.9) (layers *.Cu *.Mask) (roundrect_rratio 0.25) (tstamp 195ef2b3-0e93-4fbf-9686-6f0ac4ab5d66))
   (pad "2" thru_hole circle (at -1.27 0) (size 1.6 1.6) (drill 0.9) (layers *.Cu *.Mask) (tstamp d606757f-f667-4296-ace4-82e7f2535e48))
-  (model "${KICAD6_3DMODEL_DIR}/LED_THT.3dshapes/LED_D3.0mm_Horizontal_O6.35mm_Z2.0mm.step"
+  (model "${KIPRJMOD}/myAmp.pretty/models/LED_D3.0mm_Horizontal_O6.35mm_Z2.0mm.step"
     (offset (xyz 1.27 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 180))
