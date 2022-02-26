@@ -2187,7 +2187,7 @@
     (uuid 11af6226-d94c-469b-95d8-d952d2567f76)
     (property "Reference" "C8" (id 0) (at 156.21 67.31 0))
     (property "Value" "1µF" (id 1) (at 156.21 69.85 0))
-    (property "Footprint" "myAmp:C_FILM_L7.2mm_W5.5mm_P5.00mm" (id 2) (at 151.4348 64.77 0)
+    (property "Footprint" "myAmp:C_FILM_L7.2mm_W5.0mm_P5.00mm" (id 2) (at 151.4348 64.77 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 152.4 68.58 0)
@@ -2501,7 +2501,7 @@
     (uuid 66f613c0-61ed-40a1-a380-fef466742922)
     (property "Reference" "C3" (id 0) (at 86.36 66.04 0))
     (property "Value" "1µF" (id 1) (at 86.36 68.58 0))
-    (property "Footprint" "myAmp:C_FILM_L7.2mm_W5.5mm_P5.00mm" (id 2) (at 81.5848 63.5 0)
+    (property "Footprint" "myAmp:C_FILM_L7.2mm_W5.0mm_P5.00mm" (id 2) (at 81.5848 63.5 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 82.55 67.31 0)
@@ -2875,7 +2875,7 @@
       (reference "C2") (unit 1) (value "22nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
     )
     (path "/66f613c0-61ed-40a1-a380-fef466742922"
-      (reference "C3") (unit 1) (value "1µF") (footprint "myAmp:C_FILM_L7.2mm_W5.5mm_P5.00mm")
+      (reference "C3") (unit 1) (value "1µF") (footprint "myAmp:C_FILM_L7.2mm_W5.0mm_P5.00mm")
     )
     (path "/48142eaa-7210-4390-91e8-e59685a2b4d4"
       (reference "C4") (unit 1) (value "120pF") (footprint "myAmp:C_2.5MM")
@@ -2890,7 +2890,7 @@
       (reference "C7") (unit 1) (value "47nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
     )
     (path "/11af6226-d94c-469b-95d8-d952d2567f76"
-      (reference "C8") (unit 1) (value "1µF") (footprint "myAmp:C_FILM_L7.2mm_W5.5mm_P5.00mm")
+      (reference "C8") (unit 1) (value "1µF") (footprint "myAmp:C_FILM_L7.2mm_W5.0mm_P5.00mm")
     )
     (path "/5b89da72-879f-440b-96c6-c1f1e0879801"
       (reference "C9") (unit 1) (value "100nF") (footprint "myAmp:C_5MM_1206")
