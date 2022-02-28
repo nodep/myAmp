@@ -1,18 +1,26 @@
-# myAmp
+# modulo2
 
-For a while I've had this idea to build my own, battery powered, guitar amplifier. I want to put it into the case of my old Marshall Valvestate 8010 that I've had since the mid '90s. The Marshall hasn't been working properly for a very long time, but I couldn't be bothered to try to fix it. The amp has sentimental value, and I've felt bad simply throwing it out. So I will use it for science! Which is great because I hate making enclosures for my projects.
+What started as an idea to upgrade the guts of a practice guitar amplifier (Marshall Valvestate 8010), has evolved into a stereo guitar amplifier with effects. The current prototype is housed in a guitar pedal box (119 x 93.5 x 56.5mm). It has a modular design with the preamp, the effects board, and a stereo power amp. These modules are split into their own PCBs.
 
-I don't really need an amp, but I need a project to learn more about basic electronics with discrete components, since most of the electronics I did so far was about connecting ICs with a decoupling capacitor here & there. Which was fun, but I want to learn more about the basics.
+### The preamp
 
-This amp will have:
+It is based on ESP's project 27 (https://sound-au.com/project27.htm). I have only used the preamp from this project and I have made a few changes:
 
-- Tone controls with bass/mid/treble. I want to experiment with different tone stacks (Fender, Marshall, Vox...)
-- Switchable overdrive. Something warm and crunchy - not a hi-gain metal.
-- A class D power stage. Probably a TPA3136D2. I've used those already, so for me this will be the least interesting part of the circuit.
-- A reverb/chorus with a FV-1 from Spin semiconductors. I've never done DSP programming, so that should be fun. But I will only add this when the basics are working.
+- The overdrive section is changed to work as protection and limit the output to 3.3V. This is needed for the inputs of the DSP chip in the effects section (max input of FV-1 is 3.3V).
+- The zener diode rail splitter is changed to a TL2426. Reasons being a smaller footprint and much lower power consumption.
+- The total gain has been reduced on every stage.
+- The tone control values have changed to a more Fender-like sound.
 
-I will probably replace the speaker that came with the Marshall at some point. It would be great if I could squeeze an 8" speaker instead of the original 6.5". But I doubt it will fit.
+### The effects
 
-These are the plans. How far I get with them remains to be seen...
+The effects sections is based on a Spin semiconductor's FV-1 DSP chip. The chip has 8 built-in effects and the ability to read 8 more effects from an external EEPROM. This was extended using a microcontroller (ATmega328p) to up to 56 external effects which are read from the microcontroller's flash memory. The board also has a dry/wet mixer, a master volume. The microcontroller has a driverless USB bootloader which allows easier firmware updates and DSP program modification. A rotary encoder allows for FV-1 program selection and changing the input clock frequency of the FV-1. Some of the FV-1 programs work as a mono input and produce a stereo output with one channel outputing a slightly different signal to the other creating a stereo effect from a mono preamp input. The microcontroller oversees the power section to avoid audible pops during the power-up and power-down.
 
-Stay tuned!
+### The power amp
+
+The power section is based on a TPA3220 in a stereo configuration. I have not tested it fully yet, but it should be able to output up to 60W into 4Ω per channel. It is a Class-D amp bringing high efficiency (around 90%) and very low distortion and noise. The TPA3220 chip has an integrated preamp with a selectable gain (4 distinct levels) making the full range of the master volume useful for quiter practice and louder performance levels.
+
+
+
+The PCBs for the final prototype have been send to the fab.
+
+Stay tuned for results!
