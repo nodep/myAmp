@@ -5518,7 +5518,7 @@
     (uuid 4699291b-5ea2-4f18-89a9-48e46658cc16)
     (property "Reference" "J6" (id 0) (at 131.445 157.48 0))
     (property "Value" "USB_OTG" (id 1) (at 131.445 160.02 0))
-    (property "Footprint" "myAmp:USB_OTG_THT_simple" (id 2) (at 135.89 171.45 0)
+    (property "Footprint" "myAmp:USB_OTG_THT" (id 2) (at 135.89 171.45 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 135.89 171.45 0)
@@ -6603,7 +6603,7 @@
       (reference "J5") (unit 1) (value "HOLE") (footprint "myAmp:MountingHole")
     )
     (path "/4699291b-5ea2-4f18-89a9-48e46658cc16"
-      (reference "J6") (unit 1) (value "USB_OTG") (footprint "myAmp:USB_OTG_THT_simple")
+      (reference "J6") (unit 1) (value "USB_OTG") (footprint "myAmp:USB_OTG_THT")
     )
     (path "/00000000-0000-0000-0000-00005ef23215"
       (reference "R1") (unit 1) (value "1K") (footprint "myAmp:R_1206")
