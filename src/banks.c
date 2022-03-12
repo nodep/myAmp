@@ -43,7 +43,7 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 /* 5 0 */ #include "FV-1/spn/holy-city-audio/percussion-ambience.h"
 /* 5 1 */ #include "FV-1/spn/holy-city-audio/room-reverb-3-4-5.h"
 /* 5 2 */ #include "FV-1/spn/holy-city-audio/shimmer.h"
-/* 5 3 */ #include "FV-1/spn/min_rev1.h"
+/* 5 3 */ #include "FV-1/spn/holy-city-audio/shimmer.h"		// double
 /* 5 4 */ #include "FV-1/spn/rev_pl_1.h"
 /* 5 5 */ #include "FV-1/spn/rev_pl_2.h"
 /* 5 6 */ #include "FV-1/spn/rev_pl_3.h"

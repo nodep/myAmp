@@ -1,26 +1,7 @@
 import os
 
-spjFiles = (
-'progs\\a01.spj',
-'progs\\a02.spj',
-'progs\\a03.spj',
-'progs\\a04.spj',
-'progs\\a05.spj',
-'progs\\a06.spj',
-'progs\\a07.spj',
-'progs\\a08.spj',
-'progs\\a09.spj',
-'progs\\a10.spj',
-'progs\\a11.spj',
-'progs\\a12.spj',
-'progs\\a13.spj',
-'progs\\a14.spj',
-'progs\\a15.spj',
-'progs\\a16.spj',
-'progs\\a17.spj',
-'progs\\a18.spj',
-'progs\\a19.spj',
-'progs\\a20.spj',
+projFiles = (
+('softclip.spj', 'out\\softclip.hex'),
 )
 
 def decodeLine(lineNum, line):
@@ -111,10 +92,10 @@ def getSourceForProgram(bankData, program, name):
 currDirLen = len(os.getcwd())
 
 # iterate the SPJ files
-for spjFileName in spjFiles:
+for projFileNames in projFiles:
 	# get the list of spn files in the spj
 	spnFiles = []
-	with open(spjFileName) as inspj:
+	with open(projFileNames[0], 'rt', encoding='utf-8') as inspj:
 		line = inspj.readline()
 		numSpns = int(line.split(':')[1])
 		for lineNum in range(0, numSpns):
@@ -123,8 +104,7 @@ for spjFileName in spjFiles:
 			spnFiles.append(spnFileName[currDirLen + 1:])
 
 	# load the hex file for this spj file
-	hexFileName = spjFileName[:-3] + 'hex'
-	bankData = loadBank(hexFileName)
+	bankData = loadBank(projFileNames[1])
 
 	# write the hex output for the spn files
 	program_num = 0
