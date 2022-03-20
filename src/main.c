@@ -4,7 +4,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/pgmspace.h>
+#include <avr/eeprom.h>
 #include <util/delay.h>
 
 #include "hw_setup.h"
@@ -17,6 +17,7 @@
 #include "fvclk.h"
 #include "sendprog.h"
 #include "state.h"
+#include "powsup.h"
 
 void i2c_init(void)
 {
@@ -55,6 +56,9 @@ void init_hw(void)
 
 	// clock for FV-1
 	fvclk_init();
+
+	// initialize ADC on channel 7
+	powsup_init();
 }
 
 void program_change(const int16_t delta)
@@ -63,16 +67,25 @@ void program_change(const int16_t delta)
     // bits 0 and 1: intermediary positions on the rotary encoder
     // bits 2 to 7: selected program
     
-	static int16_t rotPos = 0;
+	static int16_t rotPos = 2;
+	static uint8_t prevProgram = 0xff;
 	const int16_t maxRotPos = (((NUM_EXT_PROGRAMS + 8) - 1) << 2) | 0b11;
 
+	// initialize rotPos from internal MCU EEPROM on first run
+	uint8_t* eeaadr = (uint8_t*)0;
+	if (prevProgram == 0xff)
+	{
+		const uint8_t saved = eeprom_read_byte(eeaadr);
+
+		if (saved < NUM_EXT_PROGRAMS + 8)
+			rotPos = (saved << 2) | 2;
+	}
+	
 	rotPos += delta;
 	if (rotPos > maxRotPos)
 		rotPos -= maxRotPos;
 	else if (rotPos < 0)
 		rotPos += maxRotPos;
-
-	static uint8_t prevProgram	= 0xff;
 
 	const uint8_t program = (rotPos >> 2) & 0b111111;
 	
@@ -82,21 +95,18 @@ void program_change(const int16_t delta)
 		led_show_program(program);
 
 		// get the current value of the PORTx register
-		uint8_t sxPort = PORT(S0_PORT) & ~(_BV(S0_BIT) | _BV(S1_BIT) | _BV(S2_BIT));
+		uint8_t sxPort = PORT(S0_PORT)
+							& ~(_BV(S0_BIT) | _BV(S1_BIT) | _BV(S2_BIT) | _BV(T0_BIT));
 
 		// put the bits in their right order
 		sxPort |= (program & 1) << 3;
 		sxPort |= (program & 2) << 1;
 		sxPort |= (program & 4) >> 1;
+		sxPort |= (program > 7) ? 1 : 0;
 
 		dprint("prog %i\n", program);
 
 		// set the values on output pins
-		if (program < 8)
-			ClrBit(PORT(T0_PORT), T0_BIT);
-		else
-			SetBit(PORT(T0_PORT), T0_BIT);
-
 		PORT(S0_PORT) = sxPort;
 
 		// send the program over I2C
@@ -104,14 +114,15 @@ void program_change(const int16_t delta)
 			send_program(&fv1programs[program - 8][0]);
 
 		prevProgram = program;
+		
+		// save selected program to internal MCU EEPROM
+		eeprom_update_byte(eeaadr, program);
 	}
 }
 
 int main()
 {
 	init_hw();
-
-	dprint("I live...\n");
 
 	const uint16_t minChangeInterval = MS2TICKS(100);
 	uint16_t prevChange = timer_ticks() - minChangeInterval;
@@ -125,6 +136,8 @@ int main()
 		delta += rotenc_delta();
 
 		const uint16_t now = timer_ticks();
+
+		powsup_poll();
 
 		state_poll(now);
 

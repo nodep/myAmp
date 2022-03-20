@@ -12,7 +12,7 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 /* 1 5 */ #include "FV-1/spn/drolo/flanger.h"
 /* 1 6 */ #include "FV-1/spn/drolo/reverb.h"
 /* 1 7 */ #include "FV-1/spn/firesledge/bass-fv1-p3-reverb.h"
-     
+
 /* 2 0 */ #include "FV-1/spn/dervish/dattorro-mixed/dattorro_1oct_pitch-ip+fb-2k.h"
 /* 2 1 */ #include "FV-1/spn/dervish/dattorro-mixed/dattorro_1oct_pitch-ip-4k.h"
 /* 2 2 */ #include "FV-1/spn/dervish/dattorro-mixed/dattorro_var_pitch-ip+fb-4k.h"
@@ -57,13 +57,15 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 /* 6 5 */ #include "FV-1/spn/spinsemi/rev_rt_d_f.h"
 /* 6 6 */ #include "FV-1/spn/spring_verb.h"
 /* 6 7 */ #include "FV-1/spn/triple-delay-feedback.h"
-     
+
 /* 7 0 */ #include "FV-1/spn/chorus-dual-rate.h"
 /* 7 1 */ #include "FV-1/spn/softclipping_overdrive.h"
 /* 7 2 */ #include "FV-1/spn/dervish/drv102/dv102-1head-reverb.h"
 /* 7 3 */ #include "FV-1/spn/dervish/drv102/dv102-2head-reverb.h"
+#if 0     
 /* 7 4 */ #include "FV-1/spn/dervish/drv102/dv102-pp-1head-reverb.h"
 /* 7 5 */ #include "FV-1/spn/dervish/drv102/dv102-pp-2head-reverb.h"
 /* 7 6 */ #include "FV-1/spn/dervish/drv103/dv103-1head-4xreverb.h"
 /* 7 7 */ #include "FV-1/spn/dervish/looper/looper-pingpong-fb.h"
+#endif
 };

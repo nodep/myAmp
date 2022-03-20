@@ -1946,7 +1946,7 @@
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061baa65d)
     (property "Reference" "C1" (id 0) (at 57.15 27.94 90))
-    (property "Value" "47nF" (id 1) (at 57.15 35.56 90))
+    (property "Value" "150nF" (id 1) (at 57.15 35.56 90))
     (property "Footprint" "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm" (id 2) (at 60.96 30.7848 0)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -2022,7 +2022,7 @@
     (uuid 00000000-0000-0000-0000-000061c307c0)
     (property "Reference" "C5" (id 0) (at 116.84 30.48 90))
     (property "Value" "250pF" (id 1) (at 116.84 38.1 90))
-    (property "Footprint" "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm" (id 2) (at 120.65 33.3248 0)
+    (property "Footprint" "myAmp:C_2.5MM" (id 2) (at 120.65 33.3248 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 116.84 34.29 0)
@@ -2452,7 +2452,7 @@
     (in_bom yes) (on_board yes)
     (uuid 528c4caa-abd9-4c76-a2f9-5cc7d77f317f)
     (property "Reference" "R15" (id 0) (at 242.57 52.07 90))
-    (property "Value" "10k" (id 1) (at 244.475 54.61 90)
+    (property "Value" "4k7" (id 1) (at 244.475 54.61 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "myAmp:R_10MM" (id 2) (at 242.57 50.292 90)
@@ -2869,7 +2869,7 @@
       (reference "#PWR0103") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-000061baa65d"
-      (reference "C1") (unit 1) (value "47nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
+      (reference "C1") (unit 1) (value "150nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
     )
     (path "/ae2e9d4a-7d99-4f91-b532-5d8ec352d108"
       (reference "C2") (unit 1) (value "22nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
@@ -2881,7 +2881,7 @@
       (reference "C4") (unit 1) (value "120pF") (footprint "myAmp:C_2.5MM")
     )
     (path "/00000000-0000-0000-0000-000061c307c0"
-      (reference "C5") (unit 1) (value "250pF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
+      (reference "C5") (unit 1) (value "250pF") (footprint "myAmp:C_2.5MM")
     )
     (path "/00000000-0000-0000-0000-000061c52359"
       (reference "C6") (unit 1) (value "100nF") (footprint "myAmp:C_FILM_L7.2mm_W3.5mm_P5.00mm")
@@ -2974,7 +2974,7 @@
       (reference "R14") (unit 1) (value "220") (footprint "myAmp:R_10MM")
     )
     (path "/528c4caa-abd9-4c76-a2f9-5cc7d77f317f"
-      (reference "R15") (unit 1) (value "10k") (footprint "myAmp:R_10MM")
+      (reference "R15") (unit 1) (value "4k7") (footprint "myAmp:R_10MM")
     )
     (path "/8b87a0e2-0d4e-4917-8cb8-8611032f3b61"
       (reference "R16") (unit 1) (value "100k") (footprint "myAmp:R_10MM")

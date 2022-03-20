@@ -1,10 +1,10 @@
 TARGET  = myAmp
 DEVICE  = atmega328p
 
-F_CPU   = 16000000
+F_CPU   = 12000000
 
-FUSEH = 0xD7
-FUSEL = 0xFD
+FUSEL = 0xFF
+FUSEH = 0xD2
 FUSEX = 0xFF
 
 AVRDUDE = avrdude -c stk500v2 -P avrdoper -p $(DEVICE)
@@ -18,7 +18,7 @@ LFLAGS  = -Wl,--relax
 
 COMPILE = avr-gcc -mmcu=$(DEVICE) -DF_CPU=$(F_CPU) $(CFLAGS)
 
-OBJECTS = main.o avrdbg.o leds.o rotenc.o banks.o timer.o fvclk.o state.o sendprog.o
+OBJECTS = main.o avrdbg.o leds.o rotenc.o banks.o timer.o fvclk.o state.o sendprog.o powsup.o
 
 hex: $(TARGET).hex
 

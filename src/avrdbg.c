@@ -4,11 +4,10 @@
 
 #include <avr/io.h>
 #include <avr/power.h>
-#include <avr/pgmspace.h>
 
 #if DBGPRINT
 
-#define BAUD 76800
+#define BAUD 57600
 #include <util/setbaud.h>
 
 #include "avrdbg.h"

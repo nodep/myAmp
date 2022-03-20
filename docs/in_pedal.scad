@@ -122,11 +122,11 @@ module pcb_powamp()
 	gain_sel_shaft_down(40.17);
 }
 
-translate([0, 0, 40])
+translate([0, 0, 26 + 1.6])
 	pcb_pa27();
 
-translate([0, 0, 20])
+translate([0, 0, 0])
 	pcb_fv1();
 
-translate([0, 0, 0])
+translate([0, 0, -34 - 1.6])
 	pcb_powamp();
