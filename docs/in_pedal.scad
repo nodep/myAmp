@@ -12,9 +12,15 @@ pot_shaft_len = 6;
 pot_depth = 7.05;
 pot_height = 11.3;
 pot_width = 9.5;
+pot_knob_r = 15;
 
-rotenc_shaft_r = 6;
+switch_shaft = 5;
+switch_shaft_offset = 12;
+switch_shaft_len = 12;
+
+rotenc_shaft_r = 7;
 rotenc_shaft_l = 15;
+rotenc_knob_r = 13;
 
 gain_sel_shaft_r = 7;
 gain_sel_shaft_l = 15;
@@ -32,7 +38,11 @@ module pot_up(pos)
 		
 		translate([pot_width/2, pot_shaft_len + pot_depth, pot_shaft_offset])
 			rotate([90, 0, 0])
-				cylinder(pot_shaft_len, pot_shaft / 2, pot_shaft / 2);
+				difference()
+				{
+					cylinder(pot_shaft_len, pot_knob_r / 2, pot_knob_r / 2);
+					cylinder(pot_shaft_len, pot_shaft / 2, pot_shaft / 2);
+				}
 	}
 }
 
@@ -44,8 +54,19 @@ module pot_down(pos)
 		
 		translate([pot_width/2, pot_shaft_len + pot_depth, pot_height - pot_shaft_offset])
 			rotate([90, 0, 0])
-				cylinder(pot_shaft_len, pot_shaft / 2, pot_shaft / 2);
+				difference()
+				{
+					cylinder(pot_shaft_len, pot_knob_r / 2, pot_knob_r / 2);
+					cylinder(pot_shaft_len, pot_shaft / 2, pot_shaft / 2);
+				}
 	}
+}
+
+module switch_down(pos)
+{
+	translate([pos, pcb_height + switch_shaft_len / 2, -switch_shaft_offset])
+		rotate([90, 0, 0])
+			cylinder(switch_shaft_len, switch_shaft / 2, switch_shaft / 2);
 }
 
 module led_up(x, off)
@@ -66,14 +87,22 @@ module rotenc_shaft_down(x)
 {
 	translate([x, pcb_height + rotenc_shaft_l / 2, -10])
 		rotate([90, 0, 0])
-			cylinder(rotenc_shaft_l, rotenc_shaft_r / 2, rotenc_shaft_r / 2);
+			difference()
+			{
+				cylinder(rotenc_shaft_l, rotenc_knob_r / 2, rotenc_knob_r / 2);
+				cylinder(rotenc_shaft_l, rotenc_shaft_r / 2, rotenc_shaft_r / 2);
+			}
 }
 
 module gain_sel_shaft_down(x)
 {
 	translate([x, pcb_height + gain_sel_shaft_l / 2, pcb_thick + 6.5])
 		rotate([90, 0, 0])
-			cylinder(gain_sel_shaft_l, gain_sel_shaft_r / 2, gain_sel_shaft_r / 2);
+			difference()
+			{
+				cylinder(gain_sel_shaft_l, pot_knob_r / 2, pot_knob_r / 2);
+				cylinder(gain_sel_shaft_l, gain_sel_shaft_r / 2, gain_sel_shaft_r / 2);
+			}
 }
 
 module pcb_pa27()
@@ -84,6 +113,8 @@ module pcb_pa27()
 	pot_up(37);
 	pot_up(68);
 	pot_up(99);
+	
+	switch_down(6);
 }
 
 module pcb_fv1()
@@ -97,7 +128,7 @@ module pcb_fv1()
 	pot_up(68);
 	
 	// clip
-	led_down(39.535, 3);
+	led_down(39.535, 2);
 	
 	// program
 	led_down(76.365, 2);
@@ -121,11 +152,25 @@ module pcb_powamp()
 	gain_sel_shaft_down(40.17);
 }
 
-translate([0, 0, 24 + 1.6])
-	pcb_pa27();
+projection(cut = true)
+{
+	translate([-20, 0, 0])
+		difference()
+		{
+			translate([-3, -42, -0.8])
+				cube([111, 84, pcb_thick]);
 
-translate([0, 0, 0])
-	pcb_fv1();
+			rotate([90, 0, 0])
+				translate([0, -48, 0])
+				{
+					translate([0, 0, 24 + 1.6])
+						pcb_pa27();
 
-translate([0, 0, -36 - 1.6])
-	pcb_powamp();
+					translate([0, 0, 0])
+						pcb_fv1();
+
+					translate([0, 0, -36 - 1.6])
+						pcb_powamp();
+				}
+		}
+}
