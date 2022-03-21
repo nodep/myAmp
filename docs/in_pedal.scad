@@ -71,9 +71,9 @@ module rotenc_shaft_down(x)
 
 module gain_sel_shaft_down(x)
 {
-	translate([x, pcb_height + rotenc_shaft_l / 2, pcb_thick + 6.5])
+	translate([x, pcb_height + gain_sel_shaft_l / 2, pcb_thick + 6.5])
 		rotate([90, 0, 0])
-			cylinder(rotenc_shaft_l, rotenc_shaft_r / 2, rotenc_shaft_r / 2);
+			cylinder(gain_sel_shaft_l, gain_sel_shaft_r / 2, gain_sel_shaft_r / 2);
 }
 
 module pcb_pa27()
@@ -117,16 +117,15 @@ module pcb_powamp()
 	led_up(10, 2);
 	led_up(19.5, 2);
 	led_up(29, 2);
-	
-	
+
 	gain_sel_shaft_down(40.17);
 }
 
-translate([0, 0, 26 + 1.6])
+translate([0, 0, 24 + 1.6])
 	pcb_pa27();
 
 translate([0, 0, 0])
 	pcb_fv1();
 
-translate([0, 0, -34 - 1.6])
+translate([0, 0, -36 - 1.6])
 	pcb_powamp();
