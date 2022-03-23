@@ -1,5 +1,3 @@
-#include <avr/pgmspace.h>
-
 #include "banks.h"
 
 const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
@@ -30,7 +28,7 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 /* 3 5 */ #include "FV-1/spn/dervish/dattorro-shimmer/dattorro-shimmer_val-lvl.h"
 /* 3 6 */ #include "FV-1/spn/dervish/dattorro-var_predelay.h"
 /* 3 7 */ #include "FV-1/spn/dervish/drv103/dv103-1head-pp-2_1.h"
-     
+
 /* 4 0 */ #include "FV-1/spn/dervish/drv103/dv103-1head-pp-2_1-4xreverb.h"
 /* 4 1 */ #include "FV-1/spn/dervish/drv103/dv103-2head-2_1-reverb.h"
 /* 4 2 */ #include "FV-1/spn/dervish/triple/tripple_echo_cascaded.h"
@@ -62,7 +60,7 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 /* 7 1 */ #include "FV-1/spn/softclipping_overdrive.h"
 /* 7 2 */ #include "FV-1/spn/dervish/drv102/dv102-1head-reverb.h"
 /* 7 3 */ #include "FV-1/spn/dervish/drv102/dv102-2head-reverb.h"
-#if 0     
+#if 0
 /* 7 4 */ #include "FV-1/spn/dervish/drv102/dv102-pp-1head-reverb.h"
 /* 7 5 */ #include "FV-1/spn/dervish/drv102/dv102-pp-2head-reverb.h"
 /* 7 6 */ #include "FV-1/spn/dervish/drv103/dv103-1head-4xreverb.h"

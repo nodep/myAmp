@@ -28,8 +28,8 @@ void led_init(void)
 void led_shift_byte(uint8_t byte)
 {
 	SPDR = byte;
-	while (!(SPSR & _BV(SPIF)))
-		;
+
+	loop_until_bit_is_set(SPSR, SPIF);
 }
 
 void led_clear(void)

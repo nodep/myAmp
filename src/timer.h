@@ -4,3 +4,4 @@
 
 void timer_init(void);
 uint16_t timer_ticks(void);
+uint16_t timer_wrap_arounds(void);

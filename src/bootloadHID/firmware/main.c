@@ -274,7 +274,7 @@ int /*__attribute__((noreturn))*/ main(void)
         initForUsbConnectivity();
 
 		uint8_t ovcnt = 1;
-		uint8_t ledon = 1;
+		uint8_t pattern = 0;
         do{ /* main event loop */
             wdt_reset();
             usbPoll();
@@ -285,10 +285,12 @@ int /*__attribute__((noreturn))*/ main(void)
 				++ovcnt;
 				if ((ovcnt & 0b111) == 0)
 				{
-					SPDR = ledon;
-					ledon <<= 1;
-					if (ledon == 0)
-						ledon = 1;
+					if (pattern == 0b10101010)
+						pattern = 0b01010101;
+					else
+						pattern = 0b10101010;
+					
+					SPDR = pattern;
 				}
 				
 				// clear TOV0

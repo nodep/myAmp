@@ -32,6 +32,9 @@ $(TARGET).hex: $(OBJECTS)
 flash: $(TARGET).hex
 	$(AVRDUDE) -U flash:w:$(TARGET).hex:i
 
+bootload: $(TARGET).hex
+	bootloadHID/commandline/bootloadHID -r $(TARGET).hex
+
 clean:
 	rm -f $(TARGET).hex $(TARGET).elf $(TARGET).lst $(OBJECTS)
 

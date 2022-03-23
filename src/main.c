@@ -76,9 +76,11 @@ void program_change(const int16_t delta)
 	if (prevProgram == 0xff)
 	{
 		const uint8_t saved = eeprom_read_byte(eeaadr);
-
+		
 		if (saved < NUM_EXT_PROGRAMS + 8)
 			rotPos = (saved << 2) | 2;
+
+		dprint("saved: %i selected: %i\n", saved, (rotPos >> 2));
 	}
 	
 	rotPos += delta;
@@ -114,9 +116,15 @@ void program_change(const int16_t delta)
 			send_program(&fv1programs[program - 8][0]);
 
 		prevProgram = program;
-		
-		// save selected program to internal MCU EEPROM
-		eeprom_update_byte(eeaadr, program);
+
+		// only save program after we have been running for a while
+		// to avoid overwriting the value while the power fluctuates
+		// and the MCU is restarted during brownout
+		if (timer_wrap_arounds())
+		{
+			// save selected program to internal MCU EEPROM
+			eeprom_update_byte(eeaadr, program);
+		}
 	}
 }
 
