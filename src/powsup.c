@@ -19,6 +19,7 @@ enum powamp_state_e
 };
 
 static uint8_t powamp_state = st_reset;
+static uint16_t powamp_reset_started = 0;
 
 void powsup_init(void)
 {
@@ -35,6 +36,8 @@ void powsup_init(void)
 	
 	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
 	SetBit(DDR(PS_RESET_PORT), PS_RESET_BIT);
+	
+	powamp_reset_started = timer_ticks();
 }
 
 #define MAX_DROP	10
@@ -47,7 +50,7 @@ static void powsup_brownout(void)
 
 	// we need to slowly decrease the max ADC point to account
 	// for battery voltage dropping
-	if ((prev_ticks & 0xC000)  !=  (curr_tick & 0xC000))
+	if ((prev_ticks & 0xC000) != (curr_tick & 0xC000)  &&  maxADC > 0)
 		--maxADC;
 	
 	// start a conversion
@@ -79,7 +82,7 @@ static void powsup_brownout(void)
 			dprint("down; max: %i curr: %i\n", maxADC, currADC);
 		}
 	}
-	else if (powamp_state == st_down  &&  rotenc_switch())
+	else if (powamp_state == st_down  &&  rotenc_button())
 	{
 		// back to running (for testing)
 		powamp_state = st_running;
@@ -103,26 +106,26 @@ static void powsup_brownout(void)
 	prev_ticks = curr_tick;
 }
 
-#define WAIT_RESET	10000
-#define WAIT_MUTE	15000
+#define WAIT_RESET	MS2TICKS(500)
+#define WAIT_MUTE	MS2TICKS(600)
 
 void powsup_poll(void)
 {
 	// gradually wake up the power amp to avoid pops
 	if (powamp_state < st_running)
 	{
-		const uint16_t ticks = timer_ticks();
+		const uint16_t reset_dur = timer_ticks() - powamp_reset_started;
 
 		// wake up the power amp from reset?
-		if (powamp_state == st_reset  &&  ticks >= WAIT_RESET)
+		if (powamp_state == st_reset  &&  reset_dur >= WAIT_RESET)
 		{
 			SetBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
 			powamp_state = st_mute;
-			dprint("reset off\n");
+			dprint("unreset\n");
 		}
 
 		// un-mute?
-		if (powamp_state == st_mute  &&  ticks >= WAIT_MUTE)
+		if (powamp_state == st_mute  &&  reset_dur >= WAIT_MUTE)
 		{
 			ClrBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
 			powamp_state = st_running;
@@ -131,4 +134,18 @@ void powsup_poll(void)
 	}
 
 	powsup_brownout();
+}
+
+void powsup_reset(void)
+{
+	powamp_state = st_reset;
+	powamp_reset_started = timer_ticks();
+
+	// mute
+	SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
+	
+	// reset
+	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
+
+	dprint("reset started\n");
 }

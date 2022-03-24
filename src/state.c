@@ -10,10 +10,11 @@
 #include "rotenc.h"
 #include "state.h"
 #include "fvclk.h"
+#include "powsup.h"
 #include "avrdbg.h"
 
 static bool is_selecting_prog	= true;
-static bool should_reset		= false;
+static bool should_reset_clock	= false;
 
 static void state_rotenc_led_flash(const uint16_t now)
 {
@@ -43,40 +44,21 @@ static void state_rotenc_led_flash(const uint16_t now)
 
 void state_poll(const uint16_t now)
 {
-	static bool		btn_down_prev	= false;
-	static uint16_t btn_change		= 0;
-	static bool 	first_short_ok	= false;
-
-	const uint16_t btn_dur = now - btn_change;
-	const bool btn_down = rotenc_switch();
-
-	if (btn_down_prev != btn_down)
-	{
-		// button released?
-		if (btn_down_prev)
-		{
-			if (btn_dur > MS2TICKS(50)  &&  btn_dur < MS2TICKS(1000))
-			{
-				if (first_short_ok)
-					is_selecting_prog = !is_selecting_prog;
-				
-				first_short_ok = !first_short_ok;
-			}
-		}
-		else	// button pressed
-		{
-			if (first_short_ok)
-				first_short_ok = (btn_dur < MS2TICKS(1000));
-		}
-
-		btn_down_prev = btn_down;
-		btn_change = now;
-	}
-	else if (btn_down  &&  btn_dur > MS2TICKS(1500)  &&  !is_selecting_prog)
-	{
-		should_reset = true;
-	}
+	const rotenc_button_event_e button_event = rotenc_poll_button_event();
 	
+	if (button_event == be_double)
+	{
+		is_selecting_prog = !is_selecting_prog;
+	}
+	else if (button_event == be_single)
+	{
+		should_reset_clock = true;
+	}
+	else if (button_event == be_long)
+	{
+		powsup_reset();
+	}
+
 	state_rotenc_led_flash(now);
 }
 
@@ -85,11 +67,11 @@ bool state_is_selecting_prog(void)
 	return is_selecting_prog;
 }
 
-bool state_should_reset(void)
+bool state_should_reset_fvclk(void)
 {
-	if (should_reset)
+	if (should_reset_clock)
 	{
-		should_reset = false;
+		should_reset_clock = false;
 		return true;
 	}
 

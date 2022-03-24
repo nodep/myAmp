@@ -131,6 +131,8 @@ void program_change(const int16_t delta)
 int main()
 {
 	init_hw();
+	
+	dprint("i live...\n");
 
 	const uint16_t minChangeInterval = MS2TICKS(100);
 	uint16_t prevChange = timer_ticks() - minChangeInterval;
@@ -149,7 +151,7 @@ int main()
 
 		state_poll(now);
 
-		if (state_should_reset())
+		if (state_should_reset_fvclk())
 			fvclk_reset();
 		
 		// if we have a delta and the change timeout has passed
