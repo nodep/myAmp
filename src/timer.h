@@ -1,7 +1,9 @@
 #pragma once
 
-#define MS2TICKS(ms)	((ms) * (F_CPU / 1024000))
-#define TICKS2MS(ticks)	((ticks) / MS2TICKS(1))
+#define TIMER_PRESCALER		1024
+
+#define MS2TICKS(ms)		((ms) * (F_CPU/1000) / TIMER_PRESCALER)
+#define TICKS2MS(ticks)		((ticks) * TIMER_PRESCALER / (F_CPU/1000))
 
 void timer_init(void);
 uint16_t timer_ticks(void);

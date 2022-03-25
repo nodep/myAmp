@@ -35,7 +35,8 @@ uint16_t timer_ticks(void)
 
 		overflowCnt += 0x100;
 		
-		if (wrap_around_counter < 0xffff)
+		// if the overflow counter did an overflow
+		if (overflowCnt == 0)
 			++wrap_around_counter;
 		
 		// clear TOV0

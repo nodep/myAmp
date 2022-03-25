@@ -131,8 +131,6 @@ static event_t events[] =
 	{ .event = be_long,		.curr_step = 0,		.changes = changes_long, },
 };
 
-#define NUM_EVENTS	(sizeof(events)/sizeof(events[0]))
-
 static bool event_process(event_t* event, uint16_t change_dur, bool curr_button, bool prev_button)
 {
 	const uint16_t at_least = pgm_read_word(&event->changes[event->curr_step].at_least);
@@ -162,7 +160,8 @@ static bool event_process(event_t* event, uint16_t change_dur, bool curr_button,
 	return false;
 }
 
-#define MAX_CHANGE_DUR	MS2TICKS(4000)
+#define MAX_CHANGE_DUR		MS2TICKS(4000)
+#define NUM_EVENTS			(sizeof(events)/sizeof(events[0]))
 
 rotenc_button_event_e rotenc_poll_button_event(void)
 {
