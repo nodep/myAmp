@@ -4,7 +4,7 @@
 
 #include "timer.h"
 
-static uint16_t wrap_around_counter = 0;
+static uint16_t timer_high_counter = 0;
 
 void timer_init(void)
 {
@@ -14,7 +14,8 @@ void timer_init(void)
 	
 	// The timer is running at 11718.75Hz on a 12MHz quartz
 	// The tick duration is 85.333 micro seconds
-	// 16 bit counter wrap-around is every 5.592 seconds
+	// 16 bit counter overflow is every 5.592 seconds
+	// high 16 bit counter overflow is every 101 hours
 	TCCR0A = 0x00;
 	TCCR0B = _BV(CS02) | _BV(CS00);		// 1024 prescler
 }
@@ -37,7 +38,7 @@ uint16_t timer_ticks(void)
 		
 		// if the overflow counter did an overflow
 		if (overflowCnt == 0)
-			++wrap_around_counter;
+			++timer_high_counter;
 		
 		// clear TOV0
 		TIFR0 |= _BV(TOV0);
@@ -46,7 +47,7 @@ uint16_t timer_ticks(void)
 	return overflowCnt | new_tcnt;
 }
 
-uint16_t timer_wrap_arounds(void)
+uint16_t timer_ticks_high(void)
 {
-	return wrap_around_counter;
+	return timer_high_counter;
 }

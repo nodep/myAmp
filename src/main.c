@@ -120,7 +120,7 @@ void program_change(const int16_t delta)
 		// only save program after we have been running for a while
 		// to avoid overwriting the value while the power fluctuates
 		// and the MCU is restarted during brownout
-		if (timer_wrap_arounds())
+		if (timer_ticks_high())
 		{
 			// save selected program to internal MCU EEPROM
 			eeprom_update_byte(eeaadr, program);
