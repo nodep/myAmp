@@ -90,7 +90,14 @@ void program_change(const int16_t delta)
 		rotPos += maxRotPos;
 
 	const uint8_t program = (rotPos >> 2) & 0b111111;
-	
+
+	//static uint8_t p = 0;
+	//if (p != (rotPos & 3))
+	//{
+	//	p = (rotPos & 3);
+	//	dprinti(p);
+	//}
+
 	if (program != prevProgram)
 	{
 		// show the selected program
@@ -106,7 +113,7 @@ void program_change(const int16_t delta)
 		sxPort |= (program & 4) >> 1;
 		sxPort |= (program > 7) ? 1 : 0;
 
-		dprint("prog %i\n", program);
+		//dprint("prg:%u dlt:%u\n", program, rotPos & 3);
 
 		// set the values on output pins
 		PORT(S0_PORT) = sxPort;
@@ -150,6 +157,8 @@ int main()
 		powsup_poll();
 
 		state_poll(now);
+		
+		led_poll(now);
 
 		if (state_should_reset_fvclk())
 			fvclk_reset();

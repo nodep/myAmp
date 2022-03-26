@@ -40,9 +40,21 @@ void powsup_init(void)
 	powamp_reset_started = timer_ticks();
 }
 
+static uint16_t powsup_get_adc(void)
+{
+	// start a conversion
+	SetBit(ADCSRA, ADSC);
+
+	// wait for it to finish
+	loop_until_bit_is_clear(ADCSRA, ADSC);
+
+	// read the result
+	return ADC;
+}
+
 #define MAX_DROP	10
 
-static void powsup_brownout(void)
+static uint16_t powsup_brownout(void)
 {
 	static uint16_t maxADC = 0;
 	static uint16_t prev_ticks = 0;
@@ -52,15 +64,8 @@ static void powsup_brownout(void)
 	// for battery voltage dropping
 	if ((prev_ticks & 0xC000) != (curr_tick & 0xC000)  &&  maxADC > 0)
 		--maxADC;
-	
-	// start a conversion
-	SetBit(ADCSRA, ADSC);
 
-	// wait for it to finish
-	loop_until_bit_is_clear(ADCSRA, ADSC);
-
-	// read the result
-	const int16_t currADC = ADC;
+	const uint16_t currADC = powsup_get_adc();
 
 	if (powamp_state == st_running)
 	{
@@ -104,10 +109,12 @@ static void powsup_brownout(void)
 		led_show_program(curr_tick >> 10);
 	
 	prev_ticks = curr_tick;
+	
+	return currADC;
 }
 
-#define WAIT_RESET	MS2TICKS(500)
-#define WAIT_MUTE	MS2TICKS(600)
+#define WAIT_RESET	MS2TICKS(200)
+#define WAIT_MUTE	MS2TICKS(100)
 
 void powsup_poll(void)
 {
@@ -133,7 +140,37 @@ void powsup_poll(void)
 		}
 	}
 
-	powsup_brownout();
+	const uint16_t currADC = powsup_brownout();
+
+#define VOLTS2ADC(v)		(uint16_t)((v) * 28.261)
+
+	// 25v 707
+	// 24v 679
+	// 23v 652
+	// 22v 624
+	// 21v 595
+	// 20.4v 577
+	static uint16_t started = 0;
+	
+	if (currADC < VOLTS2ADC(21.6))
+	{
+		if (started == 0)
+			started = timer_ticks();
+		else {
+			//dprinti((started - timer_ticks()) & _BV(10));
+			//led_flash(true, false);
+		}
+	
+		if (currADC < VOLTS2ADC(20.4))
+		{
+		}
+		else if (currADC < VOLTS2ADC(21))
+		{
+		}
+		else
+		{
+		}
+	}
 }
 
 void powsup_reset(void)

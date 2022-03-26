@@ -7,9 +7,9 @@
 
 
 // several bits set/clear/toggle
-#define SetVal(var, mask)	((var) |= (uint8_t)  (mask) )
-#define ClrVal(var, mask)	((var) &= (uint8_t) ~(mask) )
-#define TogVal(var, mask)	((var) ^= (uint8_t)  (mask) )
+#define SetMask(var, mask)	((var) |= (uint8_t)  (mask) )
+#define ClrMask(var, mask)	((var) &= (uint8_t) ~(mask) )
+#define TogMask(var, mask)	((var) ^= (uint8_t)  (mask) )
 
 
 // port helpers

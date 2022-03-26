@@ -5,12 +5,20 @@
 #include <avr/pgmspace.h>
 
 #include "hw_setup.h"
+#include "timer.h"
 #include "leds.h"
 #include "utils.h"
+#include "avrdbg.h"
 
 // the current states of the LEDs
-static uint8_t program_leds = 0;
-static uint8_t rotenc_leds = 0;
+static uint8_t	led_state = 0;			// if not flashing, this contains the current state of the LEDs
+static bool 	led_flashing = false;	// true if flashing (led_state is ignored)
+static uint16_t	led_flash_started = 0;	// when flashing started
+static uint8_t	led_flash_state = 0;	// the current state of the LEDs while flashing
+static uint8_t	led_flash_mask = 0;		// mask to toggle on the LEDs while flashing
+static bool		led_flash_prev = false;	// previous flash state
+static uint8_t	led_flash_speed = 0;	// the flashing speed (0 is slowest)
+static uint8_t	led_flash_repeats = 0;	// how many more times to flash (0 when forever)
 
 void led_init(void)
 {
@@ -25,7 +33,12 @@ void led_init(void)
 	led_clear();
 }
 
-void led_shift_byte(uint8_t byte)
+bool led_is_flashing(void)
+{
+	return led_flashing;
+}
+
+static void led_shift_byte(uint8_t byte)
 {
 	SPDR = byte;
 
@@ -34,12 +47,15 @@ void led_shift_byte(uint8_t byte)
 
 void led_clear(void)
 {
+	led_flash_stop();
+	
 	// reset the LED shift registers
 	ClrBit(PORT(LED_RST_PORT), LED_RST_BIT);
 	
-	// set the local copies to 0
-	program_leds = 0;
-	rotenc_leds = 0;
+	// all LEDs off
+	led_state = 0;
+	
+	led_flashing = false;
 	
 	// raise the reset signal
 	SetBit(PORT(LED_RST_PORT), LED_RST_BIT);
@@ -72,7 +88,7 @@ void led_clear(void)
 // 0 0
 // 1 0
 
-const uint8_t prog_lo_leds_lookup[8] PROGMEM =
+const uint8_t prog_lo_led_lookup[8] PROGMEM =
 {
 	0b00000000,	// 0
 	0b10000000,	// 1
@@ -84,7 +100,7 @@ const uint8_t prog_lo_leds_lookup[8] PROGMEM =
 	0b10101000,	// 7
 };
 
-const uint8_t prog_hi_leds_lookup[8] PROGMEM =
+const uint8_t prog_hi_led_lookup[8] PROGMEM =
 {
 	0b00000000,	// 0
 	0b01000000,	// 1
@@ -96,26 +112,83 @@ const uint8_t prog_hi_leds_lookup[8] PROGMEM =
 	0b01010100,	// 7
 };
 
+#define LED_MASK_ROTENC		0b00000011
+#define LED_MASK_PROG		0b11111100
+
 void led_show_program(const uint8_t program)
 {
-	const uint8_t new_val = pgm_read_byte(&prog_lo_leds_lookup[program & 7]) |
-							pgm_read_byte(&prog_hi_leds_lookup[(program >> 3) & 7]);
+	const uint8_t new_prog = pgm_read_byte(&prog_lo_led_lookup[program & 7]) |
+							 pgm_read_byte(&prog_hi_led_lookup[(program >> 3) & 7]);
 
-	if (new_val != program_leds)
+	if (new_prog != (led_state & LED_MASK_ROTENC))
 	{
-		led_shift_byte(new_val | rotenc_leds);
-		program_leds = new_val;
+		led_state &= LED_MASK_ROTENC;
+		led_state |= new_prog;
+		if (!led_flashing)
+			led_shift_byte(led_state);
 	}
 }
 
-void led_show_rotenc(const bool green, const bool blue)
+void led_show_rotenc(const bool orange, const bool blue)
 {
-	const uint8_t new_val = (green ? _BV(0) : 0) |
-							(blue ? _BV(1) : 0);
+	const uint8_t new_rotenc =	(orange ? _BV(0) : 0) |
+								(blue   ? _BV(1) : 0);
 	
-	if (new_val != rotenc_leds)
+	if (new_rotenc != (led_state & LED_MASK_ROTENC))
 	{
-		led_shift_byte(program_leds | new_val);
-		rotenc_leds = new_val;
+		led_state &= LED_MASK_PROG;
+		led_state |= new_rotenc;
+		if (!led_flashing)
+			led_shift_byte(led_state);
 	}
+}
+
+void led_poll(const uint16_t now)
+{
+	if (led_flashing)
+	{
+		const bool curr = ((now - led_flash_started) & _BV(14 - led_flash_speed));
+		
+		if (led_flash_prev != curr)
+		{
+			dprint("r:%u\n", (uint16_t)led_flash_repeats);
+			if (led_flash_repeats == 1)
+			{
+				led_flash_stop();
+			}
+			else
+			{
+				TogMask(led_flash_state, led_flash_mask);
+				led_shift_byte(led_flash_state);
+			}
+			
+			if (led_flash_repeats)
+				--led_flash_repeats;
+
+			led_flash_prev = curr;
+		}
+	}
+}
+
+void led_flash_start(const uint16_t now, const uint8_t leds, const uint8_t speed, const uint8_t repeats)
+{
+	led_flashing = true;
+	led_flash_state = led_state;
+	led_flash_mask = leds;
+	led_flash_repeats = repeats;
+	led_flash_started = now;
+	led_flash_speed = speed;
+	led_flash_prev = 0;
+
+	TogMask(led_flash_state, led_flash_mask);
+	led_shift_byte(led_flash_state);
+	
+	dprint("start\n");
+}
+
+void led_flash_stop(void)
+{
+	led_flashing = false;
+	led_shift_byte(led_state);
+	dprint("stop\n");
 }
