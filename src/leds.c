@@ -11,14 +11,22 @@
 #include "avrdbg.h"
 
 // the current states of the LEDs
-static uint8_t	led_state = 0;			// if not flashing, this contains the current state of the LEDs
-static bool 	led_flashing = false;	// true if flashing (led_state is ignored)
-static uint16_t	led_flash_started = 0;	// when flashing started
-static uint8_t	led_flash_state = 0;	// the current state of the LEDs while flashing
-static uint8_t	led_flash_mask = 0;		// mask to toggle on the LEDs while flashing
-static bool		led_flash_prev = false;	// previous flash state
-static uint8_t	led_flash_speed = 0;	// the flashing speed (0 is slowest)
-static uint8_t	led_flash_repeats = 0;	// how many more times to flash (0 when forever)
+static uint8_t	led_state = 0;				// if not flashing or timeout displaying,
+											// this contains the current state of the LEDs
+											
+// flashing state
+static bool 	led_flashing = false;		// true if flashing (led_state is ignored)
+static uint16_t	led_flash_started = 0;		// when flashing started
+static uint8_t	led_flash_state = 0;		// the current state of the LEDs while flashing
+static uint8_t	led_flash_mask = 0;			// mask to toggle on the LEDs while flashing
+static bool		led_flash_prev = false;		// previous flash state
+static uint8_t	led_flash_speed = 0;		// the flashing speed (0 is slowest)
+static uint8_t	led_flash_repeats = 0;		// how many more times to flash (0 when forever)
+
+// temping state
+static bool 	led_temping = false;		// true if showing with timeout
+static uint16_t	led_temp_started = 0;		// timeout started
+static uint16_t led_temp_duration = 0;		// how long the message will stay
 
 void led_init(void)
 {
@@ -38,6 +46,11 @@ bool led_is_flashing(void)
 	return led_flashing;
 }
 
+bool led_is_showing_with_timeout(void)
+{
+	return led_temping;
+}
+
 static void led_shift_byte(uint8_t byte)
 {
 	SPDR = byte;
@@ -55,6 +68,7 @@ void led_clear(void)
 	// all LEDs off
 	led_state = 0;
 	
+	led_temping = false;
 	led_flashing = false;
 	
 	// raise the reset signal
@@ -124,7 +138,7 @@ void led_show_program(const uint8_t program)
 	{
 		led_state &= LED_MASK_ROTENC;
 		led_state |= new_prog;
-		if (!led_flashing)
+		if (!led_flashing  &&  !led_temping)
 			led_shift_byte(led_state);
 	}
 }
@@ -138,7 +152,7 @@ void led_show_rotenc(const bool orange, const bool blue)
 	{
 		led_state &= LED_MASK_PROG;
 		led_state |= new_rotenc;
-		if (!led_flashing)
+		if (!led_flashing  &&  !led_temping)
 			led_shift_byte(led_state);
 	}
 }
@@ -151,7 +165,8 @@ void led_poll(const uint16_t now)
 		
 		if (led_flash_prev != curr)
 		{
-			dprint("r:%u\n", (uint16_t)led_flash_repeats);
+			dprint("fr:%u\n", (uint16_t)led_flash_repeats);
+			
 			if (led_flash_repeats == 1)
 			{
 				led_flash_stop();
@@ -166,6 +181,16 @@ void led_poll(const uint16_t now)
 				--led_flash_repeats;
 
 			led_flash_prev = curr;
+		}
+	}
+	else if (led_temping)
+	{
+		if ((now - led_temp_started) > led_temp_duration)
+		{
+			led_shift_byte(led_state);
+			led_temping = false;
+			
+			dprint("show timeout end\n");
 		}
 	}
 }
@@ -183,12 +208,24 @@ void led_flash_start(const uint16_t now, const uint8_t leds, const uint8_t speed
 	TogMask(led_flash_state, led_flash_mask);
 	led_shift_byte(led_flash_state);
 	
-	dprint("start\n");
+	dprint("flash start\n");
 }
 
 void led_flash_stop(void)
 {
 	led_flashing = false;
 	led_shift_byte(led_state);
-	dprint("stop\n");
+	
+	dprint("flash stop\n");
+}
+
+void led_show_with_timeout(const uint16_t now, const uint8_t leds, const uint16_t duration)
+{
+	led_temping = true;
+	led_temp_started = now;
+	led_temp_duration = duration;
+	
+	led_shift_byte(leds);
+	
+	dprint("show timeout start\n");
 }

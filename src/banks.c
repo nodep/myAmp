@@ -58,8 +58,8 @@ const unsigned char fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 
 /* 7 0 */ #include "FV-1/spn/chorus-dual-rate.h"
 /* 7 1 */ #include "FV-1/spn/softclipping_overdrive.h"
-/* 7 2 */ #include "FV-1/spn/dervish/drv102/dv102-1head-reverb.h"
 #if 0
+/* 7 2 */ #include "FV-1/spn/dervish/drv102/dv102-1head-reverb.h"
 /* 7 3 */ #include "FV-1/spn/dervish/drv102/dv102-2head-reverb.h"
 /* 7 4 */ #include "FV-1/spn/dervish/drv102/dv102-pp-1head-reverb.h"
 /* 7 5 */ #include "FV-1/spn/dervish/drv102/dv102-pp-2head-reverb.h"

@@ -40,7 +40,7 @@ void powsup_init(void)
 	powamp_reset_started = timer_ticks();
 }
 
-static uint16_t powsup_get_adc(void)
+uint16_t powsup_get_adc(void)
 {
 	// start a conversion
 	SetBit(ADCSRA, ADSC);
@@ -141,8 +141,6 @@ void powsup_poll(void)
 	}
 
 	const uint16_t currADC = powsup_brownout();
-
-#define VOLTS2ADC(v)		(uint16_t)((v) * 28.261)
 
 	// 25v 707
 	// 24v 679

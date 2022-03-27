@@ -18,7 +18,7 @@ LFLAGS  = -Wl,--relax
 
 COMPILE = avr-gcc -mmcu=$(DEVICE) -DF_CPU=$(F_CPU) $(CFLAGS)
 
-OBJECTS = main.o avrdbg.o leds.o rotenc.o banks.o timer.o fvclk.o state.o sendprog.o powsup.o
+OBJECTS = main.o avrdbg.o leds.o rotenc.o banks.o timer.o fvclk.o event_handler.o sendprog.o powsup.o
 
 hex: $(TARGET).hex
 

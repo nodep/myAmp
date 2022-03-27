@@ -16,7 +16,7 @@
 #include "timer.h"
 #include "fvclk.h"
 #include "sendprog.h"
-#include "state.h"
+#include "event_handler.h"
 #include "powsup.h"
 
 void i2c_init(void)
@@ -156,17 +156,17 @@ int main()
 
 		powsup_poll();
 
-		state_poll(now);
+		event_poll(now);
 		
 		led_poll(now);
 
-		if (state_should_reset_fvclk())
+		if (event_should_reset_fvclk())
 			fvclk_reset();
 		
 		// if we have a delta and the change timeout has passed
 		if (delta != 0  &&  now - prevChange >= minChangeInterval)
 		{
-			if (state_is_selecting_prog())
+			if (event_is_selecting_prog())
 				program_change(delta);
 			else
 				fvclk_change(delta);
