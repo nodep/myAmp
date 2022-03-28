@@ -63,43 +63,39 @@ void init_hw(void)
 
 void program_change(const int16_t delta)
 {
-    // rotPos encoding:
+    // rotenc_pos encoding:
     // bits 0 and 1: intermediary positions on the rotary encoder
     // bits 2 to 7: selected program
     
-	static int16_t rotPos = 2;
-	static uint8_t prevProgram = 0xff;
-	const int16_t maxRotPos = (((NUM_EXT_PROGRAMS + 8) - 1) << 2) | 0b11;
-
-	// initialize rotPos from internal MCU EEPROM on first run
+	static int16_t rotenc_pos = 2;
+	static uint8_t prev_program = 0xff;
+	
+	// initialize rotenc_pos from internal MCU EEPROM on first run
 	uint8_t* eeaadr = (uint8_t*)0;
-	if (prevProgram == 0xff)
+	if (prev_program == 0xff)
 	{
 		const uint8_t saved = eeprom_read_byte(eeaadr);
 		
 		if (saved < NUM_EXT_PROGRAMS + 8)
-			rotPos = (saved << 2) | 2;
+			rotenc_pos = (saved << 2) | 2;
 
-		dprint("saved: %i selected: %i\n", saved, (rotPos >> 2));
+		dprint("saved:%i selected:%i\n", saved, (rotenc_pos >> 2));
 	}
 	
-	rotPos += delta;
-	if (rotPos > maxRotPos)
-		rotPos -= maxRotPos;
-	else if (rotPos < 0)
-		rotPos += maxRotPos;
+	const int16_t rotenc_pos_max = (((NUM_EXT_PROGRAMS + 8) - 1) << 2) | 0b11;
+	
+	rotenc_pos += delta;
+	if (rotenc_pos > rotenc_pos_max)
+		rotenc_pos -= rotenc_pos_max;
+	else if (rotenc_pos < 0)
+		rotenc_pos += rotenc_pos_max;
 
-	const uint8_t program = (rotPos >> 2) & 0b111111;
+	const uint8_t program = (rotenc_pos >> 2) & 0b111111;
 
-	//static uint8_t p = 0;
-	//if (p != (rotPos & 3))
-	//{
-	//	p = (rotPos & 3);
-	//	dprinti(p);
-	//}
-
-	if (program != prevProgram)
+	if (program != prev_program)
 	{
+		dprint("prog:%u\n", program);
+		
 		// show the selected program
 		led_show_program(program);
 
@@ -113,8 +109,6 @@ void program_change(const int16_t delta)
 		sxPort |= (program & 4) >> 1;
 		sxPort |= (program > 7) ? 1 : 0;
 
-		//dprint("prg:%u dlt:%u\n", program, rotPos & 3);
-
 		// set the values on output pins
 		PORT(S0_PORT) = sxPort;
 
@@ -122,7 +116,7 @@ void program_change(const int16_t delta)
 		if (program > 7)
 			send_program(&fv1programs[program - 8][0]);
 
-		prevProgram = program;
+		prev_program = program;
 
 		// only save program after we have been running for a while
 		// to avoid overwriting the value while the power fluctuates
@@ -132,6 +126,12 @@ void program_change(const int16_t delta)
 			// save selected program to internal MCU EEPROM
 			eeprom_update_byte(eeaadr, program);
 		}
+	}
+	else
+	{
+		// recenter the rotenc position
+		if (rotenc_is_stable())
+			rotenc_pos &= 0b1111110;
 	}
 }
 

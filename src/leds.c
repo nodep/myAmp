@@ -134,7 +134,7 @@ void led_show_program(const uint8_t program)
 	const uint8_t new_prog = pgm_read_byte(&prog_lo_led_lookup[program & 7]) |
 							 pgm_read_byte(&prog_hi_led_lookup[(program >> 3) & 7]);
 
-	if (new_prog != (led_state & LED_MASK_ROTENC))
+	if (new_prog != (led_state & LED_MASK_PROG))
 	{
 		led_state &= LED_MASK_ROTENC;
 		led_state |= new_prog;

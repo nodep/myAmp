@@ -3,6 +3,7 @@
 void rotenc_init(void);
 int8_t rotenc_delta(void);
 bool rotenc_button(void);
+bool rotenc_is_stable(void);
 
 typedef enum
 {

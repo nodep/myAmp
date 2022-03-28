@@ -6,6 +6,7 @@
 #include <util/delay.h>
 
 #include "hw_setup.h"
+#include "avrdbg.h"
 #include "utils.h"
 #include "timer.h"
 #include "rotenc.h"
@@ -43,6 +44,14 @@ const int8_t lookup_table[0x10] PROGMEM =
    0,	// 0b1111
 };	
 
+bool rotenc_is_stable(void)
+{
+	const uint8_t AB = ((PIN(ROT_A_PORT) & _BV(ROT_A_BIT)) ? 0 : 2)
+					 | ((PIN(ROT_B_PORT) & _BV(ROT_B_BIT)) ? 0 : 1);
+						
+	return AB == 0;
+}
+
 int8_t rotenc_delta(void)
 {
 	static uint8_t oldAB = 0;
@@ -53,7 +62,7 @@ int8_t rotenc_delta(void)
 	oldAB <<= 2;		// remember previous state
 	oldAB |= newAB;		// add current state
 	oldAB &= 0x0f;		// clear the extra bits
-
+	
 	return pgm_read_byte(&lookup_table[oldAB]);
 }
 

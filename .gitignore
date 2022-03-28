@@ -11,3 +11,13 @@ fp-info-cache
 *.gtl
 *.gts
 *.gto
+*.raw
+*.log
+*.o
+*.exe
+*.elf
+*.hex
+*.bin
+sym/*
+docs/*
+circuit/gerber/*
