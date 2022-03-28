@@ -9,8 +9,10 @@
 
 #define CONFIRM()	TWCR = _BV(TWEA) | _BV(TWEN) | _BV(TWINT)
 
-void send_program(const uint8_t* program_addr)
+void send_program(const uint8_t program_num)
 {
+	const uint8_t* program_addr = fv1programs[program_num];
+	
 	// wait for FV-1 to start reading the selected program
 	do {
 		CONFIRM();

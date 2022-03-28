@@ -52,7 +52,7 @@ uint16_t powsup_get_adc(void)
 	return ADC;
 }
 
-#define MAX_DROP	10
+#define MAX_DROP	40
 
 static uint16_t powsup_brownout(void)
 {

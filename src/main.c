@@ -31,7 +31,7 @@ void i2c_init(void)
 void init_hw(void)
 {
 	dbgInit();
-	
+
 	timer_init();
 
 	led_init();
@@ -39,7 +39,7 @@ void init_hw(void)
 	rotenc_init();
 
 	i2c_init();
-	
+
 	// FV-1 program selector
 	SetBit(DDR(S0_PORT), S0_BIT);
 	ClrBit(PORT(S0_PORT), S0_BIT);
@@ -66,36 +66,36 @@ void program_change(const int16_t delta)
     // rotenc_pos encoding:
     // bits 0 and 1: intermediary positions on the rotary encoder
     // bits 2 to 7: selected program
-    
+
 	static int16_t rotenc_pos = 2;
 	static uint8_t prev_program = 0xff;
-	
+
 	// initialize rotenc_pos from internal MCU EEPROM on first run
 	uint8_t* eeaadr = (uint8_t*)0;
 	if (prev_program == 0xff)
 	{
 		const uint8_t saved = eeprom_read_byte(eeaadr);
-		
+
 		if (saved < NUM_EXT_PROGRAMS + 8)
 			rotenc_pos = (saved << 2) | 2;
 
 		dprint("saved:%i selected:%i\n", saved, (rotenc_pos >> 2));
 	}
-	
+
 	const int16_t rotenc_pos_max = (((NUM_EXT_PROGRAMS + 8) - 1) << 2) | 0b11;
-	
+
 	rotenc_pos += delta;
 	if (rotenc_pos > rotenc_pos_max)
 		rotenc_pos -= rotenc_pos_max;
 	else if (rotenc_pos < 0)
 		rotenc_pos += rotenc_pos_max;
 
-	const uint8_t program = (rotenc_pos >> 2) & 0b111111;
+	const uint8_t program = (rotenc_pos >> 2);
 
 	if (program != prev_program)
 	{
 		dprint("prog:%u\n", program);
-		
+
 		// show the selected program
 		led_show_program(program);
 
@@ -114,7 +114,7 @@ void program_change(const int16_t delta)
 
 		// send the program over I2C
 		if (program > 7)
-			send_program(&fv1programs[program - 8][0]);
+			send_program(program - 8);
 
 		prev_program = program;
 
@@ -127,18 +127,17 @@ void program_change(const int16_t delta)
 			eeprom_update_byte(eeaadr, program);
 		}
 	}
-	else
+	else if (rotenc_is_stable())
 	{
 		// recenter the rotenc position
-		if (rotenc_is_stable())
-			rotenc_pos &= 0b1111110;
+		rotenc_pos = (rotenc_pos & 0b11111100) | 2;
 	}
 }
 
 int main()
 {
 	init_hw();
-	
+
 	dprint("i live...\n");
 
 	const uint16_t minChangeInterval = MS2TICKS(100);
@@ -157,12 +156,12 @@ int main()
 		powsup_poll();
 
 		event_poll(now);
-		
+
 		led_poll(now);
 
 		if (event_should_reset_fvclk())
 			fvclk_reset();
-		
+
 		// if we have a delta and the change timeout has passed
 		if (delta != 0  &&  now - prevChange >= minChangeInterval)
 		{
