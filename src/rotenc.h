@@ -11,6 +11,7 @@ typedef enum
 	be_single,
 	be_double,
 	be_long,
+	be_long_short,
 } rotenc_button_event_e;
 
 rotenc_button_event_e rotenc_poll_button_event(void);

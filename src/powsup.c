@@ -77,16 +77,7 @@ static void powsup_brownout(const uint16_t now)
 		// do we have a drop over the allowed max?
 		if (maxADC - currADC > MAX_DROP)
 		{
-			// mute
-			SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
-
-			// reset
-			ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
-
-			powamp_state = st_down;
-
-			// start flashing
-			led_flash_start(now, 0xff, 0, 0);
+			powsup_shutdown(now);
 
 			dprint("down; max: %i curr: %i\n", maxADC, currADC);
 		}
@@ -145,6 +136,22 @@ void powsup_reset(const uint16_t now)
 
 	// reset
 	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
+	
+	led_flash_stop();
 
 	dprint("reset started\n");
+}
+
+void powsup_shutdown(const uint16_t now)
+{
+	// mute
+	SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
+
+	// reset
+	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
+
+	powamp_state = st_down;
+
+	// start flashing
+	led_flash_start(now, 0xff, MS2TICKS(80), 0);
 }

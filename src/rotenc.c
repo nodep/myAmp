@@ -133,11 +133,21 @@ const change_t changes_long[] PROGMEM =
 	{ .at_least = MS2TICKS( 501), .at_most = MS2TICKS(   0)},	// up
 };
 
+const change_t changes_long_short[] PROGMEM =
+{
+	{ .at_least = MS2TICKS( 501), .at_most = MS2TICKS(   0)},	// up
+	{ .at_least = MS2TICKS( 600), .at_most = MS2TICKS(2000)},	// down
+	{ .at_least = MS2TICKS(   0), .at_most = MS2TICKS( 300)},	// up
+	{ .at_least = MS2TICKS(   0), .at_most = MS2TICKS( 300)},	// down
+	{ .at_least = MS2TICKS( 501), .at_most = MS2TICKS(   0)},	// up
+};
+
 static event_t events[] =
 {
-	{ .event = be_single,	.curr_step = 0,		.changes = changes_single, },
-	{ .event = be_double,	.curr_step = 0,		.changes = changes_double, },
-	{ .event = be_long,		.curr_step = 0,		.changes = changes_long, },
+	{ .event = be_single,		.curr_step = 0,		.changes = changes_single, },
+	{ .event = be_double,		.curr_step = 0,		.changes = changes_double, },
+	{ .event = be_long,			.curr_step = 0,		.changes = changes_long, },
+	{ .event = be_long_short,	.curr_step = 0,		.changes = changes_long_short, },
 };
 
 static bool event_process(event_t* event, uint16_t change_dur, bool curr_button, bool prev_button)

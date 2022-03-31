@@ -16,13 +16,14 @@ static bool should_reset_clock	= false;
 void event_poll(const uint16_t now)
 {
 	const rotenc_button_event_e button_event = rotenc_poll_button_event();
+	const uint16_t flash_interval = ((FV_FREQ_MAX - fvclk_get_freq()) >> 4) + 100;
 	
 	if (button_event == be_double)
 	{
 		if (is_selecting_prog)
 		{
 			// start flashing the rotenc LEDs
-			led_flash_start(now, 3, MS2TICKS(300), 0);
+			led_flash_start(now, 3, MS2TICKS(flash_interval), 0);
 			is_selecting_prog = false;
 		}
 		else
@@ -64,6 +65,15 @@ void event_poll(const uint16_t now)
 	{
 		powsup_reset(now);
 	}
+	else if (button_event == be_long_short)
+	{
+		powsup_shutdown(now);
+	}
+	else if (!is_selecting_prog)
+	{
+		// start flashing the rotenc LEDs
+		led_flash_start(now, 3, MS2TICKS(flash_interval), 0);
+	}
 	else if (!led_is_flashing()  &&  !led_is_showing_with_timeout())
 	{
 		static uint16_t last_flash = 0;
@@ -87,7 +97,7 @@ void event_poll(const uint16_t now)
 		{
 			dprint("n:%u l:%u\n", now_high, last_flash);
 			
-			led_flash_start(now, 0xff, 3, flash_repeats);
+			led_flash_start(now, 0xff, MS2TICKS(200), flash_repeats);
 		
 			last_flash = now_high;
 		}
