@@ -16,7 +16,7 @@ void led_show_program(const uint8_t program);
 void led_show_rotenc(const bool orange, const bool blue);
 
 // flashing
-void led_flash_start(const uint16_t now, const uint8_t leds, const uint8_t speed, const uint8_t repeats);
+void led_flash_start(const uint16_t now, const uint8_t leds, const uint16_t interval, const uint8_t repeats);
 void led_flash_stop(void);
 bool led_is_flashing(void);
 

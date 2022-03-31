@@ -18,7 +18,7 @@ enum powamp_state_e
 	st_down,		// the amp has been shut down due to brownout
 };
 
-static uint8_t powamp_state = st_reset;
+static uint8_t  powamp_state = st_reset;
 static uint16_t powamp_reset_started = 0;
 
 void powsup_init(void)
@@ -28,15 +28,15 @@ void powsup_init(void)
 			| 7;			// ADC channel 7
 
 	ADCSRA = _BV(ADEN)		// enable ADC
-			| _BV(ADPS2) /*| _BV(ADPS1) | _BV(ADPS0)*/;	// division 16
-			
+			| _BV(ADPS2);	// division 16
+
 	// configure the pins that control the power amp
 	SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
 	SetBit(DDR(PS_MUTE_PORT), PS_MUTE_BIT);
-	
+
 	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
 	SetBit(DDR(PS_RESET_PORT), PS_RESET_BIT);
-	
+
 	powamp_reset_started = timer_ticks();
 }
 
@@ -52,17 +52,18 @@ uint16_t powsup_get_adc(void)
 	return ADC;
 }
 
-#define MAX_DROP	40
+#define MAX_DROP	10
 
-static uint16_t powsup_brownout(void)
+// this function attempts to reset the power amp
+// when it notices a drop in input power voltage
+static void powsup_brownout(const uint16_t now)
 {
 	static uint16_t maxADC = 0;
 	static uint16_t prev_ticks = 0;
-	const uint16_t curr_tick = timer_ticks();
 
 	// we need to slowly decrease the max ADC point to account
 	// for battery voltage dropping
-	if ((prev_ticks & 0xC000) != (curr_tick & 0xC000)  &&  maxADC > 0)
+	if ((prev_ticks & 0xC000) != (now & 0xC000)  &&  maxADC > 0)
 		--maxADC;
 
 	const uint16_t currADC = powsup_get_adc();
@@ -78,50 +79,41 @@ static uint16_t powsup_brownout(void)
 		{
 			// mute
 			SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
-			
+
 			// reset
 			ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
-			
+
 			powamp_state = st_down;
-			
+
+			// start flashing
+			led_flash_start(now, 0xff, 0, 0);
+
 			dprint("down; max: %i curr: %i\n", maxADC, currADC);
 		}
 	}
 	else if (powamp_state == st_down  &&  rotenc_button())
 	{
-		// back to running (for testing)
-		powamp_state = st_running;
-
-		// back from reset
-		SetBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
-
-		// un-mute
-		ClrBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
+		// back to reset then to running
+		powsup_reset(now);
 
 		// reset the max
 		maxADC = currADC;
-		
+
 		dprint("back up\n");
 	}
 
-	// blink during power down
-	if (powamp_state == st_down)
-		led_show_program(curr_tick >> 10);
-	
-	prev_ticks = curr_tick;
-	
-	return currADC;
+	prev_ticks = now;
 }
 
-#define WAIT_RESET	MS2TICKS(200)
-#define WAIT_MUTE	MS2TICKS(100)
+#define WAIT_RESET	MS2TICKS(300)
+#define WAIT_MUTE	MS2TICKS(500)
 
-void powsup_poll(void)
+void powsup_poll(const uint16_t now)
 {
 	// gradually wake up the power amp to avoid pops
 	if (powamp_state < st_running)
 	{
-		const uint16_t reset_dur = timer_ticks() - powamp_reset_started;
+		const uint16_t reset_dur = now - powamp_reset_started;
 
 		// wake up the power amp from reset?
 		if (powamp_state == st_reset  &&  reset_dur >= WAIT_RESET)
@@ -140,45 +132,17 @@ void powsup_poll(void)
 		}
 	}
 
-	const uint16_t currADC = powsup_brownout();
-
-	// 25v 707
-	// 24v 679
-	// 23v 652
-	// 22v 624
-	// 21v 595
-	// 20.4v 577
-	static uint16_t started = 0;
-	
-	if (currADC < VOLTS2ADC(21.6))
-	{
-		if (started == 0)
-			started = timer_ticks();
-		else {
-			//dprinti((started - timer_ticks()) & _BV(10));
-			//led_flash(true, false);
-		}
-	
-		if (currADC < VOLTS2ADC(20.4))
-		{
-		}
-		else if (currADC < VOLTS2ADC(21))
-		{
-		}
-		else
-		{
-		}
-	}
+	powsup_brownout(now);
 }
 
-void powsup_reset(void)
+void powsup_reset(const uint16_t now)
 {
 	powamp_state = st_reset;
-	powamp_reset_started = timer_ticks();
+	powamp_reset_started = now;
 
 	// mute
 	SetBit(PORT(PS_MUTE_PORT), PS_MUTE_BIT);
-	
+
 	// reset
 	ClrBit(PORT(PS_RESET_PORT), PS_RESET_BIT);
 

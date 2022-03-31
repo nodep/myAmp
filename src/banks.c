@@ -2,6 +2,7 @@
 
 const uint8_t fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 {
+#if 0
 /*  0 1 0 */ #include "FV-1/spn/shimmer_drAlx.h"
 /*  1 1 1 */ #include "FV-1/spn/shimmer-1.h"
 /*  2 1 2 */ #include "FV-1/spn/shimmer-2.h"
@@ -58,7 +59,6 @@ const uint8_t fv1programs[NUM_EXT_PROGRAMS][0x200] PROGMEM =
 
 /* 48 7 0 */ #include "FV-1/spn/chorus-dual-rate.h"
 /* 49 7 1 */ #include "FV-1/spn/softclipping_overdrive.h"
-#if 0
 /* 50 7 2 */ #include "FV-1/spn/dervish/drv102/dv102-1head-reverb.h"
 /* 51 7 3 */ #include "FV-1/spn/dervish/drv102/dv102-2head-reverb.h"
 /* 52 7 4 */ #include "FV-1/spn/dervish/drv102/dv102-pp-1head-reverb.h"

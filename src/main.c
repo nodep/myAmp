@@ -63,9 +63,9 @@ void init_hw(void)
 
 void program_change(const int16_t delta)
 {
-    // rotenc_pos encoding:
-    // bits 0 and 1: intermediary positions on the rotary encoder
-    // bits 2 to 7: selected program
+	// rotenc_pos encoding:
+	// bits 0 and 1: intermediary positions on the rotary encoder
+	// bits 2 to 7: selected program
 
 	static int16_t rotenc_pos = 2;
 	static uint8_t prev_program = 0xff;
@@ -140,8 +140,8 @@ int main()
 
 	dprint("i live...\n");
 
-	const uint16_t minChangeInterval = MS2TICKS(100);
-	uint16_t prevChange = timer_ticks() - minChangeInterval;
+	const uint16_t min_change_interval = MS2TICKS(100);
+	uint16_t prev_change = timer_ticks() - min_change_interval;
 
 	program_change(0);		// init the program selector
 
@@ -153,7 +153,7 @@ int main()
 
 		const uint16_t now = timer_ticks();
 
-		powsup_poll();
+		powsup_poll(now);
 
 		event_poll(now);
 
@@ -163,14 +163,14 @@ int main()
 			fvclk_reset();
 
 		// if we have a delta and the change timeout has passed
-		if (delta != 0  &&  now - prevChange >= minChangeInterval)
+		if (delta != 0  &&  now - prev_change >= min_change_interval)
 		{
 			if (event_is_selecting_prog())
 				program_change(delta);
 			else
 				fvclk_change(delta);
 
-			prevChange = now;
+			prev_change = now;
 			delta = 0;
 		}
 	}

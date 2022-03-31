@@ -15,18 +15,17 @@ static uint8_t	led_state = 0;				// if not flashing or timeout displaying,
 											// this contains the current state of the LEDs
 											
 // flashing state
-static bool 	led_flashing = false;		// true if flashing (led_state is ignored)
-static uint16_t	led_flash_started = 0;		// when flashing started
+static bool		led_flashing = false;		// true if flashing (led_state is ignored)
+static uint16_t	led_flash_started = 0;		// when the current flashing change started
 static uint8_t	led_flash_state = 0;		// the current state of the LEDs while flashing
 static uint8_t	led_flash_mask = 0;			// mask to toggle on the LEDs while flashing
-static bool		led_flash_prev = false;		// previous flash state
-static uint8_t	led_flash_speed = 0;		// the flashing speed (0 is slowest)
+static uint16_t	led_flash_interval = 0;		// the flashing interval in ms
 static uint8_t	led_flash_repeats = 0;		// how many more times to flash (0 when forever)
 
 // temping state
-static bool 	led_temping = false;		// true if showing with timeout
+static bool		led_temping = false;		// true if showing with timeout
 static uint16_t	led_temp_started = 0;		// timeout started
-static uint16_t led_temp_duration = 0;		// how long the message will stay
+static uint16_t	led_temp_duration = 0;		// how long the message will stay
 
 void led_init(void)
 {
@@ -161,9 +160,9 @@ void led_poll(const uint16_t now)
 {
 	if (led_flashing)
 	{
-		const bool curr = ((now - led_flash_started) & _BV(14 - led_flash_speed));
+		const uint16_t flash_dur = now - led_flash_started;
 		
-		if (led_flash_prev != curr)
+		if (flash_dur >= led_flash_interval)
 		{
 			dprint("fr:%u\n", (uint16_t)led_flash_repeats);
 			
@@ -180,7 +179,7 @@ void led_poll(const uint16_t now)
 			if (led_flash_repeats)
 				--led_flash_repeats;
 
-			led_flash_prev = curr;
+			led_flash_started += led_flash_interval;
 		}
 	}
 	else if (led_temping)
@@ -195,19 +194,24 @@ void led_poll(const uint16_t now)
 	}
 }
 
-void led_flash_start(const uint16_t now, const uint8_t leds, const uint8_t speed, const uint8_t repeats)
+void led_flash_start(const uint16_t now, const uint8_t leds, const uint16_t interval, const uint8_t repeats)
 {
-	led_flashing = true;
-	led_flash_state = led_state;
-	led_flash_mask = leds;
+	led_flash_interval = interval;
 	led_flash_repeats = repeats;
-	led_flash_started = now;
-	led_flash_speed = speed;
-	led_flash_prev = 0;
+	led_flash_mask = leds;
 
-	TogMask(led_flash_state, led_flash_mask);
-	led_shift_byte(led_flash_state);
-	
+	if (!led_flashing)
+	{
+		led_flash_state = led_state;
+		led_flash_started = now;
+		
+		TogMask(led_flash_state, led_flash_mask);
+
+		led_shift_byte(led_flash_state);
+	}
+
+	led_flashing = true;
+
 	dprint("flash start\n");
 }
 

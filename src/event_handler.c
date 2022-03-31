@@ -21,7 +21,8 @@ void event_poll(const uint16_t now)
 	{
 		if (is_selecting_prog)
 		{
-			led_flash_start(now, 3, 2, 0);
+			// start flashing the rotenc LEDs
+			led_flash_start(now, 3, MS2TICKS(300), 0);
 			is_selecting_prog = false;
 		}
 		else
@@ -61,7 +62,7 @@ void event_poll(const uint16_t now)
 	}
 	else if (button_event == be_long)
 	{
-		powsup_reset();
+		powsup_reset(now);
 	}
 	else if (!led_is_flashing()  &&  !led_is_showing_with_timeout())
 	{
