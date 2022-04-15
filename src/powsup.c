@@ -52,50 +52,6 @@ uint16_t powsup_get_adc(void)
 	return ADC;
 }
 
-#define MAX_DROP	10
-
-// this function puts the power amp into reset
-// when it notices a drop in input power voltage
-static void powsup_check_brownout(const uint16_t now)
-{
-	static uint16_t maxADC = 0;
-	static uint16_t prev_ticks = 0;
-
-	// we need to slowly decrease the max ADC (once every 0.3s)
-	// to account for battery voltage dropping
-	if ((prev_ticks & 0xE000) != (now & 0xE000)  &&  maxADC > 0)
-		--maxADC;
-
-	const uint16_t currADC = powsup_get_adc();
-
-	if (powamp_state == st_running)
-	{
-		// new max?
-		if (maxADC < currADC)
-			maxADC = currADC;
-
-		// do we have a drop over the allowed max?
-		if (maxADC - currADC > MAX_DROP)
-		{
-			powsup_shutdown(now);
-
-			dprint("down; max: %i curr: %i\n", maxADC, currADC);
-		}
-	}
-	else if (powamp_state == st_down  &&  rotenc_button())
-	{
-		// back to reset then to running
-		powsup_reset(now);
-
-		// reset the max
-		maxADC = currADC;
-
-		dprint("back up\n");
-	}
-
-	prev_ticks = now;
-}
-
 #define WAIT_RESET	MS2TICKS(300)
 #define WAIT_MUTE	MS2TICKS(500)
 
@@ -122,8 +78,6 @@ void powsup_poll(const uint16_t now)
 			dprint("unmute\n");
 		}
 	}
-
-	powsup_check_brownout(now);
 }
 
 void powsup_reset(const uint16_t now)

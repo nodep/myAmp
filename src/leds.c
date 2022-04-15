@@ -164,7 +164,7 @@ void led_poll(const uint16_t now)
 		
 		if (flash_dur >= led_flash_interval)
 		{
-			dprint("fr:%u\n", (uint16_t)led_flash_repeats);
+			//dprint("fr:%u\n", (uint16_t)led_flash_repeats);
 			
 			if (led_flash_repeats == 1)
 			{
@@ -189,7 +189,7 @@ void led_poll(const uint16_t now)
 			led_shift_byte(led_state);
 			led_temping = false;
 			
-			dprint("show timeout end\n");
+			//dprint("show timeout end\n");
 		}
 	}
 }
