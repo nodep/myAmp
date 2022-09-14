@@ -1,15 +1,15 @@
 $fn = 80;
 
 thick = 16;
-width = 300;
-depth = 240;
-speaker = 259;
+bafflethick = 8;
+width = 330;
+depth = 280;
 spholer = 231/2;
 
 ctrwidth = 200;
-ctrdepth = 60;
+ctrdepth = 90;
 
-angle = 18;
+angle = 15;
 
 upheight = cos(angle) * width;
 upoff = sin(angle) * width;
@@ -23,37 +23,62 @@ echo("height", height);
 echo("walnut", volume * 0.57);
 echo("pine", volume * 0.42);
 
-difference()
+translate([0, width + thick*2, 0])
+	side();
+
+translate([0, thick, 0])
+	side();
+	
+// bottom
+translate([0, 0, -thick])
+	cube([depth, width + thick*2, thick]);
+
+translate([0, 0, height])
+	top();
+
+// lower speaker
+translate([depth - thick*2, thick, 0])
+	baffle();
+
+// upper speaker
+translate([depth - thick*2, thick, width - 2])
+	rotate([0, -angle, 0])
+		baffle();
+
+// middle separator
+translate([0, 0, width - bafflethick / 2])
+	cube([depth - thick*2, width + thick*2, bafflethick]);
+
+module top()
 {
-	rotate([90, 0, 90])
-		difference()
-		{
-			linear_extrude(width)
-				polygon([	[    0, 0],
-							[    0, width],
-							[upoff, height], 
-							[depth, height],
-							[depth, 0]]);
-
-
-			translate([0, 0, thick])
-			linear_extrude(width - thick*2)
-				polygon([	[thick, thick],
-							[thick, width], 
-							[upoff + thick, height - thick], 
-							[depth, height - thick],
-							[depth, thick]]);
-		}
-
-	translate([width / 2, thick+1, width / 2])
-		rotate([90, 0, 0])
-			cylinder(thick + 2, spholer, spholer);
-
-	translate([width/2, upoff/2 + thick*2, height - upheight/2])
-		rotate([90 - angle, 0, 0])
-			cylinder(thick * 2, spholer, spholer);
-
-	translate([width/2 - ctrwidth/2, depth - ctrdepth, height - thick - 1])
-		cube([ctrwidth, ctrdepth, thick + 2]);
+	difference()
+	{
+		cube([depth - upoff, width + thick*2, thick]);
+		
+		translate([0, thick + (width - ctrwidth) / 2, -1])
+			cube([ctrdepth, ctrwidth, thick + 2]);
+	}
 }
 
+module baffle()
+{
+	difference()
+	{
+		cube([bafflethick, width, width]);
+
+		translate([-1, width/2, width/2])
+			rotate([0, 90, 0])
+				cylinder(bafflethick + 2, spholer, spholer);
+	}
+}
+
+module side()
+{
+	rotate([90, 0, 0])
+		linear_extrude(thick)
+			polygon([	[0, 0],
+						[depth, 0],
+						[depth, width],
+						[depth - upoff, height],
+						[0, height]]);
+}
