@@ -106,7 +106,7 @@
         "allow_blind_buried_vias": false,
         "allow_microvias": false,
         "max_error": 0.005,
-        "min_clearance": 0.254,
+        "min_clearance": 0.2286,
         "min_copper_edge_clearance": 0.075,
         "min_hole_clearance": 0.25,
         "min_hole_to_hole": 0.25,
@@ -121,11 +121,11 @@
       },
       "track_widths": [
         0.0,
+        0.3048,
+        0.4064,
         0.508,
-        0.6096,
         0.7112,
         0.9144,
-        1.6256,
         2.8448
       ],
       "via_dimensions": [
@@ -360,7 +360,7 @@
     "classes": [
       {
         "bus_width": 12.0,
-        "clearance": 0.254,
+        "clearance": 0.2286,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.4064,
