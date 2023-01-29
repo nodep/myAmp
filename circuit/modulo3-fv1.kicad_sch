@@ -3662,7 +3662,7 @@
     (uuid 7ecda2af-480d-4b2d-8eae-09c8c67a1787)
     (property "Reference" "U2" (id 0) (at 59.69 99.06 0))
     (property "Value" "FV1_CONN" (id 1) (at 59.69 101.6 0))
-    (property "Footprint" "myAmp:PIN_1x10" (id 2) (at 65.405 137.16 0)
+    (property "Footprint" "myAmp:FV1_CONN" (id 2) (at 65.405 137.16 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 65.405 137.16 0)
@@ -4281,7 +4281,7 @@
       (reference "U1") (unit 3) (value "OPA1642") (footprint "myAmp:SOIC-8_3.9x4.9mm_P1.27mm")
     )
     (path "/7ecda2af-480d-4b2d-8eae-09c8c67a1787"
-      (reference "U2") (unit 1) (value "FV1_CONN") (footprint "myAmp:PIN_1x10")
+      (reference "U2") (unit 1) (value "FV1_CONN") (footprint "myAmp:FV1_CONN")
     )
     (path "/00000000-0000-0000-0000-00005ef23204"
       (reference "U3") (unit 1) (value "FV-1") (footprint "myAmp:SOIC-28_7.5x17.9mm_Pitch1.27mm")
