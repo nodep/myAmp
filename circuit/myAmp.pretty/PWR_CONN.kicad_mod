@@ -22,9 +22,9 @@
     (effects (font (size 0.75 0.75) (thickness 0.15)) (justify left))
     (tstamp ca57bd9b-36eb-4968-97ae-46ec1e50aece)
   )
-  (pad "1" thru_hole roundrect (at 2.54 0 180) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (roundrect_rratio 0.25) (tstamp 702c90e3-51a0-43b0-94e9-38889f418deb))
-  (pad "2" thru_hole circle (at 0 0 180) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (tstamp 4aa97962-4366-435d-bed0-dce16d744c03))
-  (pad "3" thru_hole circle (at -2.54 0 180) (size 1.6 1.6) (drill 0.8) (layers *.Cu *.Mask) (tstamp bcbd8770-d6b6-4f73-9563-643fd61da0ac))
+  (pad "1" thru_hole roundrect (at 2.54 0 180) (size 1.6 1.6) (drill 0.9) (layers *.Cu *.Mask) (roundrect_rratio 0.25) (tstamp 702c90e3-51a0-43b0-94e9-38889f418deb))
+  (pad "2" thru_hole circle (at 0 0 180) (size 1.6 1.6) (drill 0.9) (layers *.Cu *.Mask) (tstamp 4aa97962-4366-435d-bed0-dce16d744c03))
+  (pad "3" thru_hole circle (at -2.54 0 180) (size 1.6 1.6) (drill 0.9) (layers *.Cu *.Mask) (tstamp bcbd8770-d6b6-4f73-9563-643fd61da0ac))
   (model "${KIPRJMOD}/myAmp.pretty/models/PinHeader_1x03_P2.54mm_Vertical.step"
     (offset (xyz 2.54 0 0))
     (scale (xyz 1 1 1))
