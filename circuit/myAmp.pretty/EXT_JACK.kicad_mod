@@ -1,11 +1,11 @@
-(footprint "FOOTSWITCH" (version 20221018) (generator pcbnew)
+(footprint "EXT_JACK" (version 20221018) (generator pcbnew)
   (layer "F.Cu")
   (attr through_hole)
   (fp_text reference "REF**" (at 0 -0.5 unlocked) (layer "F.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 5e113efb-46d2-461d-86fb-c402f61e2d59)
   )
-  (fp_text value "FOOTSWITCH" (at 0 1 unlocked) (layer "F.Fab") hide
+  (fp_text value "EXT_JACK" (at 0 1 unlocked) (layer "F.Fab") hide
       (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 581252f4-7cf1-4223-a7b2-84136dabc805)
   )
