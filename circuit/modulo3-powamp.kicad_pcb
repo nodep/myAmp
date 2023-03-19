@@ -2814,18 +2814,10 @@
     (fill yes (thermal_gap 0.3048) (thermal_bridge_width 0.4572) (island_removal_mode 2) (island_area_min 1.999999))
     (polygon
       (pts
-        (xy 133 51)
-        (xy 134 53)
-        (xy 134 99)
-        (xy 133 101)
-        (xy 131 102)
-        (xy 53 102)
-        (xy 51 101)
-        (xy 50 99)
-        (xy 50 53)
-        (xy 51 51)
-        (xy 53 50)
-        (xy 131 50)
+        (xy 134 50)
+        (xy 134 102)
+        (xy 50 102)
+        (xy 50 50)
       )
     )
     (filled_polygon
