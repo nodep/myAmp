@@ -2070,7 +2070,7 @@
   (gr_text "modulo3-amp" (at 69 93) (layer "F.SilkS") (tstamp 00000000-0000-0000-0000-00006193fd1e)
     (effects (font (size 1.9 1.9) (thickness 0.3)))
   )
-  (gr_text "2023/03/19" (at 68 97) (layer "F.SilkS") (tstamp da546d77-4b03-4562-8fc6-837fd68e7691)
+  (gr_text "2023/04/16" (at 68 97) (layer "F.SilkS") (tstamp da546d77-4b03-4562-8fc6-837fd68e7691)
     (effects (font (size 2 2) (thickness 0.3)))
   )
 

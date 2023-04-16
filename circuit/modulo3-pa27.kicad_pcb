@@ -1855,7 +1855,7 @@
     (stroke (width 0.05) (type solid)) (layer "Edge.Cuts") (tstamp b09666f9-12f1-4ee9-8877-2292c94258ca))
   (gr_arc (start 154.5 86) (mid 153.328427 88.828427) (end 150.5 90)
     (stroke (width 0.05) (type solid)) (layer "Edge.Cuts") (tstamp f798dd12-cea2-4016-b65c-e87ef9dad232))
-  (gr_text "2023/03/19" (at 123.19 86.995) (layer "F.SilkS") (tstamp 274465f0-41e7-4702-aa90-f3037c193441)
+  (gr_text "2023/04/16" (at 123.19 86.995) (layer "F.SilkS") (tstamp 274465f0-41e7-4702-aa90-f3037c193441)
     (effects (font (size 2 2) (thickness 0.3)) (justify left))
   )
   (gr_text "vol" (at 63.5 52.07) (layer "F.SilkS") (tstamp 2d0d333a-99a0-4575-9433-710c8cc7ac0b)
