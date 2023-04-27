@@ -67,24 +67,19 @@ public:
 		return ovf_cnt | c;
 	}
 
-	constexpr static uint16_t get_div()
-	{
-		return Prescale;
-	}
-
 	static uint32_t ticks2ms_long(const uint32_t ticks)
 	{
-		return ticks * get_div() / (F_CPU / 1000);
+		return ticks * 1000 * Prescale / 32768;
 	}
 
 	static uint16_t ticks2ms(const uint16_t ticks)
 	{
-		return ticks * get_div() / (F_CPU / 1000);
+		return ticks * 1000 * Prescale / 32768;
 	}
 
-	static uint32_t ms2ticks(const uint32_t ms)
+	static uint16_t ms2ticks(const uint16_t ms)
 	{
-		return ms * (F_CPU / 1000) / get_div();
+		return ms * 32768 / Prescale / 1000;
 	}
 
 	static bool has_ms_passed_since(const uint16_t ms, const uint16_t since)

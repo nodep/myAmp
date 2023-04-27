@@ -67,11 +67,11 @@ struct Touchscreen_XPT2046
 		return get_point().valid();
 	}
 
-	template <class D>
-	void calibrate(D& d)
+	template <class Display>
+	void calibrate(Display& d)
 	{
-		disp_width = D::Width;
-		disp_height = D::Height;
+		disp_width = Display::Width;
+		disp_height = Display::Height;
 
 		fill(d, colBlack);
 
@@ -83,26 +83,26 @@ struct Touchscreen_XPT2046
 		_delay_ms(50);
 		TS_Point p = get_point_raw();
 		const int16_t x1 = p.x;
-		int16_t y1 = p.y;
+		const int16_t y1 = p.y;
 		hline(d, 10, 20, 20, colBlack);
 		vline(d, 20, 10, 20, colBlack);
 		_delay_ms(500);
 
 		// get the second calibration point
 		while(touched());
-		hline(d, D::Width - 30, D::Height - 20, 20, colYellow);
-		vline(d, D::Width - 20, D::Height - 30, 20, colYellow);
+		hline(d, Display::Width - 30, Display::Height - 20, 20, colYellow);
+		vline(d, Display::Width - 20, Display::Height - 30, 20, colYellow);
 		while(!touched());
 		_delay_ms(50);
 		p = get_point_raw();
 		const int16_t x2 = p.x;
 		const int16_t y2 = p.y;
-		hline(d, D::Width - 30, D::Height - 20, 20, colBlack);
-		vline(d, D::Width - 20, D::Height - 30, 20, colBlack);
+		hline(d, Display::Width - 30, Display::Height - 20, 20, colBlack);
+		vline(d, Display::Width - 20, Display::Height - 30, 20, colBlack);
 		
 		// translate to form pos = m * val + c
-		const double xDist = D::Width - 40;
-		const double yDist = D::Height - 40;
+		const double xDist = Display::Width - 40;
+		const double yDist = Display::Height - 40;
 		
 		xCalM = xDist / (x2 - x1);
 		xCalC = 20.0 - x1 * xCalM;

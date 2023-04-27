@@ -36,8 +36,6 @@ private:
 
 public:
 
-	static const uint16_t div = Prescale;
-
 	static void start()
 	{
 		get_tca().CTRLA = get_clksel() | TCA_SINGLE_ENABLE_bm;
@@ -61,7 +59,7 @@ public:
 	template <uint8_t Channel>
 	static void enable_pwm()
 	{
-		static_assert(Channel < 3);
+		static_assert(Channel < 3, "We don't have that channel on this timer");
 
 		const uint16_t prevCtrlb = (get_tca().CTRLB & 0x78);
 
@@ -73,7 +71,7 @@ public:
 	template <uint8_t Channel>
 	static void set_pwm_duty(const uint16_t cmp)
 	{
-		static_assert(Channel < 3);
+		static_assert(Channel < 3, "We don't have that channel on this timer");
 
 		(&(get_tca().CMP0))[Channel] = cmp;
 	}

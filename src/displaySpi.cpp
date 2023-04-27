@@ -140,56 +140,6 @@ static const uint8_t init9341[] PROGMEM =
 	0x00	// EOF
 };
 
-// 7735R init
-static const uint8_t init7735[] PROGMEM =
-{										
-	cmdSoftReset, flagDelay,			// Software reset, 0 args, w/delay
-		150,							// 150 ms delay
-	cmdSleepOut, flagDelay,				// Out of sleep mode, 0 args, w/delay
-		255,							// 500 ms delay
-	cmdFrameRateControl1, 3,			// Framerate ctrl - normal mode, 3 arg:
-		0x01, 0x2C, 0x2D,				// Rate = fosc/(1x2+40) * (LINE+2C+2D)
-	cmdFrameRateControl2, 3,			// Framerate ctrl - idle mode, 3 args:
-		0x01, 0x2C, 0x2D,				// Rate = fosc/(1x2+40) * (LINE+2C+2D)
-	cmdFrameRateControl3, 6,			// Framerate - partial mode, 6 args:
-		0x01, 0x2C, 0x2D,				// Dot inversion mode
-		0x01, 0x2C, 0x2D,				// Line inversion mode
-	cmdInvertControl, 1,				// Display inversion ctrl, 1 arg:
-		0x07,							// No inversion
-	cmdPowerControl1, 3,				// Power control, 3 args:
-		0xA2,
-		0x02,							// -4.6V
-		0x84,							// AUTO mode
-	cmdPowerControl2, 1,				// Power control, 1 arg:
-		0xC5,							// VGH25=2.4C VGSEL=-10 VGH=3 * AVDD
-	cmdPowerControl3, 2,				// Power control, 2 args:
-		0x0A,							// Opamp current small
-		0x00,							// Boost frequency
-	cmdPowerControl4, 2,				// Power control, 2 args:
-		0x8A,							// BCLK/2,
-		0x2A,							// opamp current small & medium low
-	cmdPowerControl5, 2,				// Power control, 2 args:
-		0x8A, 0xEE,
-	cmdVCOMControl1, 1,					// Power control, 1 arg:
-		0x0E,
-	cmdInvertOff, 0,					// Don't invert display, no args
-	cmdMemoryAccessControl, 1,			// Rotation:
-		0x00,							// 0x00: portrait, pins up
-										// 0xA0: landscape, pins right
-										// 0xC0: portrait, pins down
-										// 0x60: landscape, pins left
-
-	cmdPixelFormat, 1,					// set color mode, 1 arg:
-		0x05,							// 16-bit color
-
-	cmdNormalModeOn, flagDelay,			// Normal display on, no args, w/delay
-		10,								// 10 ms delay
-	cmdDisplayOn, flagDelay,			// Main screen turn on, no args w/delay
-		100,							// 100 ms delay
-
-	0x00,								// EOF
-};
-
 void Display::init()
 {
 	// setup the SPI pins

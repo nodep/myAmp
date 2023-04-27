@@ -43,6 +43,8 @@ using pa_reset		= IoPin<'A', 1>;
 using pa_mute		= IoPin<'A', 2>;
 using pa_otw_clip	= IoPin<'G', 7>;
 
+// pedals UART
+
 // misc
 using in_v			= IoPin<'D', 7>;
 using dbg_tx		= IoPin<'A', 4>;

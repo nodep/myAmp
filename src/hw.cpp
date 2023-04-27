@@ -30,15 +30,21 @@ static void init_mcu()
 	#error Unknown F_CPU setting
 #endif
 
+	////////////////
 	// MCU pin mux
-	PORTMUX.USARTROUTEA = PORTMUX_USART0_0_bm;	// ALT -> PA4 is TX
-	PORTMUX.SPIROUTEA = PORTMUX_SPI1_1_bm;		// ALT2 -> PB4 is MOSI
-	
-	// TimerA 1 PWM to PORTC
-	//PORTMUX.TCAROUTEA = PORTMUX_TCA1_0_bm;
+	////////////////
 
-	// USART 3 is on ALT1: TX->PB4 RX->PB5
-	//PORTMUX.USARTROUTEA = PORTMUX_USART3_0_bm;
+	// debug TX on UART
+	PORTMUX.USARTROUTEA = PORTMUX_USART0_0_bm;	// ALT -> PA4 is TX
+
+	// SPI for display/touchscreen
+	PORTMUX.SPIROUTEA = PORTMUX_SPI1_1_bm;		// ALT2 -> PB4 is MOSI
+
+	// UART for pedals
+
+	// I2C for FV-1
+
+	// I2C for digi pots
 }
 
 void init_fv1()

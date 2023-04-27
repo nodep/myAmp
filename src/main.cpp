@@ -134,10 +134,11 @@ int main()
 		//refresh_screen();
 		_delay_ms(500);
 
-		//auto prev_cnt = Watch::cnt();
-		//while (prev_cnt == Watch::cnt())
-		//	;
+		auto prev_cnt = Watch::cnt();
+		while (Watch::has_ms_passed_since(500, prev_cnt))
+			;
 		fv1_t0::toggle();
+
 		/*
 		TS_Point p = ts.get_point();
 
