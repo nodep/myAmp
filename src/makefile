@@ -23,11 +23,12 @@ LFLAGS += -Wl,-u,vfprintf -lprintf_min
 # the latest AVR-Dx pack which you can get here:
 # https://packs.download.microchip.com/
 # The file has an extension atpack, but it is actually a zip file.
-# Rename it and unzip.
+# Rename it and unzip. However, it turns out the link scripts for
+# some of the new AVR devices are not correct...
 COMPILE = avr-g++ -mmcu=$(DEVICE) $(CFLAGS)
 
 OBJPATH = obj
-OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o)
+OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o)
 TGTNAME = $(OBJPATH)/$(TARGET)
 
 hex: $(TGTNAME).hex

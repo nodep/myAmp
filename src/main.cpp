@@ -14,6 +14,7 @@
 
 #include "displaySpi.h"
 #include "touchscreen.h"
+#include "powamp.h"
 
 struct { uint8_t x, y; } const dial_arc[] PROGMEM = {
 { 6,34},{ 5,33},{ 4,32},{ 4,31},{ 3,30},{ 3,29},{ 2,28},{ 2,27},{ 2,26},{ 1,25},
@@ -131,13 +132,17 @@ int main()
 
 	while (true)
 	{
-		//refresh_screen();
-		_delay_ms(500);
+		powamp_poll();
 
+		//refresh_screen();
+		//_delay_ms(500);
+
+		/*
 		auto prev_cnt = Watch::cnt();
 		while (Watch::has_ms_passed_since(500, prev_cnt))
 			;
 		fv1_t0::toggle();
+		*/
 
 		/*
 		TS_Point p = ts.get_point();

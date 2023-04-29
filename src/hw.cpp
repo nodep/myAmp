@@ -1,9 +1,12 @@
 #include <stdio.h>
 
 #include <avr/io.h>
+#include <util/delay.h>
 
 #include "hw.h"
 #include "avrdbg.h"
+#include "powamp.h"
+#include "fv1.h"
 
 static void init_mcu()
 {
@@ -38,30 +41,10 @@ static void init_mcu()
 	PORTMUX.USARTROUTEA = PORTMUX_USART0_0_bm;	// ALT -> PA4 is TX
 
 	// SPI for display/touchscreen
-	PORTMUX.SPIROUTEA = PORTMUX_SPI1_1_bm;		// ALT2 -> PB4 is MOSI
-
-	// UART for pedals
-
-	// I2C for FV-1
+	PORTMUX.SPIROUTEA = PORTMUX_SPI1_1_bm;		// ALT2 -> PB4 is MOSI...
 
 	// I2C for digi pots
-}
-
-void init_fv1()
-{
-	fv1_clip::dir_in();
-	
-	fv1_t0::dir_out();
-	fv1_t0::low();
-
-	fv1_s0::dir_out();
-	fv1_s0::low();
-	
-	fv1_s1::dir_out();
-	fv1_s1::low();
-	
-	fv1_s2::dir_out();
-	fv1_s2::low();
+	PORTMUX.TWIROUTEA = PORTMUX_TWI0_1_bm;		// ALT2 -> PC2 is SDA, PC3 is SCL
 }
 
 // init the CPU clock, PORTMUX, and onboard LED and button
@@ -71,7 +54,6 @@ void init_hw()
 	dbgInit();
 	Watch::start();
 
-	pa_fault::dir_in();
-
-	init_fv1();
+	fv1_init();
+	powamp_init();
 }

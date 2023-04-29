@@ -7,7 +7,7 @@ class IoPin
 {
 protected:
 
-	static_assert(Port >= 'A'  &&  Port <= 'F', "Bad Port in IoPin template argument");
+	static_assert(Port >= 'A'  &&  Port <= 'G', "Bad Port in IoPin template argument");
 	static_assert(PinNum <= 7, "Bad pin number n IoPin template argument");
 
 	//////////////////

@@ -3,6 +3,7 @@
 #include "usart.h"
 #include "iopin.h"
 #include "ring.h"
+#include "hw.h"
 
 enum PedalEvent : uint8_t
 {
@@ -42,7 +43,7 @@ enum PedalLED : uint8_t
 	ledExpRed		= 13,
 };
 
-class Pedals: public Usart<3>
+class Pedals: public pdl_usart
 {
 public:
 

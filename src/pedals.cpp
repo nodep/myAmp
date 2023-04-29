@@ -110,17 +110,17 @@ PedalEvent Pedals::get_event()
 
 void Pedals::reset()
 {
-	// TODO: this function should not block
+	// TODO: maybe this function should not block?
 
 	enable(false, false);	// disable RX and TX
 
-	IoPin<'B', 4>::dir_out();	// TX is out
-	IoPin<'B', 4>::low();		// lo
+	pdl_tx::dir_out();	// TX is out
+	pdl_tx::low();		// lo
 
 	_delay_ms(1000);
 
-	IoPin<'B', 4>::dir_out();	// TX is out
-	IoPin<'B', 5>::dir_in();	// RX is in
+	pdl_tx::dir_out();	// TX is out
+	pdl_rx::dir_in();	// RX is in
 
 	set_baud(31250);
 	enable(true, true);		// enable RX and TX
