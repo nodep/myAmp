@@ -14,7 +14,8 @@ CFLAGS += --param=min-pagesize=0 -Wno-volatile
 
 LFLAGS  = -Wl,--relax,--gc-sections
 #LFLAGS += -Wl,--verbose
-LFLAGS += -Wl,-u,vfprintf -lprintf_min
+#LFLAGS += -Wl,-u,vfprintf -lprintf_min
+LFLAGS += -Wl,-u,vfprintf
 #LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
 
 # I used avr-gcc 12.1 which I got from here:
@@ -28,7 +29,7 @@ LFLAGS += -Wl,-u,vfprintf -lprintf_min
 COMPILE = avr-g++ -mmcu=$(DEVICE) $(CFLAGS)
 
 OBJPATH = obj
-OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o)
+OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o)
 TGTNAME = $(OBJPATH)/$(TARGET)
 
 hex: $(TGTNAME).hex
@@ -48,7 +49,6 @@ flash: all hex
 
 #@$(AVRDUDE) -U flash:w:$(TGTNAME).hex:i
 	
-
 clean:
 	@echo cleaning...
 	@rm -f $(TGTNAME).hex $(TGTNAME).elf $(TGTNAME).lst $(OBJECTS)

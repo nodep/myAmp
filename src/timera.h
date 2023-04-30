@@ -11,7 +11,10 @@ private:
 
 	constexpr static TCA_SINGLE_t& get_tca()
 	{
-		return (&TCA0)[TimerNum].SINGLE;
+		if (TimerNum == 0)
+			return TCA0.SINGLE;
+
+		return TCA1.SINGLE;
 	}
 
 	constexpr static TCA_SINGLE_CLKSEL_t get_clksel()

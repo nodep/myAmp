@@ -15,6 +15,7 @@
 #include "displaySpi.h"
 #include "touchscreen.h"
 #include "powamp.h"
+#include "fv1.h"
 
 struct { uint8_t x, y; } const dial_arc[] PROGMEM = {
 { 6,34},{ 5,33},{ 4,32},{ 4,31},{ 3,30},{ 3,29},{ 2,28},{ 2,27},{ 2,26},{ 1,25},
@@ -117,6 +118,15 @@ void refresh_screen()
 	draw_dial_at("white", rand() % dial_arc_points, 64, 95, colWhite);
 }
 
+#define TWI0_BAUD(F_SCL, T_RISE)  ((((((float)20000000.0 / (float)F_SCL)) - 10 - ((float)20000000.0 * T_RISE / 1000000))) / 2)
+
+void TWI0_init()
+{
+	TWI0.MBAUD = (uint8_t)TWI0_BAUD(100000, 0);	/* set MBAUD register */
+	TWI0.MCTRLA = TWI_ENABLE_bm;		/* Enable TWI Master: enabled */
+	TWI0.MSTATUS = 1;	// force an idle state
+}
+
 int main()
 {
 	init_hw();
@@ -127,12 +137,24 @@ int main()
 
 	Touchscreen_XPT2046 ts;
 	ts.init();
-	s_led::high();
+	//s_led::high();
 	//ts.calibrate(d);
+	
+	VREF.ADC0REF = 5;	// VDD
+	ADC0.CTRLA = ADC_ENABLE_bm;
+	ADC0.CTRLB = 4;	// 16 samples
+	ADC0.CTRLC = 4;	// prescale 16
 
 	while (true)
 	{
 		powamp_poll();
+		fv1_poll();
+
+		//if (Watch::has_ms_passed_since(100, started))
+		//{
+		//	set_pots<dp_mix_i2c>(dp_mix_address, rdac, rdac);
+		//	started = Watch::cnt();
+		//}
 
 		//refresh_screen();
 		//_delay_ms(500);

@@ -6,6 +6,8 @@
 #include "hw.h"
 #include "avrdbg.h"
 #include "fv1.h"
+#include "digipot.h"
+#include "rotenc.h"
 
 void fv1_init()
 {
@@ -15,13 +17,106 @@ void fv1_init()
 	fv1_t0::low();
 
 	fv1_s0::dir_out();
-	fv1_s0::low();
-	
 	fv1_s1::dir_out();
-	fv1_s1::low();
-	
 	fv1_s2::dir_out();
+
+	fv1_s0::low();
+	fv1_s1::low();
 	fv1_s2::low();
 
-	// init the PWM outputs on 
+	dp_mix_sda::low();
+	dp_mix_scl::low();
+	dp_mix_i2c::init_master();
+
+	// init the PWM outputs
+	fv1_p0::dir_out();
+	fv1_p1::dir_out();
+	fv1_p2::dir_out();
+
+	fv1_pwm_timer::start();
+	fv1_pwm_timer::set_period(0xfff);
+	fv1_pwm_timer::enable_pwm<0>();
+	fv1_pwm_timer::enable_pwm<1>();
+	fv1_pwm_timer::enable_pwm<2>();
+
+	fv1_pwm_timer::set_pwm_duty<0>(0x100);
+	fv1_pwm_timer::set_pwm_duty<1>(0x800);
+	fv1_pwm_timer::set_pwm_duty<2>(0x1000);
+
+	fv1k_led::dir_out();
+
+	rotenc_init();
+}
+
+int8_t channel_cnt = -1;
+uint16_t adc_result[4] = {0, 0, 0, 0};
+const uint8_t mux[4] = {ADC_MUXPOS_AIN10_gc,
+						ADC_MUXPOS_AIN11_gc,
+						ADC_MUXPOS_AIN12_gc,
+						ADC_MUXPOS_AIN13_gc};
+
+int8_t prog = 0;
+void fv1_poll()
+{
+	if (ADC0.COMMAND == 0)
+	{
+		bool changed = false;
+		if (channel_cnt >= 0)
+		{
+			const uint16_t prev = adc_result[channel_cnt];
+
+			const uint16_t result = ADC0.RES;
+			if (channel_cnt == 3)
+				adc_result[channel_cnt] = 0xff - (result >> 8);
+			else
+				adc_result[channel_cnt] = 0xfff - (result >> 4);
+
+			changed = prev != adc_result[channel_cnt];
+		}
+
+		if (changed)
+		{
+			//dprint("%4x %4x %4x %4x\n", adc_result[0], adc_result[1], adc_result[2], adc_result[3]);
+
+			if (channel_cnt == 0)
+				fv1_pwm_timer::set_pwm_duty<0>(adc_result[0]);
+			else if (channel_cnt == 1)
+				fv1_pwm_timer::set_pwm_duty<1>(adc_result[1]);
+			else if (channel_cnt == 2)
+				fv1_pwm_timer::set_pwm_duty<2>(adc_result[2]);
+			else
+				set_digipots<dp_mix_i2c>(dp_mix_address, adc_result[3], adc_result[3]);
+		}
+
+		if (++channel_cnt == 4)
+			channel_cnt = 0;
+
+	    ADC0.MUXPOS = mux[channel_cnt];
+		ADC0.COMMAND = 1;
+	}
+
+	const int8_t delta = rotenc_delta();
+	static int16_t delta_sum = 0;
+	if (delta)
+	{
+		delta_sum += delta;
+		prog = delta_sum / 4;
+		while (prog > 7)
+			prog -= 8;
+		while (prog < 0)
+			prog += 8;
+
+		dprint("%i\n", prog);
+
+		fv1_s0::set_value(prog & 1);
+		fv1_s1::set_value(prog & 2);
+		fv1_s2::set_value(prog & 4);
+	}
+
+	static uint16_t started = 0;
+	if (Watch::has_ms_passed_since(500, started))
+	{
+		fv1k_led::toggle();
+		started = Watch::cnt();
+	}
 }

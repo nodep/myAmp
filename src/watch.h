@@ -67,17 +67,17 @@ public:
 		return ovf_cnt | c;
 	}
 
-	static uint32_t ticks2ms_long(const uint32_t ticks)
+	constexpr static uint32_t ticks2ms_long(const uint32_t ticks)
 	{
 		return ticks * 1000 * Prescale / 32768;
 	}
 
-	static uint16_t ticks2ms(const uint16_t ticks)
+	constexpr static uint16_t ticks2ms(const uint16_t ticks)
 	{
 		return ticks * 1000 * Prescale / 32768;
 	}
 
-	static uint16_t ms2ticks(const uint16_t ms)
+	constexpr static uint16_t ms2ticks(const uint16_t ms)
 	{
 		return ms * 32768 / Prescale / 1000;
 	}

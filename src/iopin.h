@@ -25,8 +25,10 @@ protected:
 			return PORTD;
 		else if constexpr (Port == 'E')
 			return PORTE;
+		else if constexpr (Port == 'F')
+			return PORTF;
 
-		return PORTF;
+		return PORTG;
 	}
 
 	constexpr static register8_t& get_pinctrl()
@@ -61,8 +63,10 @@ protected:
 			return VPORTD;
 		else if constexpr (Port == 'E')
 			return VPORTE;
+		else if constexpr (Port == 'F')
+			return VPORTF;
 
-		return VPORTF;
+		return VPORTG;
 	}
 
 	constexpr static uint8_t bitmask = 1 << PinNum;

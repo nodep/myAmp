@@ -8,7 +8,7 @@
 #include "powamp.h"
 #include "fv1.h"
 
-static void init_mcu()
+static void mcu_init()
 {
 	CPU_CCP = CCP_IOREG_gc;
 #if   F_CPU == 1000000
@@ -45,15 +45,21 @@ static void init_mcu()
 
 	// I2C for digi pots
 	PORTMUX.TWIROUTEA = PORTMUX_TWI0_1_bm;		// ALT2 -> PC2 is SDA, PC3 is SCL
+
+	// PWM for FV-1 pots
+	PORTMUX.TCAROUTEA = 6;		// WaveOut on PORTG
 }
 
-// init the CPU clock, PORTMUX, and onboard LED and button
 void init_hw()
 {
-	init_mcu();
+	mcu_init();
 	dbgInit();
+
+	dbg_pin::dir_out();
+
 	Watch::start();
 
 	fv1_init();
+
 	powamp_init();
 }
