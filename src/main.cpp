@@ -16,6 +16,7 @@
 #include "touchscreen.h"
 #include "powamp.h"
 #include "fv1.h"
+#include "pedals.h"
 
 struct { uint8_t x, y; } const dial_arc[] PROGMEM = {
 { 6,34},{ 5,33},{ 4,32},{ 4,31},{ 3,30},{ 3,29},{ 2,28},{ 2,27},{ 2,26},{ 1,25},
@@ -142,13 +143,32 @@ int main()
 	
 	VREF.ADC0REF = 5;	// VDD
 	ADC0.CTRLA = ADC_ENABLE_bm;
-	ADC0.CTRLB = 4;	// 16 samples
-	ADC0.CTRLC = 4;	// prescale 16
+	ADC0.CTRLB = 4;		// 16 samples
+	ADC0.CTRLC = 4;		// prescale 16
+
+	Pedals pedals;
 
 	while (true)
 	{
-		powamp_poll();
-		fv1_poll();
+		//powamp_poll();
+		//fv1_poll();
+
+		static uint16_t num = 1;
+		const PedalEvent event = pedals.get_event();
+		if (event != evNone)
+		{
+			if (event == evFtswBtn1Down)
+				num++;
+			else if (event == evFtswBtn2Down)
+				num--;
+			else if (event == evFtswBtn3Down)
+				num += 10;
+			else if (event == evFtswBtn4Down)
+				num -= 10;
+
+			if (pedals.ftsw_present)
+				pedals.set_ftsw_number(num);
+		}
 
 		//if (Watch::has_ms_passed_since(100, started))
 		//{

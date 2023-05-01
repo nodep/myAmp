@@ -25,8 +25,8 @@ using s_spi		= SpiMaster<1, 6>;
 using fv1_clip		= IoPin<'E', 6>;
 using fv1_t0		= IoPin<'E', 7>;
 using fv1_s0		= IoPin<'F', 4>;
-using fv1_s1		= IoPin<'F', 5>;
-using fv1_s2		= IoPin<'F', 6>;
+using fv1_s1		= IoPin<'F', 5>;	// these two are swapped on the latest PCB version
+using fv1_s2		= IoPin<'G', 3>;	// these two are swapped on the latest PCB version
 using fv1_p0		= IoPin<'G', 0>;
 using fv1_p1		= IoPin<'G', 1>;
 using fv1_p2		= IoPin<'G', 2>;
@@ -70,7 +70,7 @@ using in_v			= IoPin<'D', 7>;
 using dbg_tx		= IoPin<'A', 4>;
 using dbg_pin		= IoPin<'A', 3>;
 
-// timekeeping: 1 tick == 0.9765625ms
-using Watch = RTClock<32>;
+// timekeeping: 1 tick == 0.24ms
+using Watch = RTClock<8>;
 
 void init_hw();

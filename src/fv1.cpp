@@ -55,7 +55,6 @@ const uint8_t mux[4] = {ADC_MUXPOS_AIN10_gc,
 						ADC_MUXPOS_AIN12_gc,
 						ADC_MUXPOS_AIN13_gc};
 
-int8_t prog = 0;
 void fv1_poll()
 {
 	if (ADC0.COMMAND == 0)
@@ -76,7 +75,7 @@ void fv1_poll()
 
 		if (changed)
 		{
-			//dprint("%4x %4x %4x %4x\n", adc_result[0], adc_result[1], adc_result[2], adc_result[3]);
+			// dprint("%4x %4x %4x %4x\n", adc_result[0], adc_result[1], adc_result[2], adc_result[3]);
 
 			if (channel_cnt == 0)
 				fv1_pwm_timer::set_pwm_duty<0>(adc_result[0]);
@@ -95,6 +94,7 @@ void fv1_poll()
 		ADC0.COMMAND = 1;
 	}
 
+	static int8_t prog = 0;
 	const int8_t delta = rotenc_delta();
 	static int16_t delta_sum = 0;
 	if (delta)
@@ -111,12 +111,5 @@ void fv1_poll()
 		fv1_s0::set_value(prog & 1);
 		fv1_s1::set_value(prog & 2);
 		fv1_s2::set_value(prog & 4);
-	}
-
-	static uint16_t started = 0;
-	if (Watch::has_ms_passed_since(500, started))
-	{
-		fv1k_led::toggle();
-		started = Watch::cnt();
 	}
 }
