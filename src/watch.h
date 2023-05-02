@@ -48,16 +48,16 @@ public:
 		RTC.CTRLA = get_prescaler() | RTC_RTCEN_bm;
 	}
 
-	static uint16_t cnt()
+	static uint16_t now()
 	{
 		return RTC.CNT;
 	}
 
-	static uint32_t cntlong()
+	static uint32_t nowlong()
 	{
 		static uint32_t ovf_cnt = 0;
 
-		const uint16_t c = cnt();
+		const uint16_t c = now();
 		if (RTC.INTFLAGS & RTC_OVF_bm)
 		{
 			RTC.INTFLAGS = RTC_OVF_bm;
@@ -84,11 +84,11 @@ public:
 
 	static bool has_ms_passed_since(const uint16_t ms, const uint16_t since)
 	{
-		return static_cast<uint32_t>(cnt() - since) >= ms2ticks(ms);
+		return static_cast<uint32_t>(now() - since) >= ms2ticks(ms);
 	}
 
 	static uint16_t ms_since(const uint16_t since)
 	{
-		return ticks2ms(cnt() - since);
+		return ticks2ms(now() - since);
 	}
 };

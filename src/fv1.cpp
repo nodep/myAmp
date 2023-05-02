@@ -8,6 +8,7 @@
 #include "fv1.h"
 #include "digipot.h"
 #include "rotenc.h"
+#include "adc.h"
 
 void fv1_init()
 {
@@ -50,21 +51,24 @@ void fv1_init()
 
 int8_t channel_cnt = -1;
 uint16_t adc_result[4] = {0, 0, 0, 0};
-const uint8_t mux[4] = {ADC_MUXPOS_AIN10_gc,
-						ADC_MUXPOS_AIN11_gc,
-						ADC_MUXPOS_AIN12_gc,
-						ADC_MUXPOS_AIN13_gc};
-
-void fv1_poll()
+const ADC_MUXPOS_t mux[4] =
 {
-	if (ADC0.COMMAND == 0)
+	ADC_MUXPOS_AIN10_gc,
+	ADC_MUXPOS_AIN11_gc,
+	ADC_MUXPOS_AIN12_gc,
+	ADC_MUXPOS_AIN13_gc
+};
+
+void fv1_poll(int8_t delta)
+{
+	if (ADC::is_ready())
 	{
 		bool changed = false;
 		if (channel_cnt >= 0)
 		{
 			const uint16_t prev = adc_result[channel_cnt];
 
-			const uint16_t result = ADC0.RES;
+			const uint16_t result = ADC::get_result();
 			if (channel_cnt == 3)
 				adc_result[channel_cnt] = 0xff - (result >> 8);
 			else
@@ -90,23 +94,19 @@ void fv1_poll()
 		if (++channel_cnt == 4)
 			channel_cnt = 0;
 
-	    ADC0.MUXPOS = mux[channel_cnt];
-		ADC0.COMMAND = 1;
+		ADC::start(mux[channel_cnt]);
 	}
 
 	static int8_t prog = 0;
-	const int8_t delta = rotenc_delta();
-	static int16_t delta_sum = 0;
 	if (delta)
 	{
-		delta_sum += delta;
-		prog = delta_sum / 4;
+		prog += delta;
 		while (prog > 7)
 			prog -= 8;
 		while (prog < 0)
 			prog += 8;
 
-		dprint("%i\n", prog);
+		dprint("new prog %i\n", prog);
 
 		fv1_s0::set_value(prog & 1);
 		fv1_s1::set_value(prog & 2);

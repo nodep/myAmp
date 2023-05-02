@@ -70,7 +70,7 @@ bool rotenc_button()
 	static uint16_t debounce_start = 0;
 
 	const bool curr_btn = fv1k_re_sw::in();
-	const uint16_t now = Watch::cnt();
+	const uint16_t now = Watch::now();
 	
 	if (prev_btn != curr_btn)
 	{
@@ -182,7 +182,7 @@ rotenc_button_event_e rotenc_poll_button_event(void)
 	static bool prev_button = false;
 
 	const bool curr_button = rotenc_button();
-	const uint16_t now = Watch::cnt();
+	const uint16_t now = Watch::now();
 	const uint16_t change_dur = now - prev_change;
 	
 	rotenc_button_event_e button_event = be_none;

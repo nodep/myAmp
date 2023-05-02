@@ -7,6 +7,7 @@
 #include "avrdbg.h"
 #include "powamp.h"
 #include "fv1.h"
+#include "adc.h"
 
 static void mcu_init()
 {
@@ -47,7 +48,7 @@ static void mcu_init()
 	PORTMUX.TWIROUTEA = PORTMUX_TWI0_1_bm;		// ALT2 -> PC2 is SDA, PC3 is SCL
 
 	// PWM for FV-1 pots
-	PORTMUX.TCAROUTEA = 6;		// WaveOut on PORTG
+	PORTMUX.TCAROUTEA = 6;		// PWM WaveOut on PORTG
 }
 
 void init_hw()
@@ -58,6 +59,8 @@ void init_hw()
 	dbg_pin::dir_out();
 
 	Watch::start();
+
+	ADC::init();
 
 	fv1_init();
 

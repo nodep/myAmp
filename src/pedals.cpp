@@ -237,7 +237,7 @@ void Pedals::parse_message()
 	expected = received = 0;
 
 	if constexpr(REFRESH_DELAY != 0)
-		last_reception = Watch::cnt();
+		last_reception = Watch::now();
 
 	PedalEvent event = evNone;
 
@@ -307,7 +307,7 @@ bool Pedals::send(const uint8_t b)
 
 	// wait for the byte to appear on RX because
 	// these are connected on the same bus
-	const uint16_t started = Watch::cnt();
+	const uint16_t started = Watch::now();
 	while (!Watch::has_ms_passed_since(1, started))
 	{
 		uint8_t d = 0;
@@ -340,7 +340,7 @@ bool Pedals::send_message()
 	send(checksum);
 
 	// wait for ACK
-	const uint16_t started = Watch::cnt();
+	const uint16_t started = Watch::now();
 	uint8_t ack = 0;
 	bool byte_read = false;
 	while (!Watch::has_ms_passed_since(2, started))
