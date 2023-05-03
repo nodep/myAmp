@@ -62,7 +62,5 @@ void init_hw()
 
 	ADC::init();
 
-	fv1_init();
-
 	powamp_init();
 }

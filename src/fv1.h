@@ -4,8 +4,8 @@
 #include "fv1programs.h"
 #include "digipot.h"
 
-void fv1_init();
-void fv1_poll();
+//void fv1_init();
+//void fv1_poll();
 
 struct Preset
 {
@@ -37,6 +37,8 @@ public:
 	Preset		active_preset;
 	bool		is_unsaved = false;
 
+	void init();
+
 	template <int PotNum>
 	void update_pot(const Preset& new_preset)
 	{
@@ -48,29 +50,5 @@ public:
 		}
 	}
 
-	void set_preset(const Preset& new_preset)
-	{
-		update_pot<0>(new_preset);
-		update_pot<1>(new_preset);
-		update_pot<2>(new_preset);
-
-		if (new_preset.mix != active_preset.mix)
-		{
-			set_digipots<dp_mix_i2c>(dp_mix_address, new_preset.mix, new_preset.mix);
-			active_preset.mix = new_preset.mix;
-
-			is_unsaved = true;
-		}
-
-		if (new_preset.is_extern != active_preset.is_extern
-			|| new_preset.prog_num != active_preset.prog_num)
-		{
-			fv1_t0::set_value(new_preset.is_extern);
-
-			if (new_preset.is_extern)
-				send_program(new_preset.prog_num);
-
-			is_unsaved = false;
-		}
-	}
+	void set_preset(const Preset& new_preset);
 };

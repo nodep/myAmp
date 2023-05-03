@@ -10,7 +10,7 @@
 #include "rotenc.h"
 #include "adc.h"
 
-void fv1_init()
+void FV1::init()
 {
 	fv1_clip::dir_in();
 	
@@ -45,8 +45,32 @@ void fv1_init()
 	fv1_pwm_timer::set_pwm_duty<2>(0x1000);
 
 	fv1k_led::dir_out();
+}
 
-	rotenc_init();
+void FV1::set_preset(const Preset& new_preset)
+{
+	update_pot<0>(new_preset);
+	update_pot<1>(new_preset);
+	update_pot<2>(new_preset);
+
+	if (new_preset.mix != active_preset.mix)
+	{
+		set_digipots<dp_mix_i2c>(dp_mix_address, new_preset.mix, new_preset.mix);
+		active_preset.mix = new_preset.mix;
+
+		is_unsaved = true;
+	}
+
+	if (new_preset.is_extern != active_preset.is_extern
+		|| new_preset.prog_num != active_preset.prog_num)
+	{
+		fv1_t0::set_value(new_preset.is_extern);
+
+		if (new_preset.is_extern)
+			send_program(new_preset.prog_num);
+
+		is_unsaved = false;
+	}
 }
 
 int8_t channel_cnt = -1;
