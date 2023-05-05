@@ -37,7 +37,7 @@ public:
 	Preset		active_preset;
 	bool		is_unsaved = false;
 
-	void init();
+	FV1();
 
 	template <int PotNum>
 	void update_pot(const Preset& new_preset)

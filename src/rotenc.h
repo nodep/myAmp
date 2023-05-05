@@ -4,11 +4,47 @@
 
 class RotEnc
 {
+public:
+
+	enum ButtonEvent: uint8_t 
+	{
+		beNone,
+		beSingle,
+		beDouble,
+		beLong,
+		beLongShort,
+	};
+
 private:
 
 	uint8_t		oldAB = 0;
-	uint8_t		delta_sum = 0;
+	int8_t		delta_sum = 0;
 	uint16_t	last_movement = 0;
+
+	struct change_t
+	{
+		uint16_t	at_least;
+		uint16_t	at_most;
+	};
+
+	struct event_t
+	{
+		RotEnc::ButtonEvent		event;
+		const change_t*			changes;
+	};
+
+	static const uint8_t NUM_EVENTS = 4;
+
+	static const change_t changes_single[];
+	static const change_t changes_double[];
+	static const change_t changes_long[] ;
+	static const change_t changes_long_short[];
+
+	static const event_t events[NUM_EVENTS];
+
+	uint8_t curr_step[NUM_EVENTS] = {0, 0, 0, 0};
+	
+	bool event_process(uint8_t event_cnt, uint16_t change_dur, bool curr_button, bool prev_button);
 
 	static uint8_t getAB()
 	{
@@ -23,15 +59,6 @@ private:
 	bool get_button();
 	
 public:
-
-	enum ButtonEvent: uint8_t 
-	{
-		beNone,
-		beSingle,
-		beDouble,
-		beLong,
-		beLongShort,
-	};
 
 	RotEnc();
 

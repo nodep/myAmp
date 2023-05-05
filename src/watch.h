@@ -53,7 +53,7 @@ public:
 		return RTC.CNT;
 	}
 
-	static uint32_t nowlong()
+	static uint32_t now_long()
 	{
 		static uint32_t ovf_cnt = 0;
 
@@ -74,10 +74,15 @@ public:
 
 	constexpr static uint16_t ticks2ms(const uint16_t ticks)
 	{
-		return ticks * 1000 * Prescale / 32768;
+		return ticks * 1000L * Prescale / 32768;
 	}
 
 	constexpr static uint16_t ms2ticks(const uint16_t ms)
+	{
+		return ms * 32768L / Prescale / 1000;
+	}
+
+	constexpr static uint32_t ms2ticks_long(const uint32_t ms)
 	{
 		return ms * 32768 / Prescale / 1000;
 	}

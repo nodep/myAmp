@@ -10,7 +10,7 @@
 #include "rotenc.h"
 #include "adc.h"
 
-void FV1::init()
+FV1::FV1()
 {
 	fv1_clip::dir_in();
 	

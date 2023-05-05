@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include <avr/io.h>
 #include <avr/pgmspace.h>
@@ -14,6 +15,7 @@ RotEnc::RotEnc()
 	// switch as input with pull-up
 	fv1k_re_sw::dir_in();
 	fv1k_re_sw::pullup();
+	fv1k_re_sw::invert();
 	
 	// A and B are inputs with pull-ups
 	fv1k_re_a::dir_in();
@@ -73,27 +75,14 @@ bool RotEnc::get_button()
 	return debounced_btn;
 }
 
-struct change_t
-{
-	uint16_t	at_least;
-	uint16_t	at_most;
-};
-
-struct event_t
-{
-	RotEnc::ButtonEvent		event;
-	uint8_t					curr_step;
-	const change_t*			changes;
-};
-
-const change_t changes_single[] PROGMEM =
+const RotEnc::change_t RotEnc::changes_single[] PROGMEM =
 {
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 	{ .at_least = Watch::ms2ticks(   0), .at_most = Watch::ms2ticks( 300)},	// down
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 };
 
-const change_t changes_double[] PROGMEM =
+const RotEnc::change_t RotEnc::changes_double[] PROGMEM =
 {
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 	{ .at_least = Watch::ms2ticks(   0), .at_most = Watch::ms2ticks( 300)},	// down
@@ -102,14 +91,14 @@ const change_t changes_double[] PROGMEM =
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 };
 
-const change_t changes_long[] PROGMEM =
+const RotEnc::change_t RotEnc::changes_long[] PROGMEM =
 {
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 	{ .at_least = Watch::ms2ticks( 600), .at_most = Watch::ms2ticks(2000)},	// down
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 };
 
-const change_t changes_long_short[] PROGMEM =
+const RotEnc::change_t RotEnc::changes_long_short[] PROGMEM =
 {
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 	{ .at_least = Watch::ms2ticks( 600), .at_most = Watch::ms2ticks(2000)},	// down
@@ -118,39 +107,37 @@ const change_t changes_long_short[] PROGMEM =
 	{ .at_least = Watch::ms2ticks( 501), .at_most = Watch::ms2ticks(   0)},	// up
 };
 
-static event_t events[] =
+const RotEnc::event_t RotEnc::events[NUM_EVENTS] =
 {
-	{ .event = RotEnc::beSingle,		.curr_step = 0,		.changes = changes_single, },
-	{ .event = RotEnc::beDouble,		.curr_step = 0,		.changes = changes_double, },
-	{ .event = RotEnc::beLong,			.curr_step = 0,		.changes = changes_long, },
-	{ .event = RotEnc::beLongShort,		.curr_step = 0,		.changes = changes_long_short, },
+	{ .event = RotEnc::beSingle,		.changes = changes_single, },
+	{ .event = RotEnc::beDouble,		.changes = changes_double, },
+	{ .event = RotEnc::beLong,			.changes = changes_long, },
+	{ .event = RotEnc::beLongShort,		.changes = changes_long_short, },
 };
 
-#define NUM_EVENTS	(sizeof(events)/sizeof(events[0]))
-
-static bool event_process(event_t* event, uint16_t change_dur, bool curr_button, bool prev_button)
+bool RotEnc::event_process(uint8_t event_cnt, uint16_t change_dur, bool curr_button, bool prev_button)
 {
-	const uint16_t at_least = pgm_read_word(&event->changes[event->curr_step].at_least);
-	const uint16_t at_most = pgm_read_word(&event->changes[event->curr_step].at_most);
+	const uint16_t at_least = pgm_read_word(&events[event_cnt].changes[curr_step[event_cnt]].at_least);
+	const uint16_t at_most = pgm_read_word(&events[event_cnt].changes[curr_step[event_cnt]].at_most);
 	
 	if (curr_button != prev_button)
 	{
 		// advance step?
-		if (curr_button  ||  event->curr_step > 0)
+		if (curr_button  ||  curr_step[event_cnt] > 0)
 		{
 			if ((at_least == 0  ||  at_least <= change_dur)
 					&&  (at_most == 0  ||  at_most >= change_dur))
-				++event->curr_step;
+				++curr_step[event_cnt];
 			else
-				event->curr_step = 0;		// back to start
+				curr_step[event_cnt] = 0;		// back to start
 		}
 	}
 	else if (!curr_button
-			&&  event->curr_step > 0
+			&&  curr_step[event_cnt] > 0
 			&&  at_most == 0
 			&&  change_dur >= at_least)
 	{
-		event->curr_step = 0;
+		curr_step[event_cnt] = 0;
 		return true;
 	}
 	
@@ -170,10 +157,20 @@ RotEnc::ButtonEvent RotEnc::get_button_event()
 	
 	for (uint8_t event_cnt = 0; event_cnt < NUM_EVENTS; ++event_cnt)
 	{
-		if (event_process(events + event_cnt, change_dur, curr_button, prev_button))
+		if (event_process(event_cnt, change_dur, curr_button, prev_button))
 			button_event = events[event_cnt].event;
 	}
 	
+	if (curr_button != prev_button)
+	{
+		if (*((int32_t*)curr_step) != 0)
+		{
+			dprint("%i %i\n", change_dur, Watch::ticks2ms(change_dur));
+		}
+		else
+			dprint("\n");
+	}
+
 	if (curr_button != prev_button)
 		prev_change = now;
 	else if (change_dur > Watch::ms2ticks(4000))
@@ -222,7 +219,7 @@ int8_t RotEnc::get_delta()
 
 	if (ret_val)
 		delta_sum -= ret_val * 4;
-	else if (Watch::has_ms_passed_since(100, last_movement)  &&  delta_sum != 0)
+	else if (Watch::has_ms_passed_since(1000, last_movement)  &&  delta_sum != 0)
 		delta_sum = 0;
 
 	return ret_val;
