@@ -29,7 +29,19 @@ int main()
 	while (true)
 	{
 		//powamp_poll();
-		//fv1_poll();
+		auto prev_cnt = app.adc.mux_cnt;
+		app.adc.poll();
+
+		if (prev_cnt != app.adc.mux_cnt  &&  app.adc.mux_cnt == 0)
+		{
+			static uint16_t prev = 0;
+			dprint("dur=%u ", Watch::now() - prev);
+			//dprint("%u %u %u %u %u\n", app.adc.results[0], app.adc.results[1], app.adc.results[2], app.adc.results[3], app.adc.results[4]);
+			double v = app.adc.results[0] * 24.4 / 43840.0;
+			dprint(" v=%f\n", v);
+			prev = Watch::now();
+			prev_cnt = app.adc.mux_cnt;
+		}
 
 		static uint16_t num = 1;
 		const PedalEvent event = app.pedals.get_event();

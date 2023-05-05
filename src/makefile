@@ -15,8 +15,8 @@ CFLAGS += --param=min-pagesize=0 -Wno-volatile
 LFLAGS  = -Wl,--relax,--gc-sections
 #LFLAGS += -Wl,--verbose
 #LFLAGS += -Wl,-u,vfprintf -lprintf_min
-LFLAGS += -Wl,-u,vfprintf
-#LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
+#LFLAGS += -Wl,-u,vfprintf
+LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
 
 # I used avr-gcc 12.1 which I got from here:
 # https://blog.zakkemble.net/avr-gcc-builds/
