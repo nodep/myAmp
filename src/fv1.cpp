@@ -47,30 +47,34 @@ FV1::FV1()
 	fv1k_led::dir_out();
 }
 
-void FV1::set_preset(const Preset& new_preset)
+bool FV1::set_preset(const Preset& new_preset)
 {
-	update_pot<0>(new_preset);
-	update_pot<1>(new_preset);
-	update_pot<2>(new_preset);
+	bool changed = false;
 
-	if (new_preset.mix != active_preset.mix)
+	changed |= update_pot<0>(new_preset);
+	changed |= update_pot<1>(new_preset);
+	changed |= update_pot<2>(new_preset);
+
+	if (new_preset.mix != _active_preset.mix)
 	{
 		set_digipots<dp_mix_i2c>(dp_mix_address, new_preset.mix, new_preset.mix);
-		active_preset.mix = new_preset.mix;
+		_active_preset.mix = new_preset.mix;
 
-		is_unsaved = true;
+		changed = true;
 	}
 
-	if (new_preset.is_extern != active_preset.is_extern
-		|| new_preset.prog_num != active_preset.prog_num)
+	if (new_preset.is_extern != _active_preset.is_extern
+		|| new_preset.prog_num != _active_preset.prog_num)
 	{
 		fv1_t0::set_value(new_preset.is_extern);
 
 		if (new_preset.is_extern)
 			send_program(new_preset.prog_num);
 
-		is_unsaved = false;
+		changed = true;
 	}
+
+	return changed;
 }
 
 int8_t channel_cnt = -1;

@@ -39,11 +39,12 @@ struct ADCRunner
 {
 	const ADC_MUXPOS_t	muxpos[Size];
 	uint16_t			results[Size];
-	bool				valid = false;
 	int8_t				mux_cnt = -1;
 
-	void poll()
+	bool has_fresh_set()
 	{
+		bool ret_val = false;
+
 		if (ADC::is_ready())
 		{
 			if (mux_cnt >= 0)
@@ -53,11 +54,13 @@ struct ADCRunner
 
 			if (++mux_cnt == Size)
 			{
-				valid = true;
+				ret_val = true;
 				mux_cnt = 0;
 			}
 
 			ADC::start(muxpos[mux_cnt]);
 		}
+
+		return ret_val;
 	}
 };

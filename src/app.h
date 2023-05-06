@@ -20,5 +20,9 @@ struct App
 							ADC_MUXPOS_AIN12_gc,
 							ADC_MUXPOS_AIN13_gc};
 
+	double		battery_voltage = .0;
+
 	App();
+
+	void poll();
 };

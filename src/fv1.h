@@ -32,23 +32,30 @@ private:
 		fv1_s2::set_value(prog_num & 4);
 	}
 
-public:
+	Preset	_active_preset;
 
-	Preset		active_preset;
-	bool		is_unsaved = false;
+public:
 
 	FV1();
 
-	template <int PotNum>
-	void update_pot(const Preset& new_preset)
+	Preset get_active_preset() const
 	{
-		if (new_preset.pots[PotNum] != active_preset.pots[PotNum])
-		{
-			fv1_pwm_timer::set_pwm_duty<PotNum>(new_preset.pots[PotNum]);
-			is_unsaved = true;
-			active_preset.pots[PotNum] = new_preset.pots[PotNum];
-		}
+		return _active_preset;
 	}
 
-	void set_preset(const Preset& new_preset);
+	template <int PotNum>
+	bool update_pot(const Preset& new_preset)
+	{
+		bool changed = false;
+		if (new_preset.pots[PotNum] != _active_preset.pots[PotNum])
+		{
+			fv1_pwm_timer::set_pwm_duty<PotNum>(new_preset.pots[PotNum]);
+			_active_preset.pots[PotNum] = new_preset.pots[PotNum];
+			changed = true;
+		}
+
+		return changed;
+	}
+
+	bool set_preset(const Preset& new_preset);
 };
