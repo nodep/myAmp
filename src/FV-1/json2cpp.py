@@ -199,7 +199,7 @@ def isValidProgram(prog):
 	retVal = False
 	if 'spn' in prog['download']:
 		includeFile = prog['download']['spn']['file']
-		if includeFile[-3:].lower() == 'spn':
+		if includeFile.lower().endswith('spn'):
 			retVal = True
 
 	if 'categories' in prog  and  'Code snippet' in prog['categories']:
