@@ -1,19 +1,8 @@
 #pragma once
 
 #include "hw.h"
-#include "fv1programs.h"
 #include "digipot.h"
-
-//void fv1_init();
-//void fv1_poll();
-
-struct Preset
-{
-	bool		is_extern	= false;
-	uint8_t		prog_num	= 0;
-	uint16_t	mix			= 0x80;
-	uint16_t	pots[3]		= { 0x800, 0x800, 0x800 };
-};
+#include "preset.h"
 
 class FV1
 {

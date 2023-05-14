@@ -1,7 +1,26 @@
 import os
 
 projFiles = (
-('softclip.spj', 'out\\softclip.hex'),
+('progs\\a01.spj', 'out\\a01.hex'),
+('progs\\a02.spj', 'out\\a02.hex'),
+('progs\\a03.spj', 'out\\a03.hex'),
+('progs\\a04.spj', 'out\\a04.hex'),
+('progs\\a05.spj', 'out\\a05.hex'),
+('progs\\a06.spj', 'out\\a06.hex'),
+('progs\\a07.spj', 'out\\a07.hex'),
+('progs\\a08.spj', 'out\\a08.hex'),
+('progs\\a09.spj', 'out\\a09.hex'),
+('progs\\a10.spj', 'out\\a10.hex'),
+('progs\\a11.spj', 'out\\a11.hex'),
+('progs\\a12.spj', 'out\\a12.hex'),
+('progs\\a13.spj', 'out\\a13.hex'),
+('progs\\a14.spj', 'out\\a14.hex'),
+('progs\\a15.spj', 'out\\a15.hex'),
+('progs\\a16.spj', 'out\\a16.hex'),
+('progs\\a17.spj', 'out\\a17.hex'),
+('progs\\a18.spj', 'out\\a18.hex'),
+('progs\\a19.spj', 'out\\a19.hex'),
+('progs\\a20.spj', 'out\\a20.hex'),
 )
 
 def decodeLine(lineNum, line):
@@ -69,23 +88,31 @@ def loadBank(hexFileName):
 
 def getSourceForProgram(bankData, program, name):
 
-	source = '// program: ' + name + '\n{\n'
+	source = '// program: ' + name + '\n'
+
+	fromByte = program * 0x200
+	toByte = fromByte + 512
+	binary = bankData[fromByte:toByte]
+	
+	# get the length of the program excluding NOPs (0x00 0x00 0x00 0x11)
+	programLength = 0
+	for bcnt in range(0, 512, 4):
+		if binary[bcnt:bcnt + 4] != [ 0x00, 0x00, 0x00, 0x11 ]:
+			programLength = bcnt + 4
 
 	# print it out in c
-	prog_offset = program * 0x200
-	index = 0
-	for byte in bankData[prog_offset : prog_offset + 0x200]:
+	for byteCnt in range(0, programLength):
+
+		byte = binary[byteCnt]
 
 		source += '0x%02x,' % byte
 
 		# end of line
-		if index % 16 == 15:
-			source += '\t// 0x%04x\n' % (index - 15)
-
-		index += 1
+		if byteCnt % 16 == 15:
+			source += '\t// 0x%04x\n' % (byteCnt - 15)
 
 	
-	return source + '},'
+	return source
 
 ################################################################
 

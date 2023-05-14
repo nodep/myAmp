@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+first start a python web server with: python -m http.server
+then go to http://localhost:8000/programs.html
+then copy the json output to programs.json
+-->
+<head>
+<script type="module">
+import programs from "./programs.js";
+function listPrograms()
+{
+	document.getElementById("result").innerHTML = JSON.stringify(programs, null, 2);
+}
+window.listPrograms = listPrograms;
+
+</script>
+
+</head>
+
+<body onload="listPrograms()">
+<pre id="result">
+json comes here
+</pre>
+</body>
+
+</html>

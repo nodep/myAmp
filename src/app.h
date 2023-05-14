@@ -6,6 +6,7 @@
 #include "displaySpi.h"
 #include "touchscreen.h"
 #include "adc.h"
+#include "preset.h"
 
 struct App
 {

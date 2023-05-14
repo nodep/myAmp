@@ -16,6 +16,7 @@
 #include "app.h"
 #include "adc.h"
 #include "rotenc.h"
+#include "programs.h"
 
 int main()
 {
@@ -30,6 +31,11 @@ int main()
 	{
 		//const auto delta = app.rotenc.get_delta();
 		app.poll();
+
+		for (uint8_t pc = 0; pc < num_fv1_programs; ++pc)
+		{
+			dprint(fv1_programs[pc].name);
+		}
 
 		static uint16_t num = 1;
 		const PedalEvent event = app.pedals.get_event();

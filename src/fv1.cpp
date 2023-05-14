@@ -63,12 +63,14 @@ bool FV1::set_preset(const Preset& new_preset)
 		changed = true;
 	}
 
-	if (new_preset.is_extern != _active_preset.is_extern
+	const bool new_external = new_preset.is_external();
+	const bool active_external = _active_preset.is_external();
+	if (new_external != active_external
 		|| new_preset.prog_num != _active_preset.prog_num)
 	{
-		fv1_t0::set_value(new_preset.is_extern);
+		fv1_t0::set_value(new_external);
 
-		if (new_preset.is_extern)
+		if (new_external)
 			send_program(new_preset.prog_num);
 
 		changed = true;

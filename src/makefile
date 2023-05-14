@@ -29,7 +29,7 @@ LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
 COMPILE = avr-g++ -mmcu=$(DEVICE) $(CFLAGS)
 
 OBJPATH = obj
-OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o)
+OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o)
 TGTNAME = $(OBJPATH)/$(TARGET)
 
 hex: $(TGTNAME).hex
@@ -69,4 +69,7 @@ $(OBJPATH)/%.o: %.cpp makefile $(OBJPATH)
 # the following saves the assembly listings and preprocessed sources
 #	$(COMPILE) -g -save-temps -c $< -o $@
 
-all: clean hex
+fv1:
+	@python FV-1/json2cpp.py program_defs.cpp
+
+all: clean fv1 hex
