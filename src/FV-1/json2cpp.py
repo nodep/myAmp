@@ -190,13 +190,6 @@ def getVarNameFromString(s):
 	
 	return varName
 
-def defineString(s, outf):
-	global usedBytes
-	
-	if s not in str2vars  and  s != '-':
-		outf.write('const char* const {} PROGMEM = "{}";\n'.format(getVarNameFromString(s), s))		
-		usedBytes += len(s) + 1
-
 def isValidProgram(prog):
 	
 	# is the program internal?
@@ -213,6 +206,13 @@ def isValidProgram(prog):
 		retVal = False		
 	
 	return retVal
+
+def defineString(s, outf):
+	global usedBytes
+	
+	if s not in str2vars  and  s != '-':
+		outf.write('const char {}[] PROGMEM = "{}";\n'.format(getVarNameFromString(s), s))		
+		usedBytes += len(s) + 1
 
 def defineStringVariables(progs, outf):
 	for prog in progs:

@@ -5,6 +5,10 @@ AVRDUDE = avrdude -c serialupdi -P com5 -p $(DEVICE)
 PYMCUPROG = pymcuprog -d $(DEVICE) -t uart -u com5
 F_CPU = 24000000
 
+OBJPATH = obj
+OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o)
+TGTNAME = $(OBJPATH)/$(TARGET)
+
 CFLAGS  = -std=c++20 -Wall -O2 -DF_CPU=$(F_CPU)
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -D_DEBUG
@@ -17,6 +21,7 @@ LFLAGS  = -Wl,--relax,--gc-sections
 #LFLAGS += -Wl,-u,vfprintf -lprintf_min
 #LFLAGS += -Wl,-u,vfprintf
 LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
+LFLAGS += -Wl,-Map,$(TGTNAME).map
 
 # I used avr-gcc 12.1 which I got from here:
 # https://blog.zakkemble.net/avr-gcc-builds/
@@ -27,10 +32,6 @@ LFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
 # Rename it and unzip. However, it turns out the link scripts for
 # some of the new AVR devices are not correct...
 COMPILE = avr-g++ -mmcu=$(DEVICE) $(CFLAGS)
-
-OBJPATH = obj
-OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o)
-TGTNAME = $(OBJPATH)/$(TARGET)
 
 hex: $(TGTNAME).hex
 
