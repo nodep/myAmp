@@ -221,8 +221,8 @@ def outputBinaries(progs, outf):
 			varName = cleanName(includeFile, 'bin_')
 			binaryLengths[varName] = binaryLength
 			outf.write('const uint8_t %s[0x%02x] PROGMEM = {\n' % (varName, binaryLength))
-			outf.write('#include "FV-1/spn/{}"\n'.format(includeFile))
-			#outf.write(binary.strip() + '\n')
+			#outf.write('#include "FV-1/spn/{}"\n'.format(includeFile))
+			outf.write(binary.strip() + '\n')
 			outf.write('};\n\n')
 
 

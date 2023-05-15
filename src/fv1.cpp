@@ -9,6 +9,7 @@
 #include "digipot.h"
 #include "rotenc.h"
 #include "adc.h"
+#include "programs.h"
 
 FV1::FV1()
 {
@@ -51,7 +52,7 @@ FV1::FV1()
 
 void FV1::send_program(uint8_t ext_prog_num)
 {
-	dbg_pin::low();
+	const uint16_t binary_length = pgm_read_word(&fv1_programs[ext_prog_num].binary_length);
 
 	// wait for the EEPROM address
 	fv1_i2c::wait_addr();
@@ -63,16 +64,27 @@ void FV1::send_program(uint8_t ext_prog_num)
 	// wait for the EEPROM address (read)
 	fv1_i2c::wait_addr();
 
+	loop_until_bit_is_set(TWI1.SSTATUS, TWI_DIF_bp);
+	
 	// send the program
-	uint16_t i = 0;
-	while (fv1_i2c::send_byte((i++) & 0xff))
+	const uint8_t* binary = (const uint8_t*)pgm_read_ptr(&fv1_programs[ext_prog_num].binary);
+	for (uint16_t cnt = 0; cnt < binary_length; cnt++)
 	{
+		dbg_pin::low();
+		fv1_i2c::send_byte(pgm_read_byte(binary++));
+		dbg_pin::high();
+	}
+
+	for (uint16_t cnt = binary_length; cnt < 0x200; cnt += 4)
+	{
+		fv1_i2c::send_byte(0x00);
+		fv1_i2c::send_byte(0x00);
+		fv1_i2c::send_byte(0x00);
+		fv1_i2c::send_byte(0x11);
 	}
 
 	// ack to release the SCL
 	TWI1.SCTRLB = TWI_SCMD_RESPONSE_gc;
-
-	dbg_pin::high();
 }
 
 bool FV1::set_preset(const Preset& new_preset)

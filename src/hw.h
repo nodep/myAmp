@@ -32,12 +32,12 @@ using fv1_p1		= IoPin<'G', 1>;
 using fv1_p2		= IoPin<'G', 2>;
 using fv1_sda		= IoPin<'F', 2>;
 using fv1_scl		= IoPin<'F', 3>;
-using fv1_i2c		= I2C<1>;
+using fv1_i2c		= I2CSlave<1>;
 
 // digipot mix
 using dp_mix_sda	= IoPin<'C', 2>;
 using dp_mix_scl	= IoPin<'C', 3>;
-using dp_mix_i2c	= I2C<0>;
+using dp_mix_i2c	= I2CMaster<0>;
 
 const uint8_t dp_mix_address = 0b101111;
 
