@@ -8,18 +8,7 @@ class FV1
 {
 private:
 
-	void send_program(uint8_t ext_prog_num)
-	{
-		// toggle t0 if internal to external or toggle any of the
-		// sx switches to trigger FV-1 to start reading the program
-	}
-
-	void set_sx_switches(uint8_t prog_num)
-	{
-		fv1_s0::set_value(prog_num & 1);
-		fv1_s1::set_value(prog_num & 2);
-		fv1_s2::set_value(prog_num & 4);
-	}
+	void send_program(uint8_t ext_prog_num);
 
 	Preset	_active_preset;
 

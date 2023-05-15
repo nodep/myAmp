@@ -21,6 +21,16 @@ private:
 	int8_t		delta_sum = 0;
 	uint16_t	last_movement = 0;
 
+	// used by get_button_event()
+	uint16_t	prev_event_change = 0;
+	bool		prev_event_button = false;
+
+	// used by get_button()
+	bool		prev_btn = false;
+	bool		in_debounce = false;
+	bool		debounced_btn = false;
+	uint16_t	debounce_start = 0;
+
 	struct change_t
 	{
 		uint16_t	at_least;

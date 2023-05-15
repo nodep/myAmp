@@ -22,20 +22,11 @@ int main()
 {
 	init_hw();
 
-	//s_led::high();
-	//ts.calibrate(d);
-
 	App app;
 
 	while (true)
 	{
-		//const auto delta = app.rotenc.get_delta();
 		app.poll();
-
-		for (uint8_t pc = 0; pc < num_fv1_programs; ++pc)
-		{
-			dprint(fv1_programs[pc].name);
-		}
 
 		static uint16_t num = 1;
 		const PedalEvent event = app.pedals.get_event();

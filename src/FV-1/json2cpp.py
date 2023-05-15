@@ -3,104 +3,7 @@ import os
 import pathlib
 import json
 
-def decodeLine(lineNum, line):
-
-	line = line.strip()
-
-	if line[0] != ':':
-		raise Exception('line in HEX file does not begin with :')
-
-	byteCount = int(line[1:3], 16)
-	address	= int(line[3:7], 16)
-	recordType = int(line[7:9], 16)
-	if byteCount > 0:
-		data = line[9:9 + byteCount*2]
-	else:
-		data = ''
-
-	sum = 0
-	index = 1
-	while index < len(line) - 2:
-		sum += int(line[index:index + 2], 16)
-		index += 2
-
-	if recordType != 0  and  recordType != 1:
-		raise Exception('unsupported record type ' + str(recordType))
-
-	# calc checksum
-	sumStr = '0000000' + '{0:b}'.format(sum)
-	sumStr = sumStr.replace('0', 'z')
-	sumStr = sumStr.replace('1', '0')
-	sumStr = sumStr.replace('z', '1')
-	sumStr = hex(int(sumStr[-8:], 2) + 1)
-	sumStr = sumStr.replace('x', '0')
-	sumStr = sumStr[-2:]
-	if int(sumStr, 16) != int(line[-2:], 16):
-		raise Exception('checksum mismatch in line ' + str(lineNum))
-
-	# make the data list
-	dataList = []
-	while data:
-		dataList.append(int(data[0:2], 16))
-		data = data[2:]
-
-	return (address, dataList)
-
-def setData(bankData, address, data):
-
-	offset = 0
-	for byte in data:
-		bankData[address + offset] = byte
-		offset += 1
-
-def loadBank(hexFileName):
-
-	print('reading', hexFileName)
-	
-	bankData = [0] * 4096
-
-	with open(hexFileName) as inh:
-		for lineNum, line in enumerate(inh):
-			address, data = decodeLine(lineNum + 1, line)
-			setData(bankData, address, data)
-
-	return bankData
-
-def getSourceForProgram(bankData, program, name):
-
-	source = '// program: ' + name + '\n'
-
-	# get the length of the program excluding NOPs (0x00 0x00 0x00 0x11)
-	programLength = 0
-	for bcnt in range(0, 512, 4):
-		if bankData[bcnt:bcnt + 4] != [ 0x00, 0x00, 0x00, 0x11 ]:
-			programLength = bcnt + 4
-
-	source += '.binary_length = %i,\n' % programLength
-	source += '.binary = {\n'
-	
-	# print it out in c
-	prog_offset = program * 0x200
-	for byteCnt in range(0, programLength):
-
-		byte = bankData[prog_offset + byteCnt]
-
-		source += '0x%02x,' % byte
-
-		# end of line
-		if byteCnt % 16 == 15:
-			source += '\t// 0x%04x\n' % (byteCnt - 15)
-
-	
-	return source + '},'
-
-################################################################
-
-# currDirLen = len(os.getcwd())
-
-prog_cnt = 0
-
-# first output the ROM programs
+# we also want to access FV1's ROM programs
 
 ROMprograms = [
 	{
@@ -147,7 +50,18 @@ ROMprograms = [
 	},
 ]
 
+# we want these programs to come right after the ROMs
+goodPrograms = [
+	'Reverb + Shimmer (Version 6)',
+	'Hall Reverb with Shimmer',
+]
+
+excludePrograms = [
+    'Bit crusher',
+]
+
 # variables
+onlyOutputGoodPrograms = True
 str2vars = {}
 usedVars = set()
 binaryLengths = {}
@@ -196,6 +110,21 @@ def isValidProgram(prog):
 	if 'download' not in prog:
 		return True
 
+	# no programs that need special PCBs
+	if 'special_pcb' in prog:
+		return False
+
+	# is this one on the list of programs we don't want?
+	if prog['name'] in excludePrograms:
+		return False
+
+	# we don't need the ROM programs
+	if prog['name'].startswith('ROM '):
+		return False
+
+	if onlyOutputGoodPrograms  and  prog['name'] not in goodPrograms:
+		return False
+		
 	retVal = False
 	if 'spn' in prog['download']:
 		includeFile = prog['download']['spn']['file']
@@ -235,7 +164,7 @@ def outputProgram(prog, outf):
 	global usedBytes
 
 	if not isValidProgram(prog):
-		print ('skipping invalid program:', prog['name'])
+		print ('skipping program:', prog['name'])
 		return
 		
 	outf.write('{\n')
@@ -292,7 +221,8 @@ def outputBinaries(progs, outf):
 			varName = cleanName(includeFile, 'bin_')
 			binaryLengths[varName] = binaryLength
 			outf.write('const uint8_t %s[0x%02x] PROGMEM = {\n' % (varName, binaryLength))
-			outf.write(binary.strip() + '\n')
+			outf.write('#include "FV-1/spn/{}"\n'.format(includeFile))
+			#outf.write(binary.strip() + '\n')
 			outf.write('};\n\n')
 
 
@@ -300,8 +230,6 @@ def outputProgParams(progs, outf):
 
 	global usedBytes
 	
-	outf.write('\n')
-
 	for prog in progs:
 		if isValidProgram(prog)  and  'params' in prog:
 			paramName = getParamsName(prog['params'])
@@ -344,13 +272,25 @@ with open(outputCpp, 'wt') as outf:
 	outf.write('\n')
 	outf.write('const Program fv1_programs[{}] PROGMEM =\n'.format(numPrograms))
 	outf.write('{\n')
-	
+
+	outf.write('// ROM programs\n')
 	for prog in ROMprograms:
 		outputProgram(prog, outf)
 
+	outf.write('// external programs\n')
+	# first ouput the "good" programs
+	for progName in goodPrograms:
+		# find this program
+		found = False
+		for prog in extPrograms:
+			if prog['name'] == progName:
+				found = True
+				outputProgram(prog, outf)
+		
 	for prog in extPrograms:
-		outputProgram(prog, outf)
+		if prog['name'] not in goodPrograms:
+			outputProgram(prog, outf)
 
 	outf.write('};\n')
 
-print ('used bytes', usedBytes)
+print ('used', usedBytes, 'bytes on', numPrograms, 'programs')

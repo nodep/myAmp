@@ -8,7 +8,7 @@
 
 ;pot0=pre-delay
 ;pot1=reverb time (decay... all the way up is infinite sustain in the tank)
-;pot2 = hf loss in the tank (damping... turn up for MORE damping)
+;pot2=hf loss in the tank (damping... turn up for MORE damping)
 
 ; fixed parameters from the paper
 equ	decay_diffusion_1	0.70	;default parameters from Dattorro paper

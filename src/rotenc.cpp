@@ -47,11 +47,6 @@ const int8_t lookup_table[0x10] PROGMEM =
 bool RotEnc::get_button()
 {
 	// read the value with de-bouncing
-	static bool prev_btn = false;
-	static bool in_debounce = false;
-	static bool debounced_btn = false;
-	static uint16_t debounce_start = 0;
-
 	const bool curr_btn = fv1k_re_sw::in();
 	const uint16_t now = Watch::now();
 	
@@ -146,37 +141,32 @@ bool RotEnc::event_process(uint8_t event_cnt, uint16_t change_dur, bool curr_but
 
 RotEnc::ButtonEvent RotEnc::get_button_event()
 {
-	static uint16_t prev_change = 0;
-	static bool prev_button = false;
-
 	const bool curr_button = get_button();
 	const uint16_t now = Watch::now();
-	const uint16_t change_dur = now - prev_change;
+	const uint16_t change_dur = now - prev_event_change;
 	
 	ButtonEvent button_event = beNone;
 	
 	for (uint8_t event_cnt = 0; event_cnt < NUM_EVENTS; ++event_cnt)
 	{
-		if (event_process(event_cnt, change_dur, curr_button, prev_button))
+		if (event_process(event_cnt, change_dur, curr_button, prev_event_button))
 			button_event = events[event_cnt].event;
 	}
 	
-	if (curr_button != prev_button)
+	if (curr_button != prev_event_button)
 	{
 		if (*((int32_t*)curr_step) != 0)
-		{
 			dprint("%i %i\n", change_dur, Watch::ticks2ms(change_dur));
-		}
 		else
 			dprint("\n");
 	}
 
-	if (curr_button != prev_button)
-		prev_change = now;
+	if (curr_button != prev_event_button)
+		prev_event_change = now;
 	else if (change_dur > Watch::ms2ticks(4000))
-		prev_change = now - Watch::ms2ticks(4000);
+		prev_event_change = now - Watch::ms2ticks(4000);
 
-	prev_button = curr_button;
+	prev_event_button = curr_button;
 	
 	return button_event;
 }

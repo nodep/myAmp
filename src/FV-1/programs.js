@@ -36,7 +36,7 @@ export default [
     source_url: "http://spinsemi.com/guitar_amp_application.html"
   },
   {
-    name: "Flanger",
+    name: "Flanger (SpinSemi demo)",
     categories: ["Flanger"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
@@ -210,7 +210,7 @@ export default [
     name: "Reverb+HP+LP",
     description: "Reverb plus 2-pole high-pass and 2-pole low-pass",
     categories: ["Reverb","Filter"],
-    controls: ["Reverb", "High Pass Filter", "Low Pass Filter"],
+    controls: ["Reverb", "HP filter", "LP filter"],
     author: "Dave Spinkler",
     download: {
       spn: { file: "spinsemi/dance_ir_h_l.spn" },
@@ -223,7 +223,7 @@ export default [
     description: "Reverb plus flange plus 4-pole low pass",
     categories: ["Reverb","Filter","Flanger"],
     author: "Dave Spinkler",
-    controls: ["Reverb", "Flanger", "Low Pass Filter"],
+    controls: ["Reverb", "Flanger", "LP filter"],
     download: {
       spn: { file: "spinsemi/dance_ir_fla_l.spn" },
     },
@@ -280,7 +280,7 @@ export default [
     application: "Mixer", source_url: "http://spinsemi.com/mixer_application.html",
   },
   {
-    name: "Plate Reverb",
+    name: "Plate Reverb (SpinSemi 3K)",
     categories: ["Reverb"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
@@ -320,6 +320,7 @@ export default [
     categories: ["Reverb", "Delay"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
+	controls: ["Delay", "Repeat", "Reverb"],
     download: {
       spn: { file: "spinsemi/3K_V1_5_STECHO-REV.spn" },
     },
@@ -339,7 +340,7 @@ export default [
     source_url: "http://spinsemi.com/mixer_application.html",
   },
   {
-    name: "Flanger",
+    name: "Flanger (SpinSemi 3K)",
     categories: ["Flanger"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
@@ -378,6 +379,7 @@ export default [
     categories: ["Pitch","Reverb"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
+	controls: ["Key", "Reverb amount", "Reverb time"],
     download: {
       spn: { file: "spinsemi/key_rev.spn", },
     },
@@ -450,6 +452,7 @@ export default [
     categories: ["Reverb"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
+	controls: ["Reverb time", "Diffusion", "Decay filtering"],
     download: {
       spn: {
         file: "spinsemi/rev_rt_d_f.spn",
@@ -485,7 +488,7 @@ export default [
     source_url: "http://spinsemi.com/programs.php"
   },
   {
-    name: "Plate Reverb",
+    name: "Plate Reverb: Lush",
     description: "Lush (large), characterized by very high density, explosive initial sound, large",
     categories: ["Reverb"],
     controls: ["Reverb time", "Low freq loss", "High freq loss"],
@@ -498,7 +501,7 @@ export default [
     source_url: "http://spinsemi.com/programs.php"
   },
   {
-    name: "Distortion",
+    name: "Distortion (SpinSemi snippet)",
     categories: ["Distortion","Code snippet"],
     author: "Spin Semi",
     author_url: "http://spinsemi.com/",
@@ -1086,7 +1089,7 @@ export default [
     },
   },
   {
-    name: "Hall Reverb w/ Shimmer",
+    name: "Hall Reverb with Shimmer",
     author: "Sweetalk",
     categories: ["Reverb", "Shimmer"],
     controls: ["Damping", "Feedback", "Decay"],
@@ -1613,7 +1616,7 @@ P2 sets the sinewave tremolo speed from 0 - slow - fast. This gets really intere
   },
 
   {
-    name: "Flanger",
+    name: "Flanger (bass)",
     description: "A basic flanger. Designed for bass",
     author: "Firesledge",
     author_url: "http://ldesoras.free.fr/",
@@ -1649,7 +1652,7 @@ P2 sets the sinewave tremolo speed from 0 - slow - fast. This gets really intere
     },
   },
   {
-    name: "Reverb",
+    name: "Reverb (Firesledge)",
     description: "Simple reverberation effect. Designed for bass",
     author: "Firesledge",
     author_url: "http://ldesoras.free.fr/",
@@ -1679,7 +1682,7 @@ P2 sets the sinewave tremolo speed from 0 - slow - fast. This gets really intere
     ],
   },
   {
-    name: "Distortion",
+    name: "Distortion (bass)",
     description: "Simple distortion with variable gain, tone and mix. Designed for bass",
     author: "Firesledge",
     author_url: "http://ldesoras.free.fr/",
@@ -1745,7 +1748,7 @@ P2 sets the sinewave tremolo speed from 0 - slow - fast. This gets really intere
     ],
   },
   {
-    name: "Reverse delay",
+    name: "Reverse delay (igore pie)",
     description: "Simplified part of A+ Paradox delay",
     author: "igore pie",
     author_url: "mailto:igor@shift-line.com",
@@ -1839,7 +1842,7 @@ This one sounds very nice.  Laughing
     ],
   },
   {
-    name: "Reverse delay",
+    name: "Reverse delay (Knut Helle)",
     author: "Knut Helle",
     categories: ["Delay"],
     controls: ["Length", "-", "-"],
@@ -1899,7 +1902,7 @@ and shimmer code with some changes such as:
     },
   },
   {
-    name: "Arpeggio",
+    name: "Arpeggio (major)",
     author: "Alex Lawrow",
     description: "Produces a major chord arpeggio based on the root note you play into the input.",
     categories: ["Pitch"],
@@ -1909,7 +1912,7 @@ and shimmer code with some changes such as:
     },
   },
   {
-    name: "Arpeggio",
+    name: "Arpeggio (minor)",
     author: "Alex Lawrow",
     description: "Produces an  ascending arpeggio for a minor chord based on the root note you play into the input.",
     categories: ["Pitch"],
@@ -2012,7 +2015,7 @@ and shimmer code with some changes such as:
     },
   },
   {
-    name: "Flanger",
+    name: "Flanger (drolo)",
     author: "David Rolo",
     author_url: "https://www.davidrolo.com/",
     categories: ["Flanger"],
@@ -2219,5 +2222,4 @@ and shimmer code with some changes such as:
     },
     source_url: "http://www.spinsemi.com/forum/viewtopic.php?f=4&t=296",
   },
-
 ]

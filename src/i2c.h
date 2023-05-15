@@ -41,10 +41,10 @@ private:
 			}
 			else if (mstatus & (TWI_WIF_bm | TWI_RIF_bm))
 			{
-				if (!(mstatus & TWI_RXACK_bm))
-					return i2c_acked;
-				else
+				if (mstatus & TWI_RXACK_bm)
 					return i2c_nacked;
+				else
+					return i2c_acked;
 			}
 		}
 	}
@@ -70,6 +70,45 @@ public:
 		get_twi().MSTATUS = 1;	// force an idle state
 	}
 
+	static void init_slave(const uint8_t address)
+	{
+		get_twi().SADDR = address;
+		get_twi().SCTRLA = TWI_SMEN_bm | TWI_ENABLE_bm;
+	}
+
+	static uint8_t wait_addr()
+	{
+		while (true)
+		{
+			const uint8_t sstatus = get_twi().SSTATUS;
+			if (sstatus & TWI_APIF_bm)
+			{
+				get_twi().SCTRLB = TWI_SCMD_RESPONSE_gc;
+				return get_twi().SDATA;
+			}
+		}
+	}
+
+	static uint8_t wait_byte()
+	{
+		while (true)
+		{
+			const uint8_t sstatus = get_twi().SSTATUS;
+			if (sstatus & TWI_DIF_bm)
+			{
+				get_twi().SCTRLB = TWI_SCMD_RESPONSE_gc;
+				return get_twi().SDATA;
+			}
+		}
+	}
+
+	static bool send_byte(uint8_t data)
+	{
+		get_twi().SDATA = data;
+		loop_until_bit_is_set(get_twi().SSTATUS, TWI_DIF_bp);
+		return (get_twi().SSTATUS & TWI_RXACK_bm) == 0;
+	}
+
 	static State write_address(uint8_t address, bool is_read)
 	{
 		const uint8_t addr = (address << 1) | (is_read ? 1 : 0);
@@ -77,7 +116,7 @@ public:
 		return wait_write();
 	}
 
-	static State write_data(uint8_t data)
+	static State write_byte(uint8_t data)
 	{
 		get_twi().MDATA = data;
 		return wait_write();

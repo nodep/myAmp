@@ -57,6 +57,7 @@ void init_hw()
 	dbgInit();
 
 	dbg_pin::dir_out();
+	dbg_pin::high();
 
 	Watch::start();
 

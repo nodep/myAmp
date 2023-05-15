@@ -280,8 +280,3 @@ rda	ap55_59+369,-0.6
 rda	del59_63+133,-0.6
 mulx	krl
 wrax	dacr,0
-
-;
-;  DONE	
-
-

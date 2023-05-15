@@ -45,6 +45,34 @@ FV1::FV1()
 	fv1_pwm_timer::set_pwm_duty<2>(0x1000);
 
 	fv1k_led::dir_out();
+
+	fv1_i2c::init_slave(0xA0);
+}
+
+void FV1::send_program(uint8_t ext_prog_num)
+{
+	dbg_pin::low();
+
+	// wait for the EEPROM address
+	fv1_i2c::wait_addr();
+
+	// wait for the address in EEPROM
+	fv1_i2c::wait_byte();
+	fv1_i2c::wait_byte();
+
+	// wait for the EEPROM address (read)
+	fv1_i2c::wait_addr();
+
+	// send the program
+	uint16_t i = 0;
+	while (fv1_i2c::send_byte((i++) & 0xff))
+	{
+	}
+
+	// ack to release the SCL
+	TWI1.SCTRLB = TWI_SCMD_RESPONSE_gc;
+
+	dbg_pin::high();
 }
 
 bool FV1::set_preset(const Preset& new_preset)
@@ -75,6 +103,9 @@ bool FV1::set_preset(const Preset& new_preset)
 
 		changed = true;
 	}
+
+	if (changed)
+		_active_preset = new_preset;
 
 	return changed;
 }

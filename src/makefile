@@ -49,7 +49,7 @@ flash: all hex
 	@$(PYMCUPROG) write -f $(TGTNAME).hex --erase --verify
 
 #@$(AVRDUDE) -U flash:w:$(TGTNAME).hex:i
-	
+
 clean:
 	@echo cleaning...
 	@rm -f $(TGTNAME).hex $(TGTNAME).elf $(TGTNAME).lst $(OBJECTS)

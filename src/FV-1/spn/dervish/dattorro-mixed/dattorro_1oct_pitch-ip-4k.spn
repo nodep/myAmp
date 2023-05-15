@@ -13,7 +13,7 @@
 
 ;pot0=ratio between dry & freq shift level into reverb
 ;pot1=reverb time (decay... all the way up is infinite sustain in the tank)
-;pot2 = hf loss in the tank (damping... turn up for MORE damping)
+;pot2=hf loss in the tank (damping... turn up for MORE damping)
 
 ; =====================================
 ; tunables - take care adjusting these, it's very easy to saturate 
