@@ -115,36 +115,23 @@ public:
 		get_twi().SCTRLA = TWI_SMEN_bm | TWI_ENABLE_bm;
 	}
 
-	static uint8_t wait_addr()
+	static uint8_t wait_for(const uint8_t mask)
 	{
-		while (true)
-		{
-			const uint8_t sstatus = get_twi().SSTATUS;
-			if (sstatus & TWI_APIF_bm)
-			{
-				get_twi().SCTRLB = TWI_SCMD_RESPONSE_gc;
-				return get_twi().SDATA;
-			}
-		}
+		uint8_t status = 0;
+		do {
+			status = get_twi().SSTATUS;
+		} while ((status & mask) == 0);
+
+		return status;
 	}
 
-	static bool send_byte(uint8_t data)
+	static void confirm()
+	{
+		get_twi().SCTRLB = TWI_SCMD_RESPONSE_gc;
+	}
+
+	static void send_byte(uint8_t data)
 	{
 		get_twi().SDATA = data;
-		loop_until_bit_is_set(get_twi().SSTATUS, TWI_DIF_bp);
-		return (get_twi().SSTATUS & TWI_RXACK_bm) == 0;
-	}
-
-	static uint8_t wait_byte()
-	{
-		while (true)
-		{
-			const uint8_t sstatus = get_twi().SSTATUS;
-			if (sstatus & TWI_DIF_bm)
-			{
-				get_twi().SCTRLB = TWI_SCMD_RESPONSE_gc;
-				return get_twi().SDATA;
-			}
-		}
 	}
 };

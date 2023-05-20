@@ -52,39 +52,38 @@ FV1::FV1()
 
 void FV1::send_program(uint8_t ext_prog_num)
 {
+	// TODO: handle bus errors
+
+	// wait for the address, and the read
+	dbg_pin::low();
+	uint8_t status = 0;
+	do {
+		status = fv1_i2c::wait_for(TWI_DIF_bm | TWI_APIF_bm);
+		fv1_i2c::confirm();
+		// when DIR is set we have to send the first byte of the program
+	} while ((status & TWI_DIR_bm) == 0);
+	dbg_pin::high();
+
 	const uint16_t binary_length = pgm_read_word(&fv1_programs[ext_prog_num].binary_length);
-
-	// wait for the EEPROM address
-	fv1_i2c::wait_addr();
-
-	// wait for the address in EEPROM
-	fv1_i2c::wait_byte();
-	fv1_i2c::wait_byte();
-
-	// wait for the EEPROM address (read)
-	fv1_i2c::wait_addr();
-
-	loop_until_bit_is_set(TWI1.SSTATUS, TWI_DIF_bp);
-	
-	// send the program
 	const uint8_t* binary = (const uint8_t*)pgm_read_ptr(&fv1_programs[ext_prog_num].binary);
+
+	// send the program from PROGMEM
 	for (uint16_t cnt = 0; cnt < binary_length; cnt++)
 	{
-		dbg_pin::low();
+		status = fv1_i2c::wait_for(TWI_DIF_bm);
 		fv1_i2c::send_byte(pgm_read_byte(binary++));
-		dbg_pin::high();
 	}
 
-	for (uint16_t cnt = binary_length; cnt < 0x200; cnt += 4)
+	// send the trailing NOPs for the full 512 bytes of a FV-1 program
+	for (uint16_t cnt = binary_length; cnt < 0x200; cnt++)
 	{
-		fv1_i2c::send_byte(0x00);
-		fv1_i2c::send_byte(0x00);
-		fv1_i2c::send_byte(0x00);
-		fv1_i2c::send_byte(0x11);
+		status = fv1_i2c::wait_for(TWI_DIF_bm);
+		fv1_i2c::send_byte((cnt & 3) == 3 ? 0x11 : 0x00);
 	}
 
-	// ack to release the SCL
-	TWI1.SCTRLB = TWI_SCMD_RESPONSE_gc;
+	// wait for NACK
+	status = fv1_i2c::wait_for(TWI_RXACK_bm);
+	fv1_i2c::confirm();
 }
 
 bool FV1::set_preset(const Preset& new_preset)
@@ -108,10 +107,23 @@ bool FV1::set_preset(const Preset& new_preset)
 	if (new_external != active_external
 		|| new_preset.prog_num != _active_preset.prog_num)
 	{
-		fv1_t0::set_value(new_external);
-
 		if (new_external)
+		{
+			if (active_external)
+				fv1_s0::toggle();
+			else
+				fv1_t0::set_value(new_external);
+
 			send_program(new_preset.prog_num);
+		}
+		else
+		{
+			fv1_t0::low();
+
+			fv1_s0::set_value(new_preset.prog_num & 1);
+			fv1_s1::set_value(new_preset.prog_num & 2);
+			fv1_s2::set_value(new_preset.prog_num & 4);
+		}
 
 		changed = true;
 	}

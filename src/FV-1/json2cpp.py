@@ -52,8 +52,8 @@ ROMprograms = [
 
 # we want these programs to come right after the ROMs
 goodPrograms = [
-	'Reverb + Shimmer (Version 6)',
 	'Hall Reverb with Shimmer',
+	'Reverb + Shimmer (Version 6)',
 ]
 
 excludePrograms = [

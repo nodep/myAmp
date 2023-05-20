@@ -45,8 +45,6 @@ void App::poll()
 	const auto delta = rotenc.get_delta();
 	if (delta)
 	{
-		dprint("d=%i old_prog=%u ", delta, current_preset.prog_num);
-
 		int16_t new_prog_num = current_preset.prog_num + delta;
 		if (new_prog_num < 0)
 			new_prog_num = num_fv1_programs - 1;
@@ -54,12 +52,11 @@ void App::poll()
 			new_prog_num = 0;
 
 		current_preset.prog_num = new_prog_num;
-
-		dprint("new_prog=%u ", new_prog_num);
 	}
 
 	if (fv1.set_preset(current_preset))
 	{
+		// dprint("new_prog=%u ", new_prog_num);
 		/*
 		dprint("prog=%u P0=%u P1=%u P2=%u mix=%u\n",
 				current_preset.prog_num,

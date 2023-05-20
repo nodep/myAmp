@@ -149,17 +149,17 @@ const Program fv1_programs[9] PROGMEM =
 },
 // external programs
 {
-.name = str_Reverb___Shimmer__Version_6_,
-.pot_names = {str_Reverb_time, str_Treble, str_Shimmer},
-.params = &param_40_0800_0800_0800,
-.binary_length = 396,
-.binary = bin_shimmer_drAlx_h
-},
-{
 .name = str_Hall_Reverb_with_Shimmer,
 .pot_names = {str_Damping, str_Feedback, str_Decay},
 .params = &default_params,
 .binary_length = 460,
 .binary = bin_shimmer_1_h
+},
+{
+.name = str_Reverb___Shimmer__Version_6_,
+.pot_names = {str_Reverb_time, str_Treble, str_Shimmer},
+.params = &param_40_0800_0800_0800,
+.binary_length = 396,
+.binary = bin_shimmer_drAlx_h
 },
 };

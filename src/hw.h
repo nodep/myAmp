@@ -73,4 +73,6 @@ using dbg_pin		= IoPin<'A', 3>;
 // timekeeping: 1 tick == 0.24ms
 using Watch = RTClock<8>;
 
+using DebugUsart = Usart<0>;
+
 void init_hw();
