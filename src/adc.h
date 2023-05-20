@@ -37,9 +37,16 @@ struct ADC
 template <int Size>
 struct ADCRunner
 {
-	const ADC_MUXPOS_t	muxpos[Size];
-	uint16_t			results[Size];
-	int8_t				mux_cnt = -1;
+	ADC_MUXPOS_t	muxpos[Size];
+	uint16_t		noise_gate[Size];
+	uint16_t		results[Size];
+	int8_t			mux_cnt = -1;
+
+	void set_muxpos(const uint8_t channel, const ADC_MUXPOS_t mp, const uint16_t ng)
+	{
+		muxpos[channel] = mp;
+		noise_gate[channel] = ng;
+	}
 
 	bool has_fresh_set()
 	{
@@ -49,7 +56,10 @@ struct ADCRunner
 		{
 			if (mux_cnt >= 0)
 			{
-				results[mux_cnt] = ADC::get_result();
+				const uint16_t result = ADC::get_result();
+				const uint16_t diff = abs(results[mux_cnt] - result);
+				if (diff > noise_gate[mux_cnt])
+					results[mux_cnt] = result;
 			}
 
 			if (++mux_cnt == Size)

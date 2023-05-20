@@ -15,12 +15,7 @@ struct App
 	RotEnc		rotenc;
 	Display		display;
 	Touchscreen_XPT2046 ts;
-	ADCRunner<5>	adc = {	ADC_MUXPOS_AIN7_gc,		// battery voltage
-							ADC_MUXPOS_AIN10_gc,	// FV1 pots
-							ADC_MUXPOS_AIN11_gc,
-							ADC_MUXPOS_AIN12_gc,
-							ADC_MUXPOS_AIN13_gc};
-
+	ADCRunner<5>	adc;
 	double		battery_voltage = .0;
 
 	App();

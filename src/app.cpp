@@ -16,6 +16,12 @@ App::App()
 	fill(display, colBlack);
 
 	ts.init();
+
+	adc.set_muxpos(0, ADC_MUXPOS_AIN7_gc, 0);
+	adc.set_muxpos(1, ADC_MUXPOS_AIN10_gc, 12);
+	adc.set_muxpos(2, ADC_MUXPOS_AIN11_gc, 12);
+	adc.set_muxpos(3, ADC_MUXPOS_AIN12_gc, 12);
+	adc.set_muxpos(4, ADC_MUXPOS_AIN13_gc, 12);
 }
 
 void App::poll()
@@ -26,19 +32,9 @@ void App::poll()
 	{
 		battery_voltage = adc.results[0] / 1796.721311;
 
-		const int16_t pot0 = 0x1000 - (adc.results[1] >> 4);
-		const int16_t pot1 = 0x1000 - (adc.results[2] >> 4);
-		const int16_t pot2 = 0x1000 - (adc.results[3] >> 4);
-
-		if (abs(pot0 - current_preset.pots[0]) > 2)
-			current_preset.pots[0] = pot0;
-
-		if (abs(pot1 - current_preset.pots[1]) > 2)
-			current_preset.pots[1] = pot1;
-
-		if (abs(pot2 - current_preset.pots[2]) > 2)
-			current_preset.pots[2] = pot2;
-
+		current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
+		current_preset.pots[1] = 0x1000 - (adc.results[2] >> 4);
+		current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
 		current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
@@ -56,14 +52,11 @@ void App::poll()
 
 	if (fv1.set_preset(current_preset))
 	{
-		// dprint("new_prog=%u ", new_prog_num);
-		/*
 		dprint("prog=%u P0=%u P1=%u P2=%u mix=%u\n",
 				current_preset.prog_num,
 				current_preset.pots[0],
 				current_preset.pots[1],
 				current_preset.pots[2],
 				current_preset.mix);
-				*/
 	}
 }
