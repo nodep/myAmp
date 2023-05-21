@@ -32,10 +32,17 @@ void App::poll()
 	{
 		battery_voltage = adc.results[0] / 1796.721311;
 
-		current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
-		current_preset.pots[1] = 0x1000 - (adc.results[2] >> 4);
-		current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
-		current_preset.mix = 0xff - (adc.results[4] >> 8);
+		if (adc.is_new[1])
+			current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
+
+		if (adc.is_new[2])
+			current_preset.pots[1] = 0x1000 - (adc.results[2] >> 4);
+
+		if (adc.is_new[3])
+			current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
+
+		if (adc.is_new[4])
+			current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
 	const auto delta = rotenc.get_delta();
