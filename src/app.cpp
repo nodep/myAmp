@@ -9,6 +9,7 @@
 #include "avrdbg.h"
 #include "app.h"
 #include "adc.h"
+#include "programs.h"
 
 App::App()
 {
@@ -32,16 +33,16 @@ void App::poll()
 	{
 		battery_voltage = adc.results[0] / 1796.721311;
 
-		if (adc.is_new[1])
+		if (adc.has_changed[1])
 			current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
 
-		if (adc.is_new[2])
+		if (adc.has_changed[2])
 			current_preset.pots[1] = 0x1000 - (adc.results[2] >> 4);
 
-		if (adc.is_new[3])
+		if (adc.has_changed[3])
 			current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
 
-		if (adc.is_new[4])
+		if (adc.has_changed[4])
 			current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
@@ -54,7 +55,12 @@ void App::poll()
 		if (new_prog_num >= num_fv1_programs)
 			new_prog_num = 0;
 
-		current_preset.prog_num = new_prog_num;
+		if (current_preset.prog_num != new_prog_num)
+		{
+			current_preset.prog_num = new_prog_num;
+			// load the preset
+			
+		}
 	}
 
 	if (fv1.set_preset(current_preset))

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <avr/pgmspace.h>
-#include "preset.h"
 
 struct ProgParams
 {

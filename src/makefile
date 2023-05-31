@@ -6,7 +6,7 @@ PYMCUPROG = pymcuprog -d $(DEVICE) -t uart -u com5
 F_CPU = 24000000
 
 OBJPATH = obj
-OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o)
+OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o preset.o)
 TGTNAME = $(OBJPATH)/$(TARGET)
 
 CFLAGS  = -std=c++20 -Wall -O2 -DF_CPU=$(F_CPU)
