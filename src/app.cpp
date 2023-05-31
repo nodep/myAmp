@@ -19,10 +19,12 @@ App::App()
 	ts.init();
 
 	adc.set_muxpos(0, ADC_MUXPOS_AIN7_gc, 0);
-	adc.set_muxpos(1, ADC_MUXPOS_AIN10_gc, 12);
-	adc.set_muxpos(2, ADC_MUXPOS_AIN11_gc, 12);
-	adc.set_muxpos(3, ADC_MUXPOS_AIN12_gc, 12);
-	adc.set_muxpos(4, ADC_MUXPOS_AIN13_gc, 12);
+	adc.set_muxpos(1, ADC_MUXPOS_AIN10_gc, 32);
+	adc.set_muxpos(2, ADC_MUXPOS_AIN11_gc, 32);
+	adc.set_muxpos(3, ADC_MUXPOS_AIN12_gc, 32);
+	adc.set_muxpos(4, ADC_MUXPOS_AIN13_gc, 32);
+
+	Preset::dump_eeprom_presets();
 }
 
 void App::poll()
@@ -46,6 +48,11 @@ void App::poll()
 			current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
+	if (rotenc.get_button_event() == RotEnc::beLong)
+	{
+		current_preset.save();
+	}
+
 	const auto delta = rotenc.get_delta();
 	if (delta)
 	{
@@ -57,9 +64,8 @@ void App::poll()
 
 		if (current_preset.prog_num != new_prog_num)
 		{
-			current_preset.prog_num = new_prog_num;
 			// load the preset
-			
+			current_preset.load(new_prog_num);
 		}
 	}
 

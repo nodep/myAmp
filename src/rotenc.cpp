@@ -154,14 +154,6 @@ RotEnc::ButtonEvent RotEnc::get_button_event()
 	}
 	
 	if (curr_button != prev_event_button)
-	{
-		if (*((int32_t*)curr_step) != 0)
-			dprint("%i %i\n", change_dur, Watch::ticks2ms(change_dur));
-		else
-			dprint("\n");
-	}
-
-	if (curr_button != prev_event_button)
 		prev_event_change = now;
 	else if (change_dur > Watch::ms2ticks(4000))
 		prev_event_change = now - Watch::ms2ticks(4000);

@@ -12,5 +12,5 @@ struct Preset
 	bool save();
 
 	static uint8_t num_free_presets();
-	static void dump_presets();
+	static void dump_eeprom_presets();
 };

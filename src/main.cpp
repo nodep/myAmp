@@ -26,18 +26,6 @@ int main()
 
 	App app;
 
-	uint8_t block[10];
-	for (uint8_t i = 0; i < sizeof(block); i++)
-		block[i] = 0;
-
-	//eeprom_write_block(block, nullptr, sizeof(block));
-	eeprom_read_block(block, nullptr, sizeof(block));
-
-	for (uint8_t i = 0; i < sizeof(block); i++)
-		dprint("0x%02x ", block[i]);
-
-	dprint("\n");
-
 	while (true)
 	{
 		app.poll();
