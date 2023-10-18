@@ -159,7 +159,6 @@ void Display::init()
 	s_rst::high();
 	_delay_ms(200);
 
-	s_led::invert();
 	s_led::dir_out();
 	s_led::low();
 	
@@ -197,12 +196,14 @@ void Display::on()
 {
 	Transaction t;
 	send_command(cmdDisplayOn);
+	s_led::low();
 }
 
 void Display::off()
 {
 	Transaction t;
 	send_command(cmdDisplayOff);
+	s_led::high();
 }
 
 void Display::send_init_command(const uint8_t commandByte, const uint8_t* dataBytes, const uint8_t numDataBytes)

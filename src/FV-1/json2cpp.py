@@ -164,9 +164,10 @@ def outputProgram(prog, outf):
 	global usedBytes
 
 	if not isValidProgram(prog):
-		print ('skipping program:', prog['name'])
 		return
-		
+
+	print('outputting program:', prog['name'])
+
 	outf.write('{\n')
 	outf.write('.name = {},\n'.format(getVarNameFromString(prog['name'])))
 	potNames = ''

@@ -10,15 +10,9 @@
 #include "hw.h"
 #include "avrdbg.h"
 #include "watch.h"
-
-#include "graph.h"
 #include "graphtext.h"
 
-#include "powamp.h"
 #include "app.h"
-#include "adc.h"
-#include "rotenc.h"
-#include "programs.h"
 
 int main()
 {
@@ -35,16 +29,26 @@ int main()
 		if (event != evNone)
 		{
 			if (event == evFtswBtn1Down)
+			{
+				app.display.off();
 				num++;
+			}
 			else if (event == evFtswBtn2Down)
+			{
+				app.display.on();
 				num--;
+			}
 			else if (event == evFtswBtn3Down)
-				num += 10;
+				num += 11;
 			else if (event == evFtswBtn4Down)
-				num -= 10;
+				num -= 11;
 
 			if (app.pedals.ftsw_present)
 				app.pedals.set_ftsw_number(num);
+
+			dprint("start...");
+			print_large(app.display, "text", 20, 20, colWhite);
+			dprint("end\n");
 		}
 	}
 }

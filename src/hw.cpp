@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -9,7 +7,7 @@
 #include "fv1.h"
 #include "adc.h"
 
-static void mcu_init()
+void mcu_init()
 {
 	CPU_CCP = CCP_IOREG_gc;
 #if   F_CPU == 1000000

@@ -181,8 +181,6 @@ const GFXglyph FreeMonoBold9pt7bGlyphs[] PROGMEM = {
     {988, 4, 14, 11, 4, -10},  // 0x7D '}'
     {995, 9, 4, 11, 1, -6}};   // 0x7E '~'
 
-const GFXfont FreeMonoBold9pt7b PROGMEM = {(uint8_t *)FreeMonoBold9pt7bBitmaps,
-                                           (GFXglyph *)FreeMonoBold9pt7bGlyphs,
-                                           0x20, 0x7E, 18};
+const GFXfont FreeMonoBold9pt7b PROGMEM = {FreeMonoBold9pt7bBitmaps, FreeMonoBold9pt7bGlyphs, ' ', '~', 18};
 
 // Approx. 1672 bytes

@@ -56,7 +56,7 @@ static const uint8_t digit_segments[10] PROGMEM =
 
 bool Pedals::consume(const uint8_t byte)
 {
-	dprint("x%02x", byte);
+	//dprint("x%02x", byte);
 	
 	// is this a command byte?
 	if (byte & 0x80)

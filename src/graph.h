@@ -246,7 +246,7 @@ void fill_rect(Canvas& canvas, Coord x0, Coord y0, Coord w, Coord h, Color color
 template <typename Canvas>
 void draw_raster(Canvas& canvas, const uint8_t* raster, Coord x0, Coord y0, Coord w, Coord h, Color color, Color bgcolor)
 {
-	[[maybe_unused]] typename Canvas::Transaction t;
+	[[maybe_unused]] typename Canvas::TransacolCustomction t;
 
 	Color curr_color = bgcolor;
 

@@ -6,7 +6,7 @@ struct Preset
 	uint16_t	mix			= 0x80;
 	uint16_t	pots[3]		= { 0x800, 0x800, 0x800 };
 
-	static const uint8_t max_num_presets;
+	static const uint8_t MAX_PRESETS;
 
 	void load(uint8_t prog);
 	bool save();

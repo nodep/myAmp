@@ -4,7 +4,7 @@
 #include "pedals.h"
 #include "rotenc.h"
 #include "displaySpi.h"
-#include "touchscreen.h"
+//#include "touchscreen.h"
 #include "adc.h"
 #include "preset.h"
 
@@ -14,7 +14,7 @@ struct App
 	Pedals		pedals;
 	RotEnc		rotenc;
 	Display		display;
-	Touchscreen_XPT2046 ts;
+	//Touchscreen_XPT2046 ts;
 	ADCRunner<5>	adc;
 	double		battery_voltage = .0;
 

@@ -67,6 +67,8 @@ struct Touchscreen_XPT2046
 		return get_point().valid();
 	}
 
+	void calibrate(const int width, const int height);
+
 	template <class Display>
 	void calibrate(Display& d)
 	{

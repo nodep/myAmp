@@ -1,7 +1,5 @@
 #pragma once
 
-#include "hw.h"
-#include "digipot.h"
 #include "preset.h"
 
 class FV1
@@ -9,17 +7,6 @@ class FV1
 private:
 
 	void send_program(uint8_t ext_prog_num);
-
-	Preset	_active_preset;
-
-public:
-
-	FV1();
-
-	Preset get_active_preset() const
-	{
-		return _active_preset;
-	}
 
 	template <int PotNum>
 	bool update_pot(const Preset& new_preset)
@@ -33,6 +20,17 @@ public:
 		}
 
 		return changed;
+	}
+
+	Preset	_active_preset;
+
+public:
+
+	FV1();
+
+	const Preset& get_active_preset() const
+	{
+		return _active_preset;
 	}
 
 	bool set_preset(const Preset& new_preset);

@@ -18,11 +18,11 @@ struct GFXglyph
 // Data stored for FONT AS A WHOLE
 struct GFXfont
 {
-	uint8_t*	bitmap;		// Glyph bitmaps, concatenated
-	GFXglyph*	glyph;		// Glyph array
-	uint8_t		first;		// ASCII extents (first char)
-	uint8_t		last;		// ASCII extents (last char)
-	uint8_t		yAdvance;	// Newline distance (y axis)
+	const uint8_t*	bitmap;		// Glyph bitmaps, concatenated
+	const GFXglyph*	glyph;		// Glyph array
+	char			first;		// ASCII extents (first char)
+	char			last;		// ASCII extents (last char)
+	uint8_t			yAdvance;	// Newline distance (y axis)
 };
 
 inline void* pgm_read_pointer(const void* addr)
@@ -137,7 +137,6 @@ void print_large(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 	while (*str)
 	{
 		const char c = *str++;
-
 		const uint8_t first = pgm_read_byte(&largeFont->first);
 		if (c >= first  &&  c <= pgm_read_byte(&largeFont->last))
 		{

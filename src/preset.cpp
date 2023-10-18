@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include <avr/eeprom.h>
 #include <avr/pgmspace.h>
 
@@ -8,13 +6,14 @@
 #include "preset.h"
 #include "programs.h"
 
-const uint8_t Preset::max_num_presets = EEPROM_SIZE / sizeof(Preset);
+const uint8_t Preset::MAX_PRESETS = EEPROM_SIZE / sizeof(Preset);
 
 void Preset::load(const uint8_t prog)
 {
 	dprint("loading\n");
+
 	// try to get the preset from eeprom
-	for (uint8_t slot_cnt = 0; slot_cnt < max_num_presets; slot_cnt++)
+	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
 		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
@@ -47,14 +46,14 @@ bool Preset::save()
 	dprint("saving %u", prog_num);
 
 	// try to save the preset to eeprom
-	for (uint8_t slot_cnt = 0; slot_cnt < max_num_presets; slot_cnt++)
+	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
 		uint8_t* const slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		const uint8_t saved_prog_num = eeprom_read_byte(slot_ptr);
 
-		// found this program or reached the end pf saved presets?
+		// found this program or reached the end of saved presets?
 		if (saved_prog_num == prog_num  ||  saved_prog_num == 0xff)
 		{
 			dprint(" to slot %u\n", slot_cnt);
@@ -69,7 +68,7 @@ bool Preset::save()
 uint8_t Preset::num_free_presets()
 {
 	// iterate through saved presets
-	for (uint8_t slot_cnt = 0; slot_cnt < max_num_presets; slot_cnt++)
+	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
 		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
@@ -78,7 +77,7 @@ uint8_t Preset::num_free_presets()
 
 		// empty slot?
 		if (saved_prog_num == 0xff)
-			return max_num_presets - slot_cnt;
+			return MAX_PRESETS - slot_cnt;
 	}
 
 	return 0;
@@ -91,7 +90,7 @@ void Preset::dump_eeprom_presets()
 	// iterate through saved presets
 	char progName[128] = { 0 };
 	uint8_t slot_cnt;
-	for (slot_cnt = 0; slot_cnt < max_num_presets; slot_cnt++)
+	for (slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
 		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
@@ -108,5 +107,5 @@ void Preset::dump_eeprom_presets()
 				p.prog_num, progName, p.mix, p.pots[0], p.pots[1], p.pots[2]);
 	}
 
-	dprint("dumped %u presets\n", p.prog_num == 0xff ? slot_cnt : max_num_presets);
+	dprint("dumped %u presets\n", p.prog_num == 0xff ? slot_cnt : MAX_PRESETS);
 }

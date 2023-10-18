@@ -30,7 +30,7 @@ FV1::FV1()
 	dp_mix_scl::low();
 	dp_mix_i2c::init_master();
 
-	// init the PWM outputs to simulate pots of FV-1
+	// init the PWM outputs to simulate the input pots of FV-1
 	fv1_p0::dir_out();
 	fv1_p1::dir_out();
 	fv1_p2::dir_out();

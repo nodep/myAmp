@@ -2,8 +2,8 @@ TARGET  = modulo3
 DEVICE  = avr64da64
 
 AVRDUDE = avrdude -c serialupdi -P com5 -p $(DEVICE)
-PYMCUPROG = pymcuprog -d $(DEVICE) -t uart -u com5
-F_CPU = 24000000
+PYMCUPROG = pymcuprog -d $(DEVICE) -t uart -u com3
+F_CPU	= 24000000
 
 OBJPATH = obj
 OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen.o graph.o pedals.o powamp.o fv1.o rotenc.o app.o programs.o preset.o)

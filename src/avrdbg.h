@@ -2,6 +2,8 @@
 
 #ifdef _DEBUG
 
+#include <stdio.h>
+
 # define dprint(...)		printf(__VA_ARGS__)		// gotta love C99, man
 # define dprint_P(...)		printf_P(__VA_ARGS__)
 # define dprinti(i)			printi(i)

@@ -11,14 +11,18 @@
 #include "fonts/glcdfont.h"
 
 // custom fonts
-#include "fonts/FreeSans9pt7b.h"
-#include "fonts/FreeSansBold9pt7b.h"
-
-#include "fonts/FreeSerif9pt7b.h"
-#include "fonts/FreeSerifBold9pt7b.h"
-
 #include "fonts/FreeMono9pt7b.h"
+#include "fonts/FreeMono12pt7b.h"
 #include "fonts/FreeMonoBold9pt7b.h"
+#include "fonts/FreeMonoBold12pt7b.h"
+#include "fonts/FreeSans9pt7b.h"
+#include "fonts/FreeSans12pt7b.h"
+#include "fonts/FreeSansBold9pt7b.h"
+#include "fonts/FreeSansBold12pt7b.h"
+#include "fonts/FreeSerif9pt7b.h"
+#include "fonts/FreeSerif12pt7b.h"
+#include "fonts/FreeSerifBold9pt7b.h"
+#include "fonts/FreeSerifBold12pt7b.h"
 
 #include "fonts/Org_01.h"
 

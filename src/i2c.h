@@ -28,7 +28,7 @@ protected:
 template <int I2CNum>
 class I2CMaster : public I2C<I2CNum>
 {
-public:
+private:
 	constexpr static uint8_t calc_baud(uint32_t f_scl, uint32_t t_rise)
 	{
 		return ((((((double)5000000.0 / (double)f_scl)) - 10 - ((double)5000000.0 * t_rise / 1000000))) / 2);
