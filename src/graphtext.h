@@ -25,6 +25,31 @@ struct GFXfont
 	uint8_t			yAdvance;	// Newline distance (y axis)
 };
 
+extern const GFXfont FreeMono9pt7b;
+extern const GFXfont FreeMono12pt7b;
+extern const GFXfont FreeMono18pt7b;
+extern const GFXfont FreeMono24pt7b;
+extern const GFXfont FreeMonoBold9pt7b;
+extern const GFXfont FreeMonoBold12pt7b;
+extern const GFXfont FreeMonoBold18pt7b;
+extern const GFXfont FreeMonoBold24pt7b;
+extern const GFXfont FreeSans9pt7b;
+extern const GFXfont FreeSans12pt7b;
+extern const GFXfont FreeSans18pt7b;
+extern const GFXfont FreeSans24pt7b;
+extern const GFXfont FreeSansBold9pt7b;
+extern const GFXfont FreeSansBold12pt7b;
+extern const GFXfont FreeSansBold18pt7b;
+extern const GFXfont FreeSansBold24pt7b;
+extern const GFXfont FreeSerif9pt7b;
+extern const GFXfont FreeSerif12pt7b;
+extern const GFXfont FreeSerif18pt7b;
+extern const GFXfont FreeSerif24pt7b;
+extern const GFXfont FreeSerifBold9pt7b;
+extern const GFXfont FreeSerifBold12pt7b;
+extern const GFXfont FreeSerifBold18pt7b;
+extern const GFXfont FreeSerifBold24pt7b;
+
 inline void* pgm_read_pointer(const void* addr)
 {
 	return (void*) pgm_read_word(addr);
@@ -41,7 +66,7 @@ inline uint8_t* pgm_read_bitmap_ptr(const GFXfont* largeFont)
 }
 
 extern const uint8_t font[256 * 5];
-extern const GFXfont* largeFont;
+extern const GFXfont* currentLargeFont;
 
 template <typename Canvas, typename ColorT>
 void print_char_small(Canvas& canvas, const Coord x, const Coord y, const unsigned char c, const ColorT color, const ColorT bgcolor)
@@ -73,10 +98,10 @@ void print_char_small(Canvas& canvas, const Coord x, const Coord y, const unsign
 template <typename Canvas, typename ColorT>
 void print_char_large(Canvas& canvas, const Coord x, const Coord y, unsigned char c, const ColorT color)
 {
-	c -= pgm_read_byte(&largeFont->first);
+	c -= pgm_read_byte(&currentLargeFont->first);
 
-	const GFXglyph* glyph = pgm_read_glyph_ptr(largeFont, c);
-	const uint8_t* bitmap = pgm_read_bitmap_ptr(largeFont);
+	const GFXglyph* glyph = pgm_read_glyph_ptr(currentLargeFont, c);
+	const uint8_t* bitmap = pgm_read_bitmap_ptr(currentLargeFont);
 
 	uint16_t bo = pgm_read_word(&glyph->bitmapOffset);
 	const uint8_t w = pgm_read_byte(&glyph->width);
@@ -137,10 +162,10 @@ void print_large(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 	while (*str)
 	{
 		const char c = *str++;
-		const uint8_t first = pgm_read_byte(&largeFont->first);
-		if (c >= first  &&  c <= pgm_read_byte(&largeFont->last))
+		const uint8_t first = pgm_read_byte(&currentLargeFont->first);
+		if (c >= first  &&  c <= pgm_read_byte(&currentLargeFont->last))
 		{
-			const GFXglyph* glyph = pgm_read_glyph_ptr(largeFont, c - first);
+			const GFXglyph* glyph = pgm_read_glyph_ptr(currentLargeFont, c - first);
 			const uint8_t w = pgm_read_byte(&glyph->width);
 			const uint8_t h = pgm_read_byte(&glyph->height);
 
@@ -150,7 +175,7 @@ void print_large(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 				if (wrap  &&  cursor_x + xo + w > Canvas::Width)
 				{
 					cursor_x = 0;
-					cursor_y += pgm_read_byte(&largeFont->yAdvance);
+					cursor_y += pgm_read_byte(&currentLargeFont->yAdvance);
 				}
 				print_char_large(canvas, cursor_x, cursor_y, c, color);
 			}
@@ -166,3 +191,8 @@ inline uint16_t get_text_width_small(const char* text)
 }
 
 uint16_t get_text_width_large(const char* text);
+
+inline void set_large_font(const GFXfont& pFont)
+{
+	currentLargeFont = &pFont;
+}

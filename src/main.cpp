@@ -45,10 +45,6 @@ int main()
 
 			if (app.pedals.ftsw_present)
 				app.pedals.set_ftsw_number(num);
-
-			dprint("start...");
-			print_large(app.display, "text", 20, 20, colWhite);
-			dprint("end\n");
 		}
 	}
 }

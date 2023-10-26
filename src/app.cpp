@@ -10,11 +10,14 @@
 #include "app.h"
 #include "adc.h"
 #include "programs.h"
+#include "graphtext.h"
 
 App::App()
 {
 	display.init();
 	fill(display, colBlack);
+
+	set_large_font(FreeMono12pt7b);
 
 	//ts.init();
 
@@ -25,6 +28,8 @@ App::App()
 	adc.set_muxpos(4, ADC_MUXPOS_AIN13_gc, 32);
 
 	Preset::dump_eeprom_presets();
+
+	refresh_display(fv1.get_active_preset());
 }
 
 void App::poll()
@@ -75,6 +80,45 @@ void App::poll()
 				current_preset.pots[2],
 				current_preset.mix);
 
-		// TODO: update the display
+		refresh_display(current_preset);
 	}
+
+	refresh_voltage();
+}
+
+void App::refresh_voltage()
+{
+	static uint16_t prev_refresh = 0;
+	if (Watch::has_ms_passed_since(2000, prev_refresh))
+	{
+		// the voltage bar
+		static uint16_t prev_charge = 0;
+		uint16_t curr_charge = 0;
+		const double MIN_VOLTAGE = 3.2 * 6;
+		if (battery_voltage > MIN_VOLTAGE)
+		{
+			curr_charge = static_cast<uint16_t>((battery_voltage - MIN_VOLTAGE) * 40);
+			if (curr_charge > Display::Height)
+				curr_charge = Display::Height;
+		}
+
+		if (curr_charge != prev_charge)
+		{
+			fill_rect(display, 0, 0, 3, Display::Height - curr_charge, colBlack);
+			fill_rect(display, 0, Display::Height - curr_charge, 3, curr_charge, colGreen);
+			prev_charge = curr_charge;
+			dprint("V=%f c=%i\n", battery_voltage, curr_charge);
+		}
+
+		prev_refresh = Watch::now();
+	}
+}
+
+void App::refresh_display(const Preset& preset)
+{
+	char buff[10];
+	sprintf(buff, "pRG=%i", preset.prog_num);
+	Window<80, 20> win(colRed);
+	print_large(win, buff, 0, 0, colWhite);
+	display.blit(win, 4, 0);
 }

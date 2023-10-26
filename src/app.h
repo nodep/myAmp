@@ -21,4 +21,6 @@ struct App
 	App();
 
 	void poll();
+	void refresh_voltage();
+	void refresh_display(const Preset& preset);
 };
