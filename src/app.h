@@ -8,6 +8,11 @@
 #include "adc.h"
 #include "preset.h"
 
+struct ProgressBar
+{
+	uint16_t	progress = 0;
+};
+
 struct App
 {
 	FV1			fv1;
@@ -20,7 +25,9 @@ struct App
 
 	static constexpr double MIN_VOLTAGE = 3.2 * 6;
 	static constexpr double MAX_VOLTAGE = 4.2 * 6;
-	static constexpr uint16_t VOLTAGE_BAR_WIDTH = 3;
+	static constexpr uint16_t VOLTAGE_BAR_WIDTH = 8;
+
+	static constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
 
 	App();
 

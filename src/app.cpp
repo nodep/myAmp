@@ -67,7 +67,7 @@ void App::poll()
 	if (adc.has_fresh_set())
 	{
 		// convert ADC result to voltage
-		battery_voltage = adc.results[0] / 1796.721311;
+		battery_voltage = adc.results[0] / ADC_VOLTAGE_FACTOR;
 
 		if (adc.has_changed[1])
 		{
@@ -160,15 +160,15 @@ void App::refresh_voltage()
 
 void App::refresh_preset(const Preset& preset, uint8_t updated)
 {
-	constexpr uint16_t WIN_WIDTH = 270;
+	constexpr uint16_t WIN_WIDTH = 298;
 	constexpr uint16_t WIN_WIDTH_HALF = WIN_WIDTH / 2;
-	constexpr uint16_t WIN_OFFSET = 15;
+	constexpr uint16_t WIN_OFFSET = 10;
 	constexpr uint16_t HBAR_WIDTH = WIN_WIDTH_HALF - 4;
-	constexpr uint16_t NAME_HEIGHT = 29;
+	constexpr uint16_t NAME_HEIGHT = 24;
+	constexpr uint16_t PARAM_NAME_HEIGHT = 18;
 	constexpr uint16_t HBAR_HEIGHT = 21;
 	constexpr uint16_t HBAR_ADVANCE = HBAR_HEIGHT + 8;
 	constexpr uint16_t HBAR_YOFFSET = 50;
-	constexpr uint16_t NAME_OFFSET = 5;
 	constexpr uint16_t MIX_YOFFSET = 8;
 
 	const auto start = Watch::now();
@@ -178,6 +178,7 @@ void App::refresh_preset(const Preset& preset, uint8_t updated)
 		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
 		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
 		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE*2, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
+		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
 	}
 
 	// names
@@ -186,25 +187,39 @@ void App::refresh_preset(const Preset& preset, uint8_t updated)
 	{
 		{
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
-			set_large_font(FreeSans12pt7b);
+			set_large_font(FreeSansBold12pt7b);
 			fv1_programs[preset.prog_num].copy_name(buff);
-			print_large(win, buff, NAME_OFFSET, NAME_OFFSET, colWhite);
-			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 6);
+			const uint16_t width = get_text_width_large(buff);
+			const uint16_t x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
+			print_large(win, buff, x_offset, 0, colWhite);
+			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 10);
 		}
 
+		// param names
 		{
-			Window<HBAR_WIDTH, HBAR_HEIGHT> win(colBlack);
+			Window<HBAR_WIDTH, PARAM_NAME_HEIGHT> win(colBlack);
 			set_large_font(FreeSans9pt7b);
-			Coord y_offset = HBAR_YOFFSET;
+			Coord y_offset = HBAR_YOFFSET + 3;
 			for (uint8_t pot = 0; pot < 3; pot++)
 			{
 				fill(win, colBlack);
 				fv1_programs[preset.prog_num].copy_param_name(buff, pot);
 				if (*buff)
-					print_large(win, buff, NAME_OFFSET, NAME_OFFSET, colWhite);
+					print_large(win, buff, 0, 0, colWhite);
 				display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset);
 
 				y_offset += HBAR_ADVANCE;
+			}
+
+			// we only need to print this once
+			static bool dry_wet_printed = false;
+			if (!dry_wet_printed)
+			{
+				fill(win, colBlack);
+				print_large(win, "dry/wet", 0, 0, colWhite);
+				display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset + MIX_YOFFSET);
+
+				dry_wet_printed = true;
 			}
 		}
 	}
@@ -228,18 +243,13 @@ void App::refresh_preset(const Preset& preset, uint8_t updated)
 	if (updated & upMix)
 	{
 		// dry/wet
-		const Coord progress = static_cast<Coord>(preset.mix / (double(0x100) / WIN_WIDTH));
+		const Coord progress = static_cast<Coord>(preset.mix / (double(0x100) / HBAR_WIDTH));
 		hbar(win, WIN_WIDTH, win.Height, progress, colDarkGray);
 
-		// param name
-		print_large(win, "dry/wet", NAME_OFFSET, NAME_OFFSET, colWhite);
-
-		display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET);
+		display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2);
 	}
 
 	const auto diff = Watch::now() - start;
 	if (diff)
-	{
 		dprint("%i %i\n", diff, Watch::ticks2ms(diff));
-	}
 }

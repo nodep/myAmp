@@ -133,8 +133,8 @@ void print_small(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 {
 	[[maybe_unused]] typename Canvas::Transaction t;
 
-	uint8_t cursor_x = x;
-	uint8_t cursor_y = y;
+	Coord cursor_x = x;
+	Coord cursor_y = y;
 
 	const bool wrap = false;
 
@@ -157,8 +157,8 @@ void print_large(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 {
 	[[maybe_unused]] typename Canvas::Transaction t;
 
-	uint8_t cursor_x = x;
-	uint8_t cursor_y = y + pgm_read_byte(&currentLargeFont->yOffset);
+	Coord cursor_x = x;
+	Coord cursor_y = y + pgm_read_byte(&currentLargeFont->yOffset);
 
 	const bool wrap = false;
 
