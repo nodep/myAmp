@@ -4,7 +4,7 @@
 
 struct ProgParams
 {
-	uint8_t		mix = 0xff;
+	uint8_t		mix = 0x80;
 	uint16_t	pots[3] = { 0x800, 0x800, 0x800 };
 };
 
@@ -26,6 +26,12 @@ struct Program
 	{
 		const char* name_ptr = (const char*)(pgm_read_word(&name));
 		strcpy_P(buff, name_ptr);
+	}
+
+	bool is_param_used(const uint8_t pot) const
+	{
+		const char* name_ptr = (const char*)(pgm_read_word(&pot_names[pot]));
+		return name_ptr != nullptr;		
 	}
 
 	void copy_param_name(char* buff, const uint8_t pot) const

@@ -28,14 +28,21 @@ constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
 struct ProgressBar
 {
 	Coord	bar_width = 0;
+	Color	frame_color = colBlack;
 	double	range = .0;
 
 	ProgressBar(const uint16_t rng, const Coord width, const Coord height)
 		: range(rng)
 	{}
 
-	void draw(Display& disp, const Coord x0, const Coord y0, const uint16_t new_progress, const Color color)
+	void draw(Display& disp, const Coord x0, const Coord y0, const uint16_t new_progress, const Color color, const Color new_frame_color)
 	{
+		if (frame_color != new_frame_color)
+		{
+			draw_rect(disp, x0 - 2, y0 - 2, WIN_WIDTH / 2, HBAR_HEIGHT + 4, new_frame_color);
+			frame_color = new_frame_color;
+		}
+
 		const Coord new_bar_width = static_cast<Coord>(new_progress / (range / HBAR_WIDTH));
 		if (new_bar_width < bar_width)
 			fill_rect(disp, x0 + new_bar_width, y0, bar_width - new_bar_width, HBAR_HEIGHT, colBlack);
@@ -65,5 +72,5 @@ struct App
 
 	void poll();
 	void refresh_voltage();
-	void refresh_preset(const Preset& preset, uint8_t updated);
+	void refresh_preset();
 };

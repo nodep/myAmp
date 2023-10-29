@@ -12,17 +12,6 @@
 #include "programs.h"
 #include "graphtext.h"
 
-enum UpdatedPart : uint8_t
-{
-	upPot0		= 0b00000001,
-	upPot1		= 0b00000010,
-	upPot2		= 0b00000100,
-	upMix		= 0b00001000,
-	upName		= 0b00010000,
-
-	upAll		= 0b11111111,
-};
-
 App::App()
 {
 	display.init();
@@ -56,13 +45,12 @@ App::App()
 	Preset preset;
 	preset.load(Preset::get_active_prog());
 	fv1.set_preset(preset);
-	refresh_preset(preset, upAll);
+	refresh_preset();
 }
 
 void App::poll()
 {
 	Preset current_preset = fv1.get_active_preset();
-	uint8_t updated = 0;
 
 	if (adc.has_fresh_set())
 	{
@@ -70,28 +58,16 @@ void App::poll()
 		battery_voltage = adc.results[0] / ADC_VOLTAGE_FACTOR;
 
 		if (adc.has_changed[1])
-		{
 			current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
-			updated |= upPot0;
-		}
 
 		if (adc.has_changed[2])
-		{
 			current_preset.pots[1] = 0x1000 - (adc.results[2] >> 4);
-			updated |= upPot1;
-		}
 
 		if (adc.has_changed[3])
-		{
 			current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
-			updated |= upPot2;
-		}
 
 		if (adc.has_changed[4])
-		{
 			current_preset.mix = 0xff - (adc.results[4] >> 8);
-			updated |= upMix;
-		}
 	}
 
 	if (rotenc.get_button_event() == RotEnc::beLong)
@@ -111,7 +87,6 @@ void App::poll()
 		{
 			current_preset.load(new_prog_num);
 			Preset::save_active_prog(new_prog_num);
-			updated |= upAll;
 		}
 	}
 
@@ -124,7 +99,7 @@ void App::poll()
 		//		current_preset.pots[2],
 		//		current_preset.mix);
 
-		refresh_preset(current_preset, updated);
+		refresh_preset();
 	}
 
 	refresh_voltage();
@@ -158,21 +133,16 @@ void App::refresh_voltage()
 	}
 }
 
-void App::refresh_preset(const Preset& preset, uint8_t updated)
+void App::refresh_preset()
 {
 	const auto start = Watch::now();
+	static uint8_t prev_prog = 0xff;
 
-	if (updated)
-	{
-		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
-		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
-		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE*2, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
-		draw_rect(display, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET, WIN_WIDTH / 2, HBAR_HEIGHT + 4, colRed);
-	}
+	const Preset& preset = fv1.get_active_preset();
 
 	// names
 	char buff[LONGEST_NAME];
-	if (updated & upName)
+	if (prev_prog != preset.prog_num)
 	{
 		{
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
@@ -211,13 +181,19 @@ void App::refresh_preset(const Preset& preset, uint8_t updated)
 				dry_wet_printed = true;
 			}
 		}
+
+		prev_prog = preset.prog_num;
 	}
 
+	// load the saved preset to compare it with the current
+	Preset saved_preset;
+	saved_preset.load(preset.prog_num);
+
 	constexpr Coord pbar_x0 = VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2;
-	pot0_progbar.draw(display, pbar_x0, HBAR_YOFFSET + 2, preset.pots[0], colGreen);
-	pot1_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE + 2, preset.pots[1], colGreen);
-	pot2_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*2 + 2, preset.pots[2], colGreen);
-	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colWhite);
+	pot0_progbar.draw(display, pbar_x0, HBAR_YOFFSET + 2, preset.pots[0], colGreen, saved_preset.pots[0] == preset.pots[0] ? colWhite : colRed);
+	pot1_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE + 2, preset.pots[1], colGreen, saved_preset.pots[1] == preset.pots[1] ? colWhite : colRed);
+	pot2_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*2 + 2, preset.pots[2], colGreen, saved_preset.pots[2] == preset.pots[2] ? colWhite : colRed);
+	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colWhite, saved_preset.mix == preset.mix ? colWhite : colRed);
 
 	const auto diff = Watch::now() - start;
 	if (diff)
