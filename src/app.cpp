@@ -160,17 +160,6 @@ void App::refresh_voltage()
 
 void App::refresh_preset(const Preset& preset, uint8_t updated)
 {
-	constexpr uint16_t WIN_WIDTH = 298;
-	constexpr uint16_t WIN_WIDTH_HALF = WIN_WIDTH / 2;
-	constexpr uint16_t WIN_OFFSET = 10;
-	constexpr uint16_t HBAR_WIDTH = WIN_WIDTH_HALF - 4;
-	constexpr uint16_t NAME_HEIGHT = 24;
-	constexpr uint16_t PARAM_NAME_HEIGHT = 18;
-	constexpr uint16_t HBAR_HEIGHT = 21;
-	constexpr uint16_t HBAR_ADVANCE = HBAR_HEIGHT + 8;
-	constexpr uint16_t HBAR_YOFFSET = 50;
-	constexpr uint16_t MIX_YOFFSET = 8;
-
 	const auto start = Watch::now();
 
 	if (updated)
@@ -224,30 +213,11 @@ void App::refresh_preset(const Preset& preset, uint8_t updated)
 		}
 	}
 
-	Window<HBAR_WIDTH, HBAR_HEIGHT> win(colBlack);
-	auto draw_pot = [&](const uint8_t pot, const Coord y_offset)
-		{
-			const Coord progress = static_cast<Coord>(preset.pots[pot] / (double(0x1000) / HBAR_WIDTH));
-			hbar(win, WIN_WIDTH, win.Height, progress, colDarkGray);
-
-			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, y_offset + 2);
-		};
-
-	if (updated & upPot0)
-		draw_pot(0, HBAR_YOFFSET);
-	if (updated & upPot1)
-		draw_pot(1, HBAR_YOFFSET + HBAR_ADVANCE);
-	if (updated & upPot2)
-		draw_pot(2, HBAR_YOFFSET + HBAR_ADVANCE*2);
-
-	if (updated & upMix)
-	{
-		// dry/wet
-		const Coord progress = static_cast<Coord>(preset.mix / (double(0x100) / HBAR_WIDTH));
-		hbar(win, WIN_WIDTH, win.Height, progress, colDarkGray);
-
-		display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2);
-	}
+	constexpr Coord pbar_x0 = VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2;
+	pot0_progbar.draw(display, pbar_x0, HBAR_YOFFSET + 2, preset.pots[0], colGreen);
+	pot1_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE + 2, preset.pots[1], colGreen);
+	pot2_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*2 + 2, preset.pots[2], colGreen);
+	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colWhite);
 
 	const auto diff = Watch::now() - start;
 	if (diff)

@@ -8,9 +8,42 @@
 #include "adc.h"
 #include "preset.h"
 
+constexpr Coord WIN_WIDTH = 298;
+constexpr Coord WIN_WIDTH_HALF = WIN_WIDTH / 2;
+constexpr Coord WIN_OFFSET = 10;
+constexpr Coord HBAR_WIDTH = WIN_WIDTH_HALF - 4;
+constexpr Coord NAME_HEIGHT = 24;
+constexpr Coord PARAM_NAME_HEIGHT = 18;
+constexpr Coord HBAR_HEIGHT = 21;
+constexpr Coord HBAR_ADVANCE = HBAR_HEIGHT + 8;
+constexpr Coord HBAR_YOFFSET = 50;
+constexpr Coord MIX_YOFFSET = 8;
+
+constexpr Coord VOLTAGE_BAR_WIDTH = 8;
+
+constexpr double MIN_VOLTAGE = 3.2 * 6;
+constexpr double MAX_VOLTAGE = 4.2 * 6;
+constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
+
 struct ProgressBar
 {
-	uint16_t	progress = 0;
+	Coord	bar_width = 0;
+	double	range = .0;
+
+	ProgressBar(const uint16_t rng, const Coord width, const Coord height)
+		: range(rng)
+	{}
+
+	void draw(Display& disp, const Coord x0, const Coord y0, const uint16_t new_progress, const Color color)
+	{
+		const Coord new_bar_width = static_cast<Coord>(new_progress / (range / HBAR_WIDTH));
+		if (new_bar_width < bar_width)
+			fill_rect(disp, x0 + new_bar_width, y0, bar_width - new_bar_width, HBAR_HEIGHT, colBlack);
+		else if (new_bar_width > bar_width)
+			fill_rect(disp, x0 + bar_width, y0, new_bar_width - bar_width, HBAR_HEIGHT, color);
+
+		bar_width = new_bar_width;
+	}
 };
 
 struct App
@@ -23,11 +56,10 @@ struct App
 	ADCRunner<5>	adc;
 	double		battery_voltage = .0;
 
-	static constexpr double MIN_VOLTAGE = 3.2 * 6;
-	static constexpr double MAX_VOLTAGE = 4.2 * 6;
-	static constexpr uint16_t VOLTAGE_BAR_WIDTH = 8;
-
-	static constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
+	ProgressBar pot0_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
+	ProgressBar pot1_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
+	ProgressBar pot2_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
+	ProgressBar mix_progbar {0x100, HBAR_WIDTH, HBAR_HEIGHT};
 
 	App();
 
