@@ -21,7 +21,7 @@ const char str_Hall_Reverb_with_Shimmer[] PROGMEM = "Hall Reverb with Shimmer";
 const char str_Damping[] PROGMEM = "Damping";
 const char str_Feedback[] PROGMEM = "Feedback";
 const char str_Decay[] PROGMEM = "Decay";
-const char str_Reverb___Shimmer__Version_6_[] PROGMEM = "Reverb + Shimmer (Version 6)";
+const char str_Reverb___Shimmer_v6[] PROGMEM = "Reverb + Shimmer v6";
 const char str_Reverb_time[] PROGMEM = "Reverb time";
 const char str_Treble[] PROGMEM = "Treble";
 const char str_Shimmer[] PROGMEM = "Shimmer";
@@ -92,10 +92,7 @@ const uint8_t bin_shimmer_drAlx_h[0x18c] PROGMEM = {
 const ProgParams param_ff_0800_0400_0400 PROGMEM = { .mix = 0xff, .pots = {0x0800, 0x0400, 0x0400} };
 const ProgParams param_80_0800_0800_0800 PROGMEM = { .mix = 0x80, .pots = {0x0800, 0x0800, 0x0800} };
 const ProgParams param_40_0800_0800_0800 PROGMEM = { .mix = 0x40, .pots = {0x0800, 0x0800, 0x0800} };
-
-const uint8_t num_fv1_programs = 9;
-
-const Program fv1_programs[9] PROGMEM =
+const Program fv1_programs[NUM_FV1_PROGRAMS] PROGMEM =
 {
 // ROM programs
 {
@@ -156,7 +153,7 @@ const Program fv1_programs[9] PROGMEM =
 .binary = bin_shimmer_1_h
 },
 {
-.name = str_Reverb___Shimmer__Version_6_,
+.name = str_Reverb___Shimmer_v6,
 .pot_names = {str_Reverb_time, str_Treble, str_Shimmer},
 .params = &param_40_0800_0800_0800,
 .binary_length = 396,

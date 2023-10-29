@@ -71,6 +71,6 @@ $(OBJPATH)/%.o: %.cpp makefile $(OBJPATH)
 #	$(COMPILE) -g -save-temps -c $< -o $@
 
 fv1:
-	@python FV-1/json2cpp.py program_defs.cpp
+	@python FV-1/json2cpp.py
 
 all: clean fv1 hex

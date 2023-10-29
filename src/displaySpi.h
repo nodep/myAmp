@@ -62,11 +62,11 @@ public:
 	static void blit(Win& w, Coord x, Coord y) = delete;
 
 	template <Coord WinWidth, Coord WinHeight>
-	static void blit(Window<WinWidth, WinHeight>& w, Coord x, Coord y)
+	static void blit(Window<WinWidth, WinHeight>& w, const Coord x0, const Coord y0)
 	{
 		Transaction t;
 
-		set_addr_window(x, y, WinWidth, WinHeight);
+		set_addr_window(x0, y0, WinWidth, WinHeight);
 		for (Coord y = 0; y < WinHeight; y++)
 			for (Coord x = 0; x < WinWidth; x++)
 				color(w.get_color(x, y));

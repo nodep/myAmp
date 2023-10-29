@@ -21,7 +21,21 @@ struct Program
 		const uint8_t* bin_ptr = (const uint8_t*)(pgm_read_word(&binary));
 		return bin_ptr != nullptr;
 	}
+
+	void copy_name(char* buff) const
+	{
+		const char* name_ptr = (const char*)(pgm_read_word(&name));
+		strcpy_P(buff, name_ptr);
+	}
+
+	void copy_param_name(char* buff, const uint8_t pot) const
+	{
+		const char* name_ptr = (const char*)(pgm_read_word(&pot_names[pot]));
+		if (name_ptr != nullptr)
+			strcpy_P(buff, name_ptr);
+		else
+			buff[0] = '\0';
+	}
 };
 
-extern const uint8_t num_fv1_programs;
-extern const Program fv1_programs[] PROGMEM;
+#include "program_defs.h"

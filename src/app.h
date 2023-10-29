@@ -18,9 +18,13 @@ struct App
 	ADCRunner<5>	adc;
 	double		battery_voltage = .0;
 
+	static constexpr double MIN_VOLTAGE = 3.2 * 6;
+	static constexpr double MAX_VOLTAGE = 4.2 * 6;
+	static constexpr uint16_t VOLTAGE_BAR_WIDTH = 3;
+
 	App();
 
 	void poll();
 	void refresh_voltage();
-	void refresh_display(const Preset& preset);
+	void refresh_preset(const Preset& preset, uint8_t updated);
 };

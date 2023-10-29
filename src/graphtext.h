@@ -23,6 +23,7 @@ struct GFXfont
 	char			first;		// ASCII extents (first char)
 	char			last;		// ASCII extents (last char)
 	uint8_t			yAdvance;	// Newline distance (y axis)
+	uint8_t			yOffset;	// Top of the character to baseline
 };
 
 extern const GFXfont FreeMono9pt7b;
@@ -49,6 +50,11 @@ extern const GFXfont FreeSerifBold9pt7b;
 extern const GFXfont FreeSerifBold12pt7b;
 extern const GFXfont FreeSerifBold18pt7b;
 extern const GFXfont FreeSerifBold24pt7b;
+extern const GFXfont Org_01;
+
+extern const uint8_t lcdfont[256 * 5];
+
+extern const GFXfont* currentLargeFont;
 
 inline void* pgm_read_pointer(const void* addr)
 {
@@ -65,9 +71,6 @@ inline uint8_t* pgm_read_bitmap_ptr(const GFXfont* largeFont)
 	return static_cast<uint8_t*>(pgm_read_pointer(&largeFont->bitmap));
 }
 
-extern const uint8_t font[256 * 5];
-extern const GFXfont* currentLargeFont;
-
 template <typename Canvas, typename ColorT>
 void print_char_small(Canvas& canvas, const Coord x, const Coord y, const unsigned char c, const ColorT color, const ColorT bgcolor)
 {
@@ -80,7 +83,7 @@ void print_char_small(Canvas& canvas, const Coord x, const Coord y, const unsign
 	// char bitmap = 5 columns
 	for (int8_t i = 0; i < 5; i++)
 	{
-		Coord line = pgm_read_byte(&font[c * 5 + i]);
+		Coord line = pgm_read_byte(&lcdfont[c * 5 + i]);
 		for (Coord j = 0; j < 8; j++, line >>= 1)
 		{
 			if (line & 1)
@@ -155,7 +158,7 @@ void print_large(Canvas& canvas, const char* str, const Coord x, const Coord y, 
 	[[maybe_unused]] typename Canvas::Transaction t;
 
 	uint8_t cursor_x = x;
-	uint8_t cursor_y = y + 14;
+	uint8_t cursor_y = y + pgm_read_byte(&currentLargeFont->yOffset);
 
 	const bool wrap = false;
 

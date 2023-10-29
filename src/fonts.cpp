@@ -29,5 +29,6 @@
 #include "fonts/FreeSerifBold18pt7b.h"
 #include "fonts/FreeSerifBold24pt7b.h"
 #include "fonts/FreeSerifBold9pt7b.h"
-#include "fonts/glcdfont.h"
 #include "fonts/Org_01.h"
+
+#include "fonts/glcdfont.h"

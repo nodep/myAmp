@@ -239,7 +239,7 @@ void fill_rect(Canvas& canvas, Coord x0, Coord y0, Coord w, Coord h, Color color
 	[[maybe_unused]] typename Canvas::Transaction t;
 
 	for (Coord x = x0; x < x0 + w; x++)
-		for (Coord y = x0; y < y0 + h; y++)
+		for (Coord y = y0; y < y0 + h; y++)
 			canvas.pixel(x, y, color);
 }
 
@@ -280,9 +280,34 @@ void draw_raster(Canvas& canvas, const uint8_t* raster, Coord x0, Coord y0, Coor
 }
 
 template <typename Canvas>
+void draw_rect(Canvas& canvas, Coord x0, Coord y0, Coord w, Coord h, Color color)
+{
+	[[maybe_unused]] typename Canvas::Transaction t;
+
+	canvas.hline(x0, y0, w, color);
+	canvas.hline(x0, y0 + h - 1, w, color);
+	canvas.vline(x0, y0, h, color);
+	canvas.vline(x0 + w - 1, y0, h, color);
+}
+
+template <typename Canvas>
 void fill(Canvas& c, Color col)
 {
 	fill_rect(c, 0, 0, Canvas::Width, Canvas::Height, col);
+}
+
+template <typename Canvas>
+void vbar(Canvas& canvas, Coord height, Coord width, Coord progress, Color color, Color bgColor = colBlack)
+{
+	fill_rect(canvas, 0, 0, width, height - progress, bgColor);
+	fill_rect(canvas, 0, height - progress, width, height, color);
+}
+
+template <typename Canvas>
+void hbar(Canvas& canvas, Coord width, Coord height, Coord progress, Color color, Color bgColor = colBlack)
+{
+	fill_rect(canvas, 0, 0, progress, height, color);
+	fill_rect(canvas, progress, 0, width - progress, height, bgColor);
 }
 
 template <Coord W, Coord H>

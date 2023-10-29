@@ -6,16 +6,17 @@
 #include "preset.h"
 #include "programs.h"
 
-const uint8_t Preset::MAX_PRESETS = EEPROM_SIZE / sizeof(Preset);
+const uint16_t PRESETS_BEGIN_AT = 1;
+const uint8_t Preset::MAX_PRESETS = (EEPROM_SIZE - PRESETS_BEGIN_AT) / sizeof(Preset);
 
 void Preset::load(const uint8_t prog)
 {
-	dprint("loading\n");
+	dprint("loading %i\n", prog);
 
 	// try to get the preset from eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
+		const uint8_t* slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		const uint8_t saved_prog_num = eeprom_read_byte(slot_ptr);
@@ -26,7 +27,7 @@ void Preset::load(const uint8_t prog)
 
 		if (saved_prog_num == prog)
 		{
-			dprint("found slot %u\n", prog);
+			//dprint("found slot %u\n", prog);
 			eeprom_read_block(this, slot_ptr, sizeof(Preset));
 			return;
 		}
@@ -35,10 +36,10 @@ void Preset::load(const uint8_t prog)
 	// get the preset from flash
 	const ProgParams* paramsPtr = (const ProgParams*)(pgm_read_word(&fv1_programs[prog].params));
 	prog_num = prog;
-	mix = pgm_read_byte(&paramsPtr->mix);
 	pots[0] = pgm_read_word(paramsPtr->pots);
 	pots[1] = pgm_read_word(paramsPtr->pots + 1);
 	pots[2] = pgm_read_word(paramsPtr->pots + 2);
+	mix = pgm_read_byte(&paramsPtr->mix);
 }
 
 bool Preset::save()
@@ -48,7 +49,7 @@ bool Preset::save()
 	// try to save the preset to eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		uint8_t* const slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
+		uint8_t* const slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		const uint8_t saved_prog_num = eeprom_read_byte(slot_ptr);
@@ -101,11 +102,24 @@ void Preset::dump_eeprom_presets()
 			break;
 
 		// read the program name from the flash
-		char* progNamePtr = (char*)pgm_read_ptr(&fv1_programs[p.prog_num].name);
+		const char* progNamePtr = (const char*)pgm_read_ptr(&fv1_programs[p.prog_num].name);
 		strcpy_P(progName, progNamePtr);
 		dprint("prog=%u \"%s\"\n\"params\": [ %u, %u, %u, %u ],\n",
 				p.prog_num, progName, p.mix, p.pots[0], p.pots[1], p.pots[2]);
 	}
 
 	dprint("dumped %u presets\n", p.prog_num == 0xff ? slot_cnt : MAX_PRESETS);
+}
+
+uint8_t Preset::get_active_prog()
+{
+	const uint8_t active_prog = eeprom_read_byte(nullptr);
+	if (active_prog == 0xff)
+		return 0;
+	return active_prog;
+}
+
+void Preset::save_active_prog(uint8_t prog)
+{
+	eeprom_update_byte(nullptr, prog);
 }

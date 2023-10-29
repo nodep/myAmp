@@ -9,7 +9,7 @@
 
 ColorRGB customGraphCol = rgbBlack;
 
-const GFXfont* currentLargeFont = nullptr;	//&FreeMono9pt7b;
+const GFXfont* currentLargeFont = nullptr;
 
 uint16_t get_text_width_large(const char* text)
 {
