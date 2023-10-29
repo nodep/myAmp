@@ -63,9 +63,10 @@ struct App
 	ADCRunner<5>	adc;
 	double		battery_voltage = .0;
 
-	ProgressBar pot0_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
-	ProgressBar pot1_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
-	ProgressBar pot2_progbar {0x1000, HBAR_WIDTH, HBAR_HEIGHT};
+	ProgressBar pot_progbars[3] = {	{0x1000, HBAR_WIDTH, HBAR_HEIGHT},
+									{0x1000, HBAR_WIDTH, HBAR_HEIGHT},
+									{0x1000, HBAR_WIDTH, HBAR_HEIGHT} };
+									
 	ProgressBar mix_progbar {0x100, HBAR_WIDTH, HBAR_HEIGHT};
 
 	App();

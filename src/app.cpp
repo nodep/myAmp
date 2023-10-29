@@ -190,10 +190,18 @@ void App::refresh_preset()
 	saved_preset.load(preset.prog_num);
 
 	constexpr Coord pbar_x0 = VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2;
-	pot0_progbar.draw(display, pbar_x0, HBAR_YOFFSET + 2, preset.pots[0], colGreen, saved_preset.pots[0] == preset.pots[0] ? colWhite : colRed);
-	pot1_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE + 2, preset.pots[1], colGreen, saved_preset.pots[1] == preset.pots[1] ? colWhite : colRed);
-	pot2_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*2 + 2, preset.pots[2], colGreen, saved_preset.pots[2] == preset.pots[2] ? colWhite : colRed);
-	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colWhite, saved_preset.mix == preset.mix ? colWhite : colRed);
+	Coord y_offset = HBAR_YOFFSET + 2;
+	for (uint8_t pot = 0; pot < 3; pot++)
+	{
+		if (fv1_programs[preset.prog_num].is_param_used(pot))
+			pot_progbars[pot].draw(display, pbar_x0, y_offset, preset.pots[pot], colGreen, saved_preset.pots[pot] == preset.pots[pot] ? colWhite : colRed);
+		else
+			pot_progbars[pot].draw(display, pbar_x0, y_offset, 0, colGreen, colBlack);
+
+		y_offset += HBAR_ADVANCE;
+	}
+
+	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colYellow, saved_preset.mix == preset.mix ? colWhite : colRed);
 
 	const auto diff = Watch::now() - start;
 	if (diff)
