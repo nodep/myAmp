@@ -86,10 +86,10 @@ uint8_t Preset::num_free_presets()
 
 void Preset::dump_eeprom_presets()
 {
+#ifdef _DEBUG
 	Preset p;
-
 	// iterate through saved presets
-	char progName[128] = { 0 };
+	char prog_name[LONGEST_PROGRAM_NAME] = { 0 };
 	uint8_t slot_cnt;
 	for (slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
@@ -102,24 +102,26 @@ void Preset::dump_eeprom_presets()
 			break;
 
 		// read the program name from the flash
-		const char* progNamePtr = (const char*)pgm_read_ptr(&fv1_programs[p.prog_num].name);
-		strcpy_P(progName, progNamePtr);
+		fv1_programs[p.prog_num].copy_name(prog_name);
 		dprint("prog=%u \"%s\"\n\"params\": [ %u, %u, %u, %u ],\n",
-				p.prog_num, progName, p.mix, p.pots[0], p.pots[1], p.pots[2]);
+				p.prog_num, prog_name, p.mix, p.pots[0], p.pots[1], p.pots[2]);
 	}
 
 	dprint("dumped %u presets\n", p.prog_num == 0xff ? slot_cnt : MAX_PRESETS);
+#endif
 }
 
-uint8_t Preset::get_active_prog()
+void Preset::load_active_prog()
 {
-	const uint8_t active_prog = eeprom_read_byte(nullptr);
+	// yes, we are reading (successfully) from nullptr
+	uint8_t active_prog = eeprom_read_byte(nullptr);
 	if (active_prog == 0xff)
-		return 0;
-	return active_prog;
+		active_prog = 0;
+
+	load(active_prog);
 }
 
-void Preset::save_active_prog(uint8_t prog)
+void Preset::save_active_prog()
 {
-	eeprom_update_byte(nullptr, prog);
+	eeprom_update_byte(nullptr, prog_num);
 }

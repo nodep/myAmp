@@ -444,6 +444,6 @@ const GFXglyph FreeSans18pt7bGlyphs[] PROGMEM = {
     {4112, 8, 33, 12, 3, -25},  // 0x7D '}'
     {4145, 15, 7, 18, 1, -15}}; // 0x7E '~'
 
-const GFXfont FreeSans18pt7b PROGMEM = {FreeSans18pt7bBitmaps, FreeSans18pt7bGlyphs, ' ', '~', 42, 26};
+const GFXfont FreeSans18pt7b PROGMEM = {FreeSans18pt7bBitmaps, FreeSans18pt7bGlyphs, ' ', '~', 42, 25};
 
 // Approx. 4831 bytes

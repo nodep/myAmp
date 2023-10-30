@@ -19,6 +19,7 @@ App::App()
 
 	//ts.init();
 
+	// init the ADC sources
 	adc.set_muxpos(0, ADC_MUXPOS_AIN7_gc, 0);
 	adc.set_muxpos(1, ADC_MUXPOS_AIN10_gc, 32);
 	adc.set_muxpos(2, ADC_MUXPOS_AIN11_gc, 32);
@@ -28,10 +29,14 @@ App::App()
 	Preset::dump_eeprom_presets();
 
 	//hline(display, 0, 0, 320, colRed);
-	//set_large_font(FreeSansBold9pt7b);		print_large(display, "P",  5, 0, colYellow);
-	//set_large_font(FreeSansBold12pt7b);		print_large(display, "P", 20, 0, colYellow);
-	//set_large_font(FreeSansBold18pt7b);		print_large(display, "P", 37, 0, colYellow);
-	//set_large_font(FreeSansBold24pt7b);		print_large(display, "P", 55, 0, colYellow);
+	//set_large_font(FreeSans9pt7b);			print_large(display, "P",  5, 0, colYellow);
+	//set_large_font(FreeSans12pt7b);			print_large(display, "P", 20, 0, colYellow);
+	//set_large_font(FreeSans18pt7b);			print_large(display, "P", 37, 0, colYellow);
+	//set_large_font(FreeSans24pt7b);			print_large(display, "P", 55, 0, colYellow);
+	//set_large_font(FreeSansBold9pt7b);		print_large(display, "P", 80, 0, colYellow);
+	//set_large_font(FreeSansBold12pt7b);		print_large(display, "P", 95, 0, colYellow);
+	//set_large_font(FreeSansBold18pt7b);		print_large(display, "P", 115, 0, colYellow);
+	//set_large_font(FreeSansBold24pt7b);		print_large(display, "P", 135, 0, colYellow);
 	//while (1);
 
 	// wait until the ADC stabilizes
@@ -43,7 +48,7 @@ App::App()
 
 	// load the active preset
 	Preset preset;
-	preset.load(Preset::get_active_prog());
+	preset.load_active_prog();
 	fv1.set_preset(preset);
 	refresh_preset();
 }
@@ -55,7 +60,7 @@ void App::poll()
 	if (adc.has_fresh_set())
 	{
 		// convert ADC result to voltage
-		battery_voltage = adc.results[0] / ADC_VOLTAGE_FACTOR;
+		refresh_voltage(adc.results[0] / ADC_VOLTAGE_FACTOR);
 
 		if (adc.has_changed[1])
 			current_preset.pots[0] = 0x1000 - (adc.results[1] >> 4);
@@ -86,7 +91,7 @@ void App::poll()
 		if (current_preset.prog_num != new_prog_num)
 		{
 			current_preset.load(new_prog_num);
-			Preset::save_active_prog(new_prog_num);
+			current_preset.save_active_prog();
 		}
 	}
 
@@ -101,11 +106,9 @@ void App::poll()
 
 		refresh_preset();
 	}
-
-	refresh_voltage();
 }
 
-void App::refresh_voltage()
+void App::refresh_voltage(const double battery_voltage)
 {
 	static uint16_t prev_refresh = 0;
 	if (Watch::has_ms_passed_since(2000, prev_refresh))
@@ -122,13 +125,25 @@ void App::refresh_voltage()
 		}
 
 		// draw the bar if it changed
-		if (curr_charge != prev_charge)
+		if (curr_charge < prev_charge)
+			fill_rect(display, 0, Display::Height - prev_charge, VOLTAGE_BAR_WIDTH, prev_charge - curr_charge, colBlack);
+		else if (curr_charge > prev_charge)
+			fill_rect(display, 0, Display::Height - curr_charge, VOLTAGE_BAR_WIDTH, curr_charge - prev_charge, colGreen);
+
+		// print the voltage
+		static char prev_buff[6] = {0};
+		char buff[6];
+		sprintf(buff, "%.1fV", battery_voltage);
+		if (strcmp(buff, prev_buff) != 0)
 		{
-			vbar(display, Display::Height, VOLTAGE_BAR_WIDTH, curr_charge, colGreen);
-			prev_charge = curr_charge;
-			//dprint("V=%f c=%i\n", battery_voltage, curr_charge);
+			Window<46, PARAM_NAME_HEIGHT> win(colBlack);
+			set_large_font(FreeSans9pt7b);
+			print_large(win, buff, 0, 0, colYellow);
+			display.blit(win, VOLTAGE_BAR_WIDTH + 2, Display::Height - PARAM_NAME_HEIGHT + 1);
+			strcpy(prev_buff, buff);
 		}
 
+		prev_charge = curr_charge;
 		prev_refresh = Watch::now();
 	}
 }
@@ -141,45 +156,44 @@ void App::refresh_preset()
 	const Preset& preset = fv1.get_active_preset();
 
 	// names
-	char buff[LONGEST_NAME];
+	char name[LONGEST_NAME];
 	if (prev_prog != preset.prog_num)
 	{
 		{
+			// center the program name
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
 			set_large_font(FreeSansBold12pt7b);
-			fv1_programs[preset.prog_num].copy_name(buff);
-			const uint16_t width = get_text_width_large(buff);
-			const uint16_t x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
-			print_large(win, buff, x_offset, 0, colWhite);
+			fv1_programs[preset.prog_num].copy_name(name);
+			const Coord width = get_text_width_large(name);
+			const Coord x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
+			print_large(win, name, x_offset, 0, colWhite);
 			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 10);
 		}
 
 		// param names
+		Window<HBAR_WIDTH, PARAM_NAME_HEIGHT> win(colBlack);
+		set_large_font(FreeSans9pt7b);
+		Coord y_offset = HBAR_YOFFSET + 3;
+		for (uint8_t pot = 0; pot < 3; pot++)
 		{
-			Window<HBAR_WIDTH, PARAM_NAME_HEIGHT> win(colBlack);
-			set_large_font(FreeSans9pt7b);
-			Coord y_offset = HBAR_YOFFSET + 3;
-			for (uint8_t pot = 0; pot < 3; pot++)
-			{
-				fill(win, colBlack);
-				fv1_programs[preset.prog_num].copy_param_name(buff, pot);
-				if (*buff)
-					print_large(win, buff, 0, 0, colWhite);
-				display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset);
+			fill(win, colBlack);
+			fv1_programs[preset.prog_num].copy_param_name(name, pot);
+			if (*name)
+				print_large(win, name, 0, 0, colWhite);
+			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset);
 
-				y_offset += HBAR_ADVANCE;
-			}
+			y_offset += HBAR_ADVANCE;
+		}
 
-			// we only need to print this once
-			static bool dry_wet_printed = false;
-			if (!dry_wet_printed)
-			{
-				fill(win, colBlack);
-				print_large(win, "dry/wet", 0, 0, colWhite);
-				display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset + MIX_YOFFSET);
+		// we only need to print this once
+		static bool dry_wet_printed = false;
+		if (!dry_wet_printed)
+		{
+			fill(win, colBlack);
+			print_large(win, "dry/wet", 0, 0, colWhite);
+			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, y_offset + MIX_YOFFSET);
 
-				dry_wet_printed = true;
-			}
+			dry_wet_printed = true;
 		}
 
 		prev_prog = preset.prog_num;
@@ -189,19 +203,15 @@ void App::refresh_preset()
 	Preset saved_preset;
 	saved_preset.load(preset.prog_num);
 
-	constexpr Coord pbar_x0 = VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2;
-	Coord y_offset = HBAR_YOFFSET + 2;
 	for (uint8_t pot = 0; pot < 3; pot++)
 	{
 		if (fv1_programs[preset.prog_num].is_param_used(pot))
-			pot_progbars[pot].draw(display, pbar_x0, y_offset, preset.pots[pot], colGreen, saved_preset.pots[pot] == preset.pots[pot] ? colWhite : colRed);
+			pot_progbars[pot].draw(display, preset.pots[pot], saved_preset.pots[pot] == preset.pots[pot] ? colWhite : colRed);
 		else
-			pot_progbars[pot].draw(display, pbar_x0, y_offset, 0, colGreen, colBlack);
-
-		y_offset += HBAR_ADVANCE;
+			pot_progbars[pot].draw(display, 0, colBlack);
 	}
 
-	mix_progbar.draw(display, pbar_x0, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, preset.mix, colYellow, saved_preset.mix == preset.mix ? colWhite : colRed);
+	mix_progbar.draw(display, preset.mix, saved_preset.mix == preset.mix ? colWhite : colRed);
 
 	const auto diff = Watch::now() - start;
 	if (diff)

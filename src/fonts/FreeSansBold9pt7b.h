@@ -200,6 +200,6 @@ const GFXglyph FreeSansBold9pt7bGlyphs[] PROGMEM = {
     {1219, 4, 17, 7, 2, -12},  // 0x7D '}'
     {1228, 8, 2, 9, 0, -4}};   // 0x7E '~'
 
-const GFXfont FreeSansBold9pt7b PROGMEM = {FreeSansBold9pt7bBitmaps, FreeSansBold9pt7bGlyphs, ' ', '~', 22, 13};
+const GFXfont FreeSansBold9pt7b PROGMEM = {FreeSansBold9pt7bBitmaps, FreeSansBold9pt7bGlyphs, ' ', '~', 22, 12};
 
 // Approx. 1902 bytes

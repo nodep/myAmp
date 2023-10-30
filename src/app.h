@@ -27,15 +27,17 @@ constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
 
 struct ProgressBar
 {
-	Coord	bar_width = 0;
-	Color	frame_color = colBlack;
-	double	range = .0;
+	Coord			bar_width = 0;
+	Color			frame_color = colBlack;
+	const Color		bar_color;
+	const Coord		x0, y0;
+	const double	range;
 
-	ProgressBar(const uint16_t rng, const Coord width, const Coord height)
-		: range(rng)
+	ProgressBar(const uint16_t rng, const Coord x, const Coord y, const Color bc)
+		: bar_color(bc), x0(x), y0(y), range(rng)
 	{}
 
-	void draw(Display& disp, const Coord x0, const Coord y0, const uint16_t new_progress, const Color color, const Color new_frame_color)
+	void draw(Display& disp, const uint16_t new_progress, const Color new_frame_color)
 	{
 		if (frame_color != new_frame_color)
 		{
@@ -47,7 +49,7 @@ struct ProgressBar
 		if (new_bar_width < bar_width)
 			fill_rect(disp, x0 + new_bar_width, y0, bar_width - new_bar_width, HBAR_HEIGHT, colBlack);
 		else if (new_bar_width > bar_width)
-			fill_rect(disp, x0 + bar_width, y0, new_bar_width - bar_width, HBAR_HEIGHT, color);
+			fill_rect(disp, x0 + bar_width, y0, new_bar_width - bar_width, HBAR_HEIGHT, bar_color);
 
 		bar_width = new_bar_width;
 	}
@@ -61,17 +63,18 @@ struct App
 	Display		display;
 	//Touchscreen_XPT2046 ts;
 	ADCRunner<5>	adc;
-	double		battery_voltage = .0;
 
-	ProgressBar pot_progbars[3] = {	{0x1000, HBAR_WIDTH, HBAR_HEIGHT},
-									{0x1000, HBAR_WIDTH, HBAR_HEIGHT},
-									{0x1000, HBAR_WIDTH, HBAR_HEIGHT} };
+	ProgressBar pot_progbars[3] = {
+		{0x1000, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + 2, colGreen},
+		{0x1000, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE + 2, colGreen},
+		{0x1000, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE*2 + 2, colGreen} };
 									
-	ProgressBar mix_progbar {0x100, HBAR_WIDTH, HBAR_HEIGHT};
+	ProgressBar mix_progbar
+		{0x100, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE*3 + MIX_YOFFSET + 2, colYellow};
 
 	App();
 
 	void poll();
-	void refresh_voltage();
+	void refresh_voltage(const double battery_voltage);
 	void refresh_preset();
 };
