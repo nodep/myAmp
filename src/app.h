@@ -77,4 +77,6 @@ struct App
 	void poll();
 	void refresh_voltage(const double battery_voltage);
 	void refresh_preset();
+	void draw_exp_pedal(const Coord x, const Coord y);
+	void draw_ftsw_pedal(const Coord x, const Coord y);
 };

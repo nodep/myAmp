@@ -122,7 +122,6 @@ const GFXglyph Org_01Glyphs[] PROGMEM = {{0, 0, 0, 6, 0, 1},     // 0x20 ' '
                                          {267, 3, 5, 4, 0, -4},  // 0x7D '}'
                                          {269, 5, 3, 6, 0, -3}}; // 0x7E '~'
 
-const GFXfont Org_01 PROGMEM = {(uint8_t *)Org_01Bitmaps,
-                                (GFXglyph *)Org_01Glyphs, 0x20, 0x7E, 7};
+const GFXfont Org_01 PROGMEM = {Org_01Bitmaps, Org_01Glyphs, 0x20, 0x7E, 7, 7};
 
 // Approx. 943 bytes

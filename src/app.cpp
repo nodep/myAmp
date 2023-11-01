@@ -46,6 +46,10 @@ App::App()
 			;
 	}
 
+	// draw the pedals
+	draw_exp_pedal(50, 185);
+	draw_ftsw_pedal(170, 180);
+
 	// load the active preset
 	Preset preset;
 	preset.load_active_prog();
@@ -136,10 +140,10 @@ void App::refresh_voltage(const double battery_voltage)
 		sprintf(buff, "%.1fV", battery_voltage);
 		if (strcmp(buff, prev_buff) != 0)
 		{
-			Window<46, PARAM_NAME_HEIGHT> win(colBlack);
-			set_large_font(FreeSans9pt7b);
+			Window<40, 8> win(colBlack);
+			set_large_font(Org_01);
 			print_large(win, buff, 0, 0, colYellow);
-			display.blit(win, VOLTAGE_BAR_WIDTH + 2, Display::Height - PARAM_NAME_HEIGHT + 1);
+			display.blit(win, VOLTAGE_BAR_WIDTH + 2, Display::Height - win.Height - 2);
 			strcpy(prev_buff, buff);
 		}
 
@@ -216,4 +220,63 @@ void App::refresh_preset()
 	const auto diff = Watch::now() - start;
 	if (diff)
 		dprint("%i %i\n", diff, Watch::ticks2ms(diff));
+}
+
+void App::draw_ftsw_pedal(const Coord x, const Coord y)
+{
+	// frame
+	vline(display, x +   0, y +  2,  38, colWhite);
+	hline(display, x +   2, y +  0, 118, colWhite);
+	vline(display, x + 120, y +  2,  38, colWhite);
+	hline(display, x +   2, y + 40, 118, colWhite);
+
+	// buttons & leds
+	auto draw_button = [&](const Coord xb, const Coord yb) {
+			draw_pixel(display, xb + 2, yb - 4, colWhite);
+
+			vline(display, xb + 0, yb + 1, 4, colWhite);
+			hline(display, xb + 1, yb + 0, 4, colWhite);
+			vline(display, xb + 5, yb + 1, 4, colWhite);
+			hline(display, xb + 1, yb + 5, 4, colWhite);
+		};
+
+	draw_button(x + 18, y + 18);
+	draw_button(x + 42, y + 18);
+	draw_button(x + 72, y + 18);
+	draw_button(x + 96, y + 18);
+
+	// display
+	vline(display, x + 54, y + 14,  8, colWhite);
+	hline(display, x + 54, y + 14, 12, colWhite);
+	vline(display, x + 66, y + 14,  8, colWhite);
+	hline(display, x + 54, y + 21, 12, colWhite);
+}
+
+void App::draw_exp_pedal(const Coord x, const Coord y)
+{
+	// The Expression Pedal
+
+	// base
+	draw_line(display, x +  0, y + 32, x +  4, y + 18, colWhite);
+	draw_line(display, x +  4, y + 18, x + 76, y + 24, colWhite);
+	draw_line(display, x + 76, y + 24, x + 80, y + 32, colWhite);
+	draw_line(display, x +  0, y + 32, x + 80, y + 32, colWhite);
+
+	// line between pedal and base
+	draw_line(display, x + 26, y + 12, x + 26, y + 20, colWhite);
+	
+	// pedal
+	draw_line(display, x + 76, y + 24, x + 12, y +  8, colWhite);
+	draw_line(display, x + 12, y +  8, x + 16, y +  0, colWhite);
+	draw_line(display, x + 16, y +  0, x + 80, y + 12, colWhite);
+	draw_line(display, x + 80, y + 12, x + 76, y + 24, colWhite);
+
+	// feet
+	draw_line(display, x +  6, y + 33, x +  6, y + 37, colWhite);
+	draw_line(display, x +  6, y + 37, x + 16, y + 37, colWhite);
+	draw_line(display, x + 16, y + 37, x + 16, y + 33, colWhite);
+
+	draw_line(display, x + 64, y + 33, x + 64, y + 37, colWhite);
+	draw_line(display, x + 64, y + 37, x + 74, y + 37, colWhite);
+	draw_line(display, x + 74, y + 37, x + 74, y + 33, colWhite);
 }
