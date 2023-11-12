@@ -64,6 +64,8 @@ struct App
 	//Touchscreen_XPT2046 ts;
 	ADCRunner<5>	adc;
 
+	bool		exp_pedal_active = false;
+
 	ProgressBar pot_progbars[3] = {
 		{0x1000, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + 2, colGreen},
 		{0x1000, VOLTAGE_BAR_WIDTH + WIN_OFFSET + WIN_WIDTH_HALF + 2, HBAR_YOFFSET + HBAR_ADVANCE + 2, colGreen},
@@ -77,6 +79,6 @@ struct App
 	void poll();
 	void refresh_voltage(const double battery_voltage);
 	void refresh_preset();
-	void draw_exp_pedal(const Coord x, const Coord y);
-	void draw_ftsw_pedal(const Coord x, const Coord y);
+	void draw_exp_pedal(const Coord x, const Coord y, const Color color);
+	void draw_ftsw_pedal(const Coord x, const Coord y, const Color color);
 };

@@ -39,13 +39,13 @@ ROMprograms = [
 	{
 		"name": "Reverb 1",
 		"controls": [ "time", "HF filter", "LF filter" ],
-		"params": [ 0x80, 0x800, 0x800, 0x800 ],
+		"params": [ 0x20, 0x800, 0x800, 0x800 ],
 		"prog_num": 6,
 	},
 	{
 		"name": "Reverb 2",
 		"controls": [ "time", "HF filter", "LF filter" ],
-		"params": [ 0x80, 0x800, 0x800, 0x800 ],
+		"params": [ 0x20, 0x800, 0x800, 0x800 ],
 		"prog_num": 7,
 	},
 ]
@@ -54,6 +54,100 @@ ROMprograms = [
 goodPrograms = [
 	'Hall Reverb with Shimmer',
 	'Reverb + Shimmer v6',
+	'Chorus (SpinSemi demo)',
+	'Echo with Repeats',
+	'Echo',
+	'Flanger (SpinSemi demo)',
+	'Phase shifter',
+	'Tremolo',
+	'Vibrato (after strike)',
+	'Wah',
+	'Reverb+HP+LP',
+	'Reverb+Flange+LP',
+	'Reverb+Pitch+LP',
+	'Hall Reverb',					# wo
+	'Room Reverb',					# wo
+	'Plate Reverb (SpinSemi 3K)',	# wo
+	'Gated Reverb',					# wo
+	'Echo Reverb',					# wo
+	'Stereo Echo Reverb',			# wo
+	'Chorus Reverb',
+	'Flanger (SpinSemi 3K)',		# wo
+	'Pitch + Reverb for karaoke apps',
+	'Reverb/RT/D/F',				# wo
+	'Plate Reverb: Very Tight',		# wo
+	'Plate Reverb: Tight',			# wo
+	'Plate Reverb: Lush',			# wo
+	'Dual LFO Chorus',				# wo
+	'Dtr shimmer reverb',			# wo
+	'Dtr v filter v damping',		# wo
+	'Dtr v filter v predelay',		# wo
+	'Dtr v predelay v damping 1k',	# wo
+	'Dtr v predelay v damping 2k',	# wo
+	'Dtr v predelay v damping 4k',	# wo
+	'Dtr v predelay v damping 8k',	# wo
+	'Dtr v predelay v damping 500',	# wo
+	'Dtr 1oct pitch ip fb 2k',		# wo
+	'Dtr 1oct pitch ip 4k',			# wo
+	'Dtr v pitch ip fb 4k',			# wo
+	'Dtr v pitch ip 4k',			# wo
+	'Dtr shimmer val lvl',			# wo
+	'Dtr v predelay',				# wo
+	'Single Head Tape Echo + Spring Reverb',
+	'Dual Head Tape Echo + Spring Reverb',
+	'Single Head Tape Echo + Spring Reverb w/ Ping Pong',
+	'Dual Head Tape Echo + Spring Reverb w/ Ping Pong',
+	'Single Head Tape Echo',
+	'Single Head Tape Echo + Reverb',
+	'Ping Pong',
+	'Ping Pong 2:1',
+	'Dual Head Tape Echo + Reverb, w/ Ping Pong',
+	'Dual Head Tape Echo + Reverb',
+	'Stereo Pitch Transposer w/ Feedback and Delay',
+	'Ping Pong: Basic Wonky',
+	'Ping Pong: Basic',
+	'Ping Pong: Stereo with Dual Taps',
+	'Ping Pong with Dual Taps',
+	'Ping Pong: Simple',
+	'Ping Pong: Simple Stereo',
+	'Ping Pong: Triple',
+	'Triple Tap Cascaded Delay',			# wo
+	'Triple Tap Cascaded Delay - Stereo',			# wo
+	'Triple Tap Cascaded Delay - Stereo w/ Chorus',			# wo
+	'Triple Tap Delay - Parallel',								# wo
+	'Triple Tap Delay - Parallel, Varying Feedback',			# wo
+	'Triple Tap Delay - Parallel, Varying Feedback, w/ Chorus',	# wo
+	'Plate Reverb - Dattorro',	# wo
+	'Freeverb',		# wo
+	'Greenwood Delay',
+	'Pitch Transposer - Stereo',
+	'Reverse Reverb',	# wo
+	'New Shimmer Reverb',
+	'Octave Up and Down',
+	'Stereo Tremolo',
+	'Stereo Ring Modulators w/ Chorus',
+	'Triple Delay w/ Feedback',
+	'Stereo Dual Flange Multi Tap Delay',
+	'Modulated Echo',
+	'Interesting - w/ Overdrive',
+	'Interesting - v1',
+	'Faux Phase Shifter',
+	'Faux Phase Shifter - extra delay',
+	'Dual-Rate Chorus',
+	'New Flanger',
+	'Oil can delay',
+	'Room reverb: 3-4-5',
+	'Spacedash',
+	'Starfield',
+	'Choir Saw',
+	'Parallax',
+	'Spring Reverb + Tremolo',
+	'Phaser OD',
+	'Delay OD',
+
+	'Ionian',
+	'Arpeggio (major)',
+	'Arpeggio (minor)'
 ]
 
 excludePrograms = [

@@ -11,8 +11,6 @@ const uint8_t Preset::MAX_PRESETS = (EEPROM_SIZE - PRESETS_BEGIN_AT) / sizeof(Pr
 
 void Preset::load(const uint8_t prog)
 {
-	dprint("loading %i\n", prog);
-
 	// try to get the preset from eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
@@ -27,7 +25,6 @@ void Preset::load(const uint8_t prog)
 
 		if (saved_prog_num == prog)
 		{
-			//dprint("found slot %u\n", prog);
 			eeprom_read_block(this, slot_ptr, sizeof(Preset));
 			return;
 		}
@@ -44,7 +41,7 @@ void Preset::load(const uint8_t prog)
 
 bool Preset::save()
 {
-	dprint("saving %u", prog_num);
+	dprint("saving preset %u", prog_num);
 
 	// try to save the preset to eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)

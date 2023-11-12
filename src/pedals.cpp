@@ -36,7 +36,7 @@ enum
 
 	// how many milliseconds do we wait from the last reception
 	// until we start refreshing LEDs
-	REFRESH_DELAY = 0,
+	REFRESH_DELAY = 15,
 };
 
 // these are LED values representing numbers
@@ -300,23 +300,23 @@ void Pedals::parse_message()
 	}
 }
 
-bool Pedals::send(const uint8_t b)
+bool Pedals::send(const uint8_t s)
 {
 	// send the byte
-	send_byte(b);
+	send_byte(s);
 
 	// wait for the byte to appear on RX because
 	// these are connected on the same bus
 	const uint16_t started = Watch::now();
 	while (!Watch::has_ms_passed_since(1, started))
 	{
-		uint8_t d = 0;
-		if (read_byte(d))
+		uint8_t r = 0;
+		if (read_byte(r))
 		{
-			if (b != d)
-				dprint("send failed:%02X d:%02X\n", b, d);
+			if (s != r)
+				dprint("send failed:%02X %02X\n", s, r);
 
-			return b == d;
+			return s == r;
 		}
 	}
 

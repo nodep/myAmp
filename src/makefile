@@ -10,7 +10,7 @@ OBJECTS = $(addprefix $(OBJPATH)/, main.o avrdbg.o hw.o displaySpi.o touchscreen
 TGTNAME = $(OBJPATH)/$(TARGET)
 
 CFLAGS  = -std=c++20 -Wall -O2 -DF_CPU=$(F_CPU)
-CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -ffunction-sections -fdata-sections -fno-threadsafe-statics
 CFLAGS += -D_DEBUG
 
 # these are needed for GCC 12 to avoid some warnings

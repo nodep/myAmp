@@ -23,16 +23,17 @@ void powamp_init()
 void powamp_poll()
 {
 	static enum: uint8_t {bs_reset, bs_muted, bs_on} boot_sequence = bs_reset;
+	static uint16_t started = Watch::now();
 
 	// bring the power amp out of reset
-	if (boot_sequence == bs_reset  &&  Watch::has_ms_passed_since(300, 0))
+	if (boot_sequence == bs_reset  &&  Watch::has_ms_passed_since(300, started))
 	{
 		pa_reset::high();
 		boot_sequence = bs_muted;
 	}
 
 	// unmute
-	if (boot_sequence == bs_muted  &&  Watch::has_ms_passed_since(600, 0))
+	if (boot_sequence == bs_muted  &&  Watch::has_ms_passed_since(600, started))
 	{
 		pa_mute::low();
 		boot_sequence = bs_on;

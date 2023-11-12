@@ -62,8 +62,8 @@ void FV1::send_program(uint8_t ext_prog_num)
 		// when DIR is set we have to start sending the program
 	} while ((status & TWI_DIR_bm) == 0);
 
-	const uint16_t binary_length = pgm_read_word(&fv1_programs[ext_prog_num].binary_length);
-	const uint8_t* binary = (const uint8_t*)pgm_read_ptr(&fv1_programs[ext_prog_num].binary);
+	const uint16_t binary_length = fv1_programs[ext_prog_num].get_binary_length();
+	const uint8_t* binary = fv1_programs[ext_prog_num].get_binary();
 
 	// send the program from PROGMEM
 	for (uint16_t cnt = 0; cnt < binary_length; cnt++)
@@ -94,20 +94,22 @@ bool FV1::set_preset(const Preset& new_preset)
 
 	if (new_preset.mix != _active_preset.mix)
 	{
-		set_digipots<dp_mix_i2c>(dp_mix_address, new_preset.mix, new_preset.mix);
+		const uint8_t mix_val = 0xff - new_preset.mix;
+		set_digipots<dp_mix_i2c>(dp_mix_address, mix_val, mix_val);
 		_active_preset.mix = new_preset.mix;
 
 		changed = true;
 	}
 
 	const bool new_external = fv1_programs[new_preset.prog_num].is_external();
-	const bool active_external = fv1_programs[_active_preset.prog_num].is_external();
-	if (new_external != active_external
+	const bool current_external = fv1_programs[_active_preset.prog_num].is_external();
+	if (new_external != current_external
 		|| new_preset.prog_num != _active_preset.prog_num)
 	{
+		// are we switching to an external or ROM effect?
 		if (new_external)
 		{
-			if (active_external)
+			if (current_external)
 				fv1_s0::toggle();
 			else
 				fv1_t0::set_value(new_external);
@@ -118,10 +120,18 @@ bool FV1::set_preset(const Preset& new_preset)
 		{
 			fv1_t0::low();
 
-			fv1_s0::set_value(new_preset.prog_num & 1);
-			fv1_s1::set_value(new_preset.prog_num & 2);
-			fv1_s2::set_value(new_preset.prog_num & 4);
+			// for ROM programs, binary_length contains the number of the program
+			const uint16_t rom_program16 = fv1_programs[new_preset.prog_num].get_binary_length();
+			const uint8_t rom_program = static_cast<uint8_t>(rom_program16);
+
+			fv1_s0::set_value(rom_program & 1);
+			fv1_s1::set_value(rom_program & 2);
+			fv1_s2::set_value(rom_program & 4);
 		}
+
+		char buff[LONGEST_NAME];
+		fv1_programs[new_preset.prog_num].copy_name(buff);
+		dprint("loaded: %s\n", buff);
 
 		changed = true;
 	}

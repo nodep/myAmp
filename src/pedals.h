@@ -84,6 +84,14 @@ public:
 		new_ftsw_number = FTSW_NUM_CLEAR;
 	}
 
+	uint16_t get_position_range() const
+	{
+		if (min_pos > max_pos)
+			return 0;
+
+		return max_pos - min_pos;
+	}
+
 	void set_led(const PedalLED led);
 	void clear_led(const PedalLED led);
 

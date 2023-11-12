@@ -810,7 +810,7 @@
     "description": "Chorus with Rate and Depth controls and sounds just like a normal chorus but adds in the 2nd rate control to spook things up a bit. Rate 2 completely CCW turns it off."
   },
   {
-    "name": "Dattorro shimmer reverb",
+    "name": "Dtr shimmer reverb",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -831,7 +831,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var filter var damping",
+    "name": "Dtr v filter v damping",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -850,7 +850,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var filter var predelay",
+    "name": "Dtr v filter v predelay",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -869,7 +869,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay var damping 1k",
+    "name": "Dtr v predelay v damping 1k",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -888,7 +888,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay var damping 2k",
+    "name": "Dtr v predelay v damping 2k",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -907,7 +907,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay var damping 4k",
+    "name": "Dtr v predelay v damping 4k",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -926,7 +926,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay var damping 8k",
+    "name": "Dtr v predelay v damping 8k",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -945,7 +945,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay var damping 500",
+    "name": "Dtr v predelay v damping 500",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -964,7 +964,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro 1oct pitch ip fb 2k",
+    "name": "Dtr 1oct pitch ip fb 2k",
     "description": "Dattorro reverb with fixed 1oct frequency pitch shift",
     "categories": [
       "Reverb",
@@ -985,7 +985,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro 1oct pitch ip 4k",
+    "name": "Dtr 1oct pitch ip 4k",
     "description": "Dattorro reverb with fixed 1oct frequency pitch shift",
     "categories": [
       "Reverb",
@@ -1002,7 +1002,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var pitch ip fb 4k",
+    "name": "Dtr v pitch ip fb 4k",
     "description": "Dattorro reverb with variable frequency pitch shift applied to input signal and feedback",
     "categories": [
       "Reverb",
@@ -1022,7 +1022,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var pitch ip 4k",
+    "name": "Dtr v pitch ip 4k",
     "description": "Dattorro reverb with variable frequency pitch shift applied to input signal",
     "categories": [
       "Reverb",
@@ -1042,7 +1042,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro shimmer val lvl",
+    "name": "Dtr shimmer val lvl",
     "description": "Dattorro Mix Reverb",
     "categories": [
       "Reverb",
@@ -1061,7 +1061,7 @@
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436"
   },
   {
-    "name": "Dattorro var predelay",
+    "name": "Dtr v predelay",
     "description": "Dattorro Reverb - variable predelay",
     "categories": [
       "Reverb"
@@ -2786,7 +2786,7 @@
     },
     "commentary": [
       {
-        "written_by": "Alex  Lawrow",
+        "written_by": "Alex Lawrow",
         "comments": {
           "text": "This routine is based on Mick Taylor's (Ice-9s) reverb loop\nand shimmer code with some changes such as:\n\n1) Prime numbers for delay line lengths.\n2) More linear mapping of pot sweep to reverb time.\n3) Anti-aliasing filter before the pitch-shifter.\n4) Shimmer level is controlled by feeding both the input signal\n   and the reverb output into the pitch-shifter in varying amounts.\n5) Pitch-shifted signal is fed into a delay line to give a couple of short delays.\n   This lets the shimmer effect build up slowly in time.\n6) Output is 100% wet.  Uncomment line at bottom to add dry signal.\n\n;POT0 = Reverb time (0 to 10 seconds).\n;POT1 = Amount of treble in reverb loop.\n;POT2 = Shimmer level\n"
         }

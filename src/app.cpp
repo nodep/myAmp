@@ -9,6 +9,7 @@
 #include "avrdbg.h"
 #include "app.h"
 #include "adc.h"
+#include "powamp.h"
 #include "programs.h"
 #include "graphtext.h"
 
@@ -28,6 +29,7 @@ App::App()
 
 	Preset::dump_eeprom_presets();
 
+	////testing fonts
 	//hline(display, 0, 0, 320, colRed);
 	//set_large_font(FreeSans9pt7b);			print_large(display, "P",  5, 0, colYellow);
 	//set_large_font(FreeSans12pt7b);			print_large(display, "P", 20, 0, colYellow);
@@ -47,20 +49,25 @@ App::App()
 	}
 
 	// draw the pedals
-	draw_exp_pedal(50, 185);
-	draw_ftsw_pedal(170, 180);
+	draw_exp_pedal(50, 185, colWhite);
+	draw_ftsw_pedal(170, 180, colWhite);
 
 	// load the active preset
 	Preset preset;
 	preset.load_active_prog();
 	fv1.set_preset(preset);
 	refresh_preset();
+
+	pedals.reset();
 }
 
 void App::poll()
 {
+	powamp_poll();
+
 	Preset current_preset = fv1.get_active_preset();
 
+	// check and handle the ADC
 	if (adc.has_fresh_set())
 	{
 		// convert ADC result to voltage
@@ -75,7 +82,7 @@ void App::poll()
 		if (adc.has_changed[3])
 			current_preset.pots[2] = 0x1000 - (adc.results[3] >> 4);
 
-		if (adc.has_changed[4])
+		if (adc.has_changed[4]  &&  !exp_pedal_active)
 			current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
@@ -99,6 +106,96 @@ void App::poll()
 		}
 	}
 
+	// handle pedal events
+	for (;;)
+	{
+		const PedalEvent event = pedals.get_event();
+
+		if (event == evNone)
+			break;
+			
+		if (event == evExpPosition)
+		{
+			dprint("evExpPos\n");
+
+			if (exp_pedal_active)
+			{
+				const uint16_t exp_range = pedals.get_position_range();
+				if (exp_range)
+				{
+					const double dest_range = 0x100;
+					const double factor = exp_range / dest_range;
+					const uint16_t calib_pos = static_cast<uint16_t>(pedals.exp_position / factor);
+					current_preset.mix = calib_pos > 0xff ? 0xff : calib_pos;
+				}
+			}
+		}
+		else if (event == evExpInit)
+		{
+			dprint("evExpInit\n");
+
+			pedals.set_led(ledExpGreen);
+			pedals.clear_led(ledExpRed);
+
+			// exp pedal is present but not active
+			exp_pedal_active = false;
+		}
+		else if (event == evExpBtnDown)
+		{
+			dprint("evExpBtnDown\n");
+
+			exp_pedal_active = !exp_pedal_active;
+			if (exp_pedal_active)
+				pedals.set_led(ledExpRed);
+			else
+				pedals.clear_led(ledExpRed);
+		}
+		else if (event == evFtswInit)
+		{
+			dprint("evFtswInit\n");
+			pedals.set_ftsw_number(current_preset.prog_num);
+		}
+		else if (event == evFtswBtn1Down)
+		{
+			uint8_t new_prog_num = current_preset.prog_num + 1;
+			if (new_prog_num >= NUM_FV1_PROGRAMS)
+				new_prog_num = 0;
+
+			current_preset.load(new_prog_num);
+			current_preset.save_active_prog();
+
+			pedals.set_led(ledFtswModeTuner);
+		}
+		else if (event == evFtswBtn1Up)
+		{
+			pedals.clear_led(ledFtswModeTuner);
+		}
+		else if (event == evFtswBtn2Down)
+		{
+			pedals.set_led(ledFtswQA1);
+		}
+		else if (event == evFtswBtn2Up)
+		{
+			pedals.clear_led(ledFtswQA1);
+		}
+		else if (event == evFtswBtn3Down)
+		{
+			pedals.set_led(ledFtswQA2);
+		}
+		else if (event == evFtswBtn3Up)
+		{
+			pedals.clear_led(ledFtswQA2);
+		}
+		else if (event == evFtswBtn4Down)
+		{
+			pedals.set_led(ledFtswQA3);
+		}
+		else if (event == evFtswBtn4Up)
+		{
+			pedals.clear_led(ledFtswQA3);
+		}
+	}
+
 	if (fv1.set_preset(current_preset))
 	{
 		//dprint("prog=%u P0=%u P1=%u P2=%u mix=%u\n",
@@ -109,6 +206,10 @@ void App::poll()
 		//		current_preset.mix);
 
 		refresh_preset();
+
+		// change the number on the footswitch
+		if (pedals.ftsw_present)
+			pedals.set_ftsw_number(current_preset.prog_num);
 	}
 }
 
@@ -129,10 +230,15 @@ void App::refresh_voltage(const double battery_voltage)
 		}
 
 		// draw the bar if it changed
+		Coord y = 0;
+		Coord height = 0;
 		if (curr_charge < prev_charge)
-			fill_rect(display, 0, Display::Height - prev_charge, VOLTAGE_BAR_WIDTH, prev_charge - curr_charge, colBlack);
+			y = Display::Height - prev_charge, height = prev_charge - curr_charge;
 		else if (curr_charge > prev_charge)
-			fill_rect(display, 0, Display::Height - curr_charge, VOLTAGE_BAR_WIDTH, curr_charge - prev_charge, colGreen);
+			y = Display::Height - curr_charge, height = curr_charge - prev_charge;
+
+		if (height != 0)
+			fill_rect(display, 0, y, VOLTAGE_BAR_WIDTH, height, colGreen);
 
 		// print the voltage
 		static char prev_buff[6] = {0};
@@ -154,7 +260,7 @@ void App::refresh_voltage(const double battery_voltage)
 
 void App::refresh_preset()
 {
-	const auto start = Watch::now();
+	//const auto start = Watch::now();
 	static uint8_t prev_prog = 0xff;
 
 	const Preset& preset = fv1.get_active_preset();
@@ -166,7 +272,7 @@ void App::refresh_preset()
 		{
 			// center the program name
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
-			set_large_font(FreeSansBold12pt7b);
+			set_large_font(FreeSans12pt7b);
 			fv1_programs[preset.prog_num].copy_name(name);
 			const Coord width = get_text_width_large(name);
 			const Coord x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
@@ -217,27 +323,29 @@ void App::refresh_preset()
 
 	mix_progbar.draw(display, preset.mix, saved_preset.mix == preset.mix ? colWhite : colRed);
 
-	const auto diff = Watch::now() - start;
-	if (diff)
-		dprint("%i %i\n", diff, Watch::ticks2ms(diff));
+	//const auto diff = Watch::now() - start;
+	//if (diff)
+	//	dprint("%i %i\n", diff, Watch::ticks2ms(diff));
 }
 
-void App::draw_ftsw_pedal(const Coord x, const Coord y)
+void App::draw_ftsw_pedal(const Coord x, const Coord y, const Color color)
 {
+	// The Footswitch icon
+
 	// frame
-	vline(display, x +   0, y +  2,  38, colWhite);
-	hline(display, x +   2, y +  0, 118, colWhite);
-	vline(display, x + 120, y +  2,  38, colWhite);
-	hline(display, x +   2, y + 40, 118, colWhite);
+	vline(display, x +   0, y +  2,  38, color);
+	hline(display, x +   2, y +  0, 118, color);
+	vline(display, x + 120, y +  2,  38, color);
+	hline(display, x +   2, y + 40, 118, color);
 
 	// buttons & leds
 	auto draw_button = [&](const Coord xb, const Coord yb) {
-			draw_pixel(display, xb + 2, yb - 4, colWhite);
+			draw_pixel(display, xb + 2, yb - 4, color);
 
-			vline(display, xb + 0, yb + 1, 4, colWhite);
-			hline(display, xb + 1, yb + 0, 4, colWhite);
-			vline(display, xb + 5, yb + 1, 4, colWhite);
-			hline(display, xb + 1, yb + 5, 4, colWhite);
+			vline(display, xb + 0, yb + 1, 4, color);
+			hline(display, xb + 1, yb + 0, 4, color);
+			vline(display, xb + 5, yb + 1, 4, color);
+			hline(display, xb + 1, yb + 5, 4, color);
 		};
 
 	draw_button(x + 18, y + 18);
@@ -246,37 +354,37 @@ void App::draw_ftsw_pedal(const Coord x, const Coord y)
 	draw_button(x + 96, y + 18);
 
 	// display
-	vline(display, x + 54, y + 14,  8, colWhite);
-	hline(display, x + 54, y + 14, 12, colWhite);
-	vline(display, x + 66, y + 14,  8, colWhite);
-	hline(display, x + 54, y + 21, 12, colWhite);
+	vline(display, x + 54, y + 14,  8, color);
+	hline(display, x + 54, y + 14, 12, color);
+	vline(display, x + 66, y + 14,  8, color);
+	hline(display, x + 54, y + 21, 12, color);
 }
 
-void App::draw_exp_pedal(const Coord x, const Coord y)
+void App::draw_exp_pedal(const Coord x, const Coord y, const Color color)
 {
 	// The Expression Pedal
 
 	// base
-	draw_line(display, x +  0, y + 32, x +  4, y + 18, colWhite);
-	draw_line(display, x +  4, y + 18, x + 76, y + 24, colWhite);
-	draw_line(display, x + 76, y + 24, x + 80, y + 32, colWhite);
-	draw_line(display, x +  0, y + 32, x + 80, y + 32, colWhite);
+	draw_line(display, x +  0, y + 32, x +  4, y + 18, color);
+	draw_line(display, x +  4, y + 18, x + 76, y + 24, color);
+	draw_line(display, x + 76, y + 24, x + 80, y + 32, color);
+	draw_line(display, x +  0, y + 32, x + 80, y + 32, color);
 
 	// line between pedal and base
-	draw_line(display, x + 26, y + 12, x + 26, y + 20, colWhite);
+	draw_line(display, x + 26, y + 12, x + 26, y + 20, color);
 	
 	// pedal
-	draw_line(display, x + 76, y + 24, x + 12, y +  8, colWhite);
-	draw_line(display, x + 12, y +  8, x + 16, y +  0, colWhite);
-	draw_line(display, x + 16, y +  0, x + 80, y + 12, colWhite);
-	draw_line(display, x + 80, y + 12, x + 76, y + 24, colWhite);
+	draw_line(display, x + 76, y + 24, x + 12, y +  8, color);
+	draw_line(display, x + 12, y +  8, x + 16, y +  0, color);
+	draw_line(display, x + 16, y +  0, x + 80, y + 12, color);
+	draw_line(display, x + 80, y + 12, x + 76, y + 24, color);
 
 	// feet
-	draw_line(display, x +  6, y + 33, x +  6, y + 37, colWhite);
-	draw_line(display, x +  6, y + 37, x + 16, y + 37, colWhite);
-	draw_line(display, x + 16, y + 37, x + 16, y + 33, colWhite);
+	draw_line(display, x +  6, y + 33, x +  6, y + 37, color);
+	draw_line(display, x +  6, y + 37, x + 16, y + 37, color);
+	draw_line(display, x + 16, y + 37, x + 16, y + 33, color);
 
-	draw_line(display, x + 64, y + 33, x + 64, y + 37, colWhite);
-	draw_line(display, x + 64, y + 37, x + 74, y + 37, colWhite);
-	draw_line(display, x + 74, y + 37, x + 74, y + 33, colWhite);
+	draw_line(display, x + 64, y + 33, x + 64, y + 37, color);
+	draw_line(display, x + 64, y + 37, x + 74, y + 37, color);
+	draw_line(display, x + 74, y + 37, x + 74, y + 33, color);
 }

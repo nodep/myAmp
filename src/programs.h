@@ -22,6 +22,16 @@ struct Program
 		return bin_ptr != nullptr;
 	}
 
+	uint16_t get_binary_length() const
+	{
+		return pgm_read_word(&binary_length);
+	}
+
+	const uint8_t* get_binary() const
+	{
+		return (const uint8_t*)pgm_read_ptr(&binary);
+	}
+
 	void copy_name(char* buff) const
 	{
 		const char* name_ptr = (const char*)(pgm_read_word(&name));
