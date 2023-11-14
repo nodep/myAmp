@@ -4,16 +4,17 @@
 
 struct ProgParams
 {
-	uint8_t		mix = 0x80;
+	uint8_t		mix = 0xff;
 	uint16_t	pots[3] = { 0x800, 0x800, 0x800 };
 };
 
 struct Program
 {
 	const char*			name = nullptr;
-	const char*			pot_names[3] = { nullptr, nullptr, nullptr };
+	const char*			param_names[3] = { nullptr, nullptr, nullptr };
 	const ProgParams*	params = nullptr;
-	const uint16_t		binary_length = 0;
+	const uint16_t		binary_length = 0;	// if external program contains the length of the binary in bytes
+											// if internal program contains the number to output to switches S0-S2
 	const uint8_t*		binary = nullptr;
 
 	bool is_external() const
@@ -40,13 +41,13 @@ struct Program
 
 	bool is_param_used(const uint8_t pot) const
 	{
-		const char* name_ptr = (const char*)(pgm_read_word(&pot_names[pot]));
+		const char* name_ptr = (const char*)(pgm_read_word(&param_names[pot]));
 		return name_ptr != nullptr;		
 	}
 
 	void copy_param_name(char* buff, const uint8_t pot) const
 	{
-		const char* name_ptr = (const char*)(pgm_read_word(&pot_names[pot]));
+		const char* name_ptr = (const char*)(pgm_read_word(&param_names[pot]));
 		if (name_ptr != nullptr)
 			strcpy_P(buff, name_ptr);
 		else

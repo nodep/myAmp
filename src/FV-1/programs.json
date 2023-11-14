@@ -399,6 +399,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_0_Hall.spn"
@@ -419,6 +420,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_1_Room.spn"
@@ -439,6 +441,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_2_PLATE.spn"
@@ -459,6 +462,7 @@
       "Gate time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_3_GATED.spn"
@@ -480,6 +484,7 @@
       "Repeat",
       "Reverb"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_4_ECHO-REV.spn"
@@ -501,6 +506,7 @@
       "Repeat",
       "Reverb"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_5_STECHO-REV.spn"
@@ -542,6 +548,7 @@
       "Sweep rate",
       "Sweep width"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/3K_V1_7_FLANGE.spn"
@@ -698,6 +705,7 @@
       "Diffusion",
       "Decay filtering"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "spinsemi/rev_rt_d_f.spn"
@@ -715,6 +723,7 @@
       "Low freq loss",
       "High freq loss"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "description": "Very tight, characterized by extreme density, slight tinnyness, explosive initial sound",
     "author": "Harmon Grold",
     "download": {
@@ -735,6 +744,7 @@
       "Low freq loss",
       "High freq loss"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "author": "Harmon Grold",
     "download": {
       "spn": {
@@ -754,6 +764,7 @@
       "Low freq loss",
       "High freq loss"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "author": "Harmon Grold",
     "download": {
       "spn": {
@@ -805,6 +816,7 @@
       "Rate 2",
       "Depth"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "author": "Graham Biswell",
     "source_url": "https://www.muffwiggler.com/forum/viewtopic.php?t=160436",
     "description": "Chorus with Rate and Depth controls and sounds just like a normal chorus but adds in the 2nd rate control to spook things up a bit. Rate 2 completely CCW turns it off."
@@ -823,6 +835,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-shimmer_oct_var-lvl.spn"
@@ -842,6 +855,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_filter-var_damping.spn"
@@ -861,6 +875,7 @@
       "Time",
       "Filter"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_filter-var_predelay.spn"
@@ -880,6 +895,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_predelay-var_damping-1k.spn"
@@ -899,6 +915,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_predelay-var_damping-2k.spn"
@@ -918,6 +935,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_predelay-var_damping-4k.spn"
@@ -937,6 +955,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_predelay-var_damping-8k.spn"
@@ -956,6 +975,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro-var_predelay-var_damping-500.spn"
@@ -977,6 +997,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro_1oct_pitch-ip+fb-2k.spn"
@@ -994,6 +1015,7 @@
       "Pitch"
     ],
     "controls": [ "Ratio", "Time", "Damping" ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro_1oct_pitch-ip-4k.spn"
@@ -1014,6 +1036,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro_var_pitch-ip+fb-4k.spn"
@@ -1034,6 +1057,7 @@
       "Time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-mixed/dattorro_var_pitch-ip-4k.spn"
@@ -1053,6 +1077,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-shimmer/dattorro-shimmer_val-lvl.spn"
@@ -1071,6 +1096,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/dattorro-var_predelay.spn"
@@ -1462,6 +1488,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo_cascaded.spn"
@@ -1480,6 +1507,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo_cascaded_stereo.spn"
@@ -1499,6 +1527,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo_cascaded_stereo+chorus.spn"
@@ -1518,6 +1547,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo_parallel.spn"
@@ -1537,6 +1567,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo-var_fb.spn"
@@ -1557,6 +1588,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/triple/tripple_echo-var_fb+chorus.spn"
@@ -1575,6 +1607,7 @@
       "Reverb time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dattorro.spn"
@@ -1599,6 +1632,7 @@
       "-",
       "-"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "commentary": [
       {
         "written_by": "Mark S.",
@@ -1655,6 +1689,7 @@
       "Decay time",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "RevRev.spn"
@@ -1673,6 +1708,7 @@
       "Feedback",
       "Decay"
     ],
+	"params": [ 64, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "shimmer-1.spn"

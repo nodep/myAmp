@@ -32,6 +32,7 @@ void mcu_init()
 	#error Unknown F_CPU setting
 #endif
 
+	
 	////////////////
 	// MCU pin mux
 	////////////////
