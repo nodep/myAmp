@@ -14,7 +14,8 @@ CFLAGS += -ffunction-sections -fdata-sections -fno-threadsafe-statics
 CFLAGS += -D_DEBUG
 
 # these are needed for GCC 12 to avoid some warnings
-CFLAGS += --param=min-pagesize=0 -Wno-volatile
+CFLAGS += --param=min-pagesize=0	# disable the "array subscript 0 is outside array bounds of ..."
+CFLAGS += -Wno-volatile				# |= on registers produces warning
 
 LFLAGS  = -Wl,--relax,--gc-sections
 #LFLAGS += -Wl,--verbose

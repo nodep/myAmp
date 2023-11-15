@@ -2166,6 +2166,11 @@
     "categories": [
       "Reverb"
     ],
+    "controls": [
+      "Scale/Offset",
+      "Feedback",
+      "ThreeTap"
+    ],
     "download": {
       "spn": {
         "file": "holy-city-audio/room-reverb-3-4-5.spn"
@@ -2839,7 +2844,7 @@
     "controls": [
       "Volume",
       "Speed",
-      "Number of notes (2 to 8)"
+      "Notes (2 to 4)"
     ],
     "download": {
       "spn": {
@@ -2857,7 +2862,7 @@
     "controls": [
       "Volume",
       "Speed",
-      "Number of notes (2 to 4)"
+      "Notes (2 to 4)"
     ],
     "download": {
       "spn": {
@@ -2875,7 +2880,7 @@
     "controls": [
       "Volume",
       "Speed",
-      "Number of notes (2 to 4)"
+      "Notes (2 to 4)"
     ],
     "download": {
       "spn": {

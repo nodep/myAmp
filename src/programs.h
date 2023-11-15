@@ -13,8 +13,8 @@ struct Program
 	const char*			name = nullptr;
 	const char*			param_names[3] = { nullptr, nullptr, nullptr };
 	const ProgParams*	params = nullptr;
-	const uint16_t		binary_length = 0;	// if external program contains the length of the binary in bytes
-											// if internal program contains the number to output to switches S0-S2
+	const uint16_t		binary_length = 0;	// if external program, this contains the length of the binary in bytes
+											// if internal program, this contains the number to output to switches S0-S2
 	const uint8_t*		binary = nullptr;
 
 	bool is_external() const
@@ -54,5 +54,8 @@ struct Program
 			buff[0] = '\0';
 	}
 };
+
+// if this fails, we also need to correct the size in json2cpp.py
+static_assert(sizeof(Program) == 14);
 
 #include "program_defs.h"
