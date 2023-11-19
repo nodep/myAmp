@@ -1171,6 +1171,7 @@
       "Feedback",
       "Level"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/drv102/dv102-pp-2head-reverb.spn"
@@ -1357,6 +1358,7 @@
       "Feedback",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-basic-wonky.spn"
@@ -1376,6 +1378,7 @@
       "Feedback",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-basic.spn"
@@ -1395,6 +1398,7 @@
       "Feedback",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-dubble-stereo.spn"
@@ -1413,6 +1417,7 @@
       "Time 2",
       "Feedback"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-dubble.spn"
@@ -1432,6 +1437,7 @@
       "Feedback",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-simple.spn"
@@ -1451,6 +1457,7 @@
       "Feedback",
       "Damping"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-simple-stereo.spn"
@@ -1470,6 +1477,7 @@
       "Time 2",
       "Time 3"
     ],
+	"params": [ 32, 2048, 2048, 2048 ],
     "download": {
       "spn": {
         "file": "dervish/pingpong/pp-tripple.spn"

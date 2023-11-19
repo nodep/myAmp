@@ -274,9 +274,13 @@ void App::refresh_preset()
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
 			set_large_font(FreeSans12pt7b);
 			fv1_programs[preset.prog_num].copy_name(name);
-			const Coord width = get_text_width_large(name);
+
+			char name_with_number[LONGEST_NAME + 5];
+			sprintf(name_with_number, "%u: %s", preset.prog_num, name);
+
+			const Coord width = get_text_width_large(name_with_number);
 			const Coord x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
-			print_large(win, name, x_offset, 0, colWhite);
+			print_large(win, name_with_number, x_offset, 0, colWhite);
 			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 10);
 		}
 
