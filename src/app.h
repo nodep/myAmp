@@ -21,7 +21,7 @@ constexpr Coord MIX_YOFFSET = 8;
 
 constexpr Coord VOLTAGE_BAR_WIDTH = 8;
 
-constexpr double MIN_VOLTAGE = 3.2 * 6;
+constexpr double MIN_VOLTAGE = 3.5 * 6;
 constexpr double MAX_VOLTAGE = 4.2 * 6;
 constexpr double ADC_VOLTAGE_FACTOR = 1796.721311;
 
