@@ -2,7 +2,7 @@
 
 #pragma once
 
-constexpr uint8_t NUM_FV1_PROGRAMS = 102;
+constexpr uint8_t NUM_FV1_PROGRAMS = 100;
 
 extern const Program fv1_programs[NUM_FV1_PROGRAMS];
 

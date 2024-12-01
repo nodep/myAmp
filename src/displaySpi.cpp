@@ -160,7 +160,7 @@ void Display::init()
 	_delay_ms(200);
 
 	s_led::dir_out();
-	s_led::low();
+	s_led::high();
 	
 	s_spi::init();
 
@@ -196,13 +196,21 @@ void Display::on()
 {
 	Transaction t;
 	send_command(cmdDisplayOn);
-	s_led::low();
 }
 
 void Display::off()
 {
 	Transaction t;
 	send_command(cmdDisplayOff);
+}
+
+void Display::backlight_on()
+{
+	s_led::low();
+}
+
+void Display::backlight_off()
+{
 	s_led::high();
 }
 

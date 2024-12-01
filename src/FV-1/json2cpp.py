@@ -73,7 +73,7 @@ goodPrograms = [
 	'Stereo Echo Reverb',			# wo
 	'Chorus Reverb',
 	'Flanger (SpinSemi 3K)',		# wo
-	'Pitch + Reverb for karaoke apps',
+	#'Pitch + Reverb for karaoke apps',
 	'Reverb/RT/D/F',				# wo
 	'Plate Reverb: Very Tight',		# wo
 	'Plate Reverb: Tight',			# wo
@@ -117,7 +117,7 @@ goodPrograms = [
 	'Triple Tap Delay - Parallel',								# wo
 	'Triple Tap Delay - Parallel, Varying Feedback',			# wo
 	'Triple Tap Delay - Parallel, Varying Feedback, w/ Chorus',	# wo
-	'Plate Reverb - Dattorro',	# wo
+	#'Plate Reverb - Dattorro',	# wo
 	'Freeverb',		# wo
 	#'Greenwood Delay',
 	'Pitch Transposer - Stereo',

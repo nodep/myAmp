@@ -17,6 +17,7 @@ App::App()
 {
 	display.init();
 	fill(display, colBlack);
+	display.backlight_on();
 
 	//ts.init();
 
@@ -49,8 +50,8 @@ App::App()
 	}
 
 	// draw the pedals
-	draw_exp_pedal(50, 185, colWhite);
-	draw_ftsw_pedal(170, 180, colWhite);
+	draw_exp_pedal(90, 185, colWhite);
+	draw_ftsw_pedal(190, 180, colWhite);
 
 	// load the active preset
 	Preset preset;
@@ -86,8 +87,12 @@ void App::poll()
 			current_preset.mix = 0xff - (adc.results[4] >> 8);
 	}
 
-	if (rotenc.get_button_event() == RotEnc::beLong)
-		current_preset.save();
+	bool preset_saved = false;
+	const auto button_event = rotenc.get_button_event();
+	if (button_event == RotEnc::beDouble)
+		preset_saved = current_preset.save();
+	else if (button_event != RotEnc::beNone)
+		dprint("button event: %s\n", RotEnc::get_button_event_desc(button_event));
 
 	const auto delta = rotenc.get_delta();
 	if (delta)
@@ -196,7 +201,7 @@ void App::poll()
 		}
 	}
 
-	if (fv1.set_preset(current_preset))
+	if (fv1.set_preset(current_preset)  ||  preset_saved)
 	{
 		//dprint("prog=%u P0=%u P1=%u P2=%u mix=%u\n",
 		//		current_preset.prog_num,
@@ -246,10 +251,10 @@ void App::refresh_voltage(const double battery_voltage)
 		sprintf(buff, "%.1fV", battery_voltage);
 		if (strcmp(buff, prev_buff) != 0)
 		{
-			Window<40, 8> win(colBlack);
-			set_large_font(Org_01);
-			print_large(win, buff, 0, 0, colYellow);
-			display.blit(win, VOLTAGE_BAR_WIDTH + 2, Display::Height - win.Height - 2);
+			Window<48, 16> win(colBlack);
+			set_large_font(FreeSans9pt7b);
+			print_large(win, buff, 0, 0, colGreen);
+			display.blit(win, VOLTAGE_BAR_WIDTH + 2, Display::Height - win.Height);
 			strcpy(prev_buff, buff);
 		}
 
@@ -269,19 +274,26 @@ void App::refresh_preset()
 	char name[LONGEST_NAME];
 	if (prev_prog != preset.prog_num)
 	{
+		// center the program name
 		{
-			// center the program name
 			Window<WIN_WIDTH, NAME_HEIGHT> win(colBlack);
 			set_large_font(FreeSans12pt7b);
 			fv1_programs[preset.prog_num].copy_name(name);
 
-			char name_with_number[LONGEST_NAME + 5];
-			sprintf(name_with_number, "%u: %s", preset.prog_num, name);
-
-			const Coord width = get_text_width_large(name_with_number);
+			const Coord width = get_text_width_large(name);
 			const Coord x_offset = width < win.Width ? (win.Width - width) / 2 : 0;
-			print_large(win, name_with_number, x_offset, 0, colWhite);
+			print_large(win, name, x_offset, 0, colWhite);
 			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 10);
+		}
+			
+		// print the program number
+		{
+			char num[4];
+			sprintf(num, "%u", preset.prog_num);
+			Window<44, 20> win(colBlack);
+			set_large_font(FreeSans12pt7b);
+			print_large(win, num, 0, 0, colWhite);
+			display.blit(win, VOLTAGE_BAR_WIDTH + WIN_OFFSET, 180);
 		}
 
 		// param names

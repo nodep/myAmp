@@ -90,7 +90,7 @@ void Preset::dump_eeprom_presets()
 	uint8_t slot_cnt;
 	for (slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
+		const uint8_t* slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		eeprom_read_block(&p, slot_ptr, sizeof(Preset));
@@ -100,8 +100,8 @@ void Preset::dump_eeprom_presets()
 
 		// read the program name from the flash
 		fv1_programs[p.prog_num].copy_name(prog_name);
-		dprint("prog=%u \"%s\"\n\"params\": [ %u, %u, %u, %u ],\n",
-				p.prog_num, prog_name, p.mix, p.pots[0], p.pots[1], p.pots[2]);
+		dprint("slot=%u prog=%u \"%s\"\n\"params\": [ %u, %u, %u, %u ],\n",
+				slot_cnt, p.prog_num, prog_name, p.mix, p.pots[0], p.pots[1], p.pots[2]);
 	}
 
 	dprint("dumped %u presets\n", p.prog_num == 0xff ? slot_cnt : MAX_PRESETS);

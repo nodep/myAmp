@@ -206,3 +206,17 @@ int8_t RotEnc::get_delta()
 
 	return ret_val;
 }
+
+const char* RotEnc::get_button_event_desc(ButtonEvent be)
+{
+	switch (be)
+	{
+		case beNone:		return "none";			break;
+		case beSingle:		return "single";		break;
+		case beDouble:		return "double";		break;
+		case beLong:		return "long";			break;
+		case beLongShort:	return "long short";	break;
+	}
+	
+	return "<unknown>";
+}

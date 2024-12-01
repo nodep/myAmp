@@ -73,4 +73,5 @@ public:
 	int8_t get_delta();
 
 	ButtonEvent get_button_event();
+	static const char* get_button_event_desc(ButtonEvent be);
 };

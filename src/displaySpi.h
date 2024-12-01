@@ -23,6 +23,8 @@ public:
 	static void init();
 	static void off();
 	static void on();
+	static void backlight_on();
+	static void backlight_off();
 
 	static void color(ColorRGB colRGB)
 	{
