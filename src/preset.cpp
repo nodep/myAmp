@@ -6,15 +6,15 @@
 #include "preset.h"
 #include "programs.h"
 
-const uint16_t PRESETS_BEGIN_AT = 1;
-const uint8_t Preset::MAX_PRESETS = (EEPROM_SIZE - PRESETS_BEGIN_AT) / sizeof(Preset);
+uint8_t* const active_preset_addr = (uint8_t*)(EEPROM_SIZE - 1);
+const uint8_t Preset::MAX_PRESETS = (EEPROM_SIZE - 1) / sizeof(Preset);
 
 void Preset::load(const uint8_t prog)
 {
 	// try to get the preset from eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		const uint8_t* slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
+		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		const uint8_t saved_prog_num = eeprom_read_byte(slot_ptr);
@@ -31,7 +31,7 @@ void Preset::load(const uint8_t prog)
 	}
 
 	// get the preset from flash
-	const ProgParams* paramsPtr = (const ProgParams*)(pgm_read_word(&fv1_programs[prog].params));
+	const ProgParams* paramsPtr = (ProgParams*)(pgm_read_word(&fv1_programs[prog].params));
 	prog_num = prog;
 	pots[0] = pgm_read_word(paramsPtr->pots);
 	pots[1] = pgm_read_word(paramsPtr->pots + 1);
@@ -46,7 +46,7 @@ bool Preset::save()
 	// try to save the preset to eeprom
 	for (uint8_t slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		uint8_t* const slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
+		uint8_t* const slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		const uint8_t saved_prog_num = eeprom_read_byte(slot_ptr);
@@ -90,7 +90,7 @@ void Preset::dump_eeprom_presets()
 	uint8_t slot_cnt;
 	for (slot_cnt = 0; slot_cnt < MAX_PRESETS; slot_cnt++)
 	{
-		const uint8_t* slot_ptr = (uint8_t*)(PRESETS_BEGIN_AT + sizeof(Preset) * slot_cnt);
+		const uint8_t* slot_ptr = (uint8_t*)(sizeof(Preset) * slot_cnt);
 
 		// read the program number for the slot
 		eeprom_read_block(&p, slot_ptr, sizeof(Preset));
@@ -110,8 +110,7 @@ void Preset::dump_eeprom_presets()
 
 void Preset::load_active_prog()
 {
-	// yes, we are reading (successfully) from nullptr
-	uint8_t active_prog = eeprom_read_byte(nullptr);
+	uint8_t active_prog = eeprom_read_byte(active_preset_addr);
 	if (active_prog == 0xff)
 		active_prog = 0;
 
@@ -120,5 +119,5 @@ void Preset::load_active_prog()
 
 void Preset::save_active_prog()
 {
-	eeprom_update_byte(nullptr, prog_num);
+	eeprom_update_byte(active_preset_addr, prog_num);
 }

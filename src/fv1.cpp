@@ -92,7 +92,7 @@ bool FV1::set_preset(const Preset& new_preset)
 	changed |= update_pot<1>(new_preset);
 	changed |= update_pot<2>(new_preset);
 
-	if (new_preset.mix != _active_preset.mix)
+	if (new_preset.mix != _active_preset.mix  ||  _first_init)
 	{
 		const uint8_t mix_val = 0xff - new_preset.mix;
 		set_digipots<dp_mix_i2c>(dp_mix_address, mix_val, mix_val);
@@ -139,5 +139,7 @@ bool FV1::set_preset(const Preset& new_preset)
 	if (changed)
 		_active_preset = new_preset;
 
+	_first_init = false;
+	
 	return changed;
 }

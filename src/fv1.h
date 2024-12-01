@@ -5,14 +5,13 @@
 class FV1
 {
 private:
-
 	void send_program(uint8_t ext_prog_num);
 
 	template <int PotNum>
 	bool update_pot(const Preset& new_preset)
 	{
 		bool changed = false;
-		if (new_preset.pots[PotNum] != _active_preset.pots[PotNum])
+		if (new_preset.pots[PotNum] != _active_preset.pots[PotNum]  ||  _first_init)
 		{
 			fv1_pwm_timer::set_pwm_duty<PotNum>(new_preset.pots[PotNum]);
 			_active_preset.pots[PotNum] = new_preset.pots[PotNum];
@@ -22,6 +21,7 @@ private:
 		return changed;
 	}
 
+	bool	_first_init = true;
 	Preset	_active_preset;
 
 public:
